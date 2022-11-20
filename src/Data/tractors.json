@@ -1,0 +1,76 @@
+{
+    "tractors": [
+        {
+            "unit": "277454",
+            "year": 2020,
+            "made_by": "FRHT",
+            "color": "Blue",
+            "description": "TA",
+            "VIN": "3ALHCYFE3LDLZ2810",
+            "terminal": "MIS",
+            "ownership": "Ryder",
+            "licence_plate": "BB35078",
+            "number_of_axles": 3,
+            "weight": 10490,
+            "standard_job": "Annual Inspection",
+
+            "status": "active",
+
+            "__v": 0
+        },
+        {
+            "unit": "277454",
+            "year": 2020,
+            "made_by": "FRHT",
+            "color": "Blue",
+            "description": "TA",
+            "VIN": "3ALHCYFE3LDLZ2810",
+            "terminal": "MIS",
+            "ownership": "Ryder",
+            "licence_plate": "BB35078",
+            "number_of_axles": 3,
+            "weight": 10490,
+            "standard_job": "Annual Inspection",
+
+            "status": "active",
+
+            "__v": 1
+        },
+        {
+            "unit": "277454",
+            "year": 2020,
+            "made_by": "FRHT",
+            "color": "Blue",
+            "description": "TA",
+            "VIN": "3ALHCYFE3LDLZ2810",
+            "terminal": "MIS",
+            "ownership": "Ryder",
+            "licence_plate": "BB35078",
+            "number_of_axles": 3,
+            "weight": 10490,
+            "standard_job": "Annual Inspection",
+
+            "status": "active",
+
+            "__v": 2
+        },
+        {
+            "unit": "277454",
+            "year": 2020,
+            "made_by": "FRHT",
+            "color": "Blue",
+            "description": "TA",
+            "VIN": "3ALHCYFE3LDLZ2810",
+            "terminal": "MIS",
+            "ownership": "Ryder",
+            "licence_plate": "BB35078",
+            "number_of_axles": 3,
+            "weight": 10490,
+            "standard_job": "Annual Inspection",
+
+            "status": "active",
+
+            "__v": 3
+        }
+    ]
+}
