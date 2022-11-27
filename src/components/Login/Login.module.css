@@ -99,7 +99,7 @@
     background-color: white;
 }
 
-.form_container a button {
+.form_container > button {
     width: fit-content;
     padding: 0.5em 2em;
     font-size: 1em;
@@ -110,6 +110,6 @@
     color: white;
 }
 
-.form_container > button a {
+/* .form_container > button a {
     color: white;
-}
+} */

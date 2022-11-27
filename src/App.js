@@ -13,22 +13,26 @@ import { useState, useMemo } from "react";
 
 function App() {
     const [user, setUser] = useState("");
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(null);
+    const [role, setRole] = useState("");
 
     const value = useMemo(
-        () => ({ isLoggedIn, setIsLoggedIn }),
-        [isLoggedIn, setIsLoggedIn]
+        () => ({ isLoggedIn, setIsLoggedIn, role, setRole }),
+        [isLoggedIn, setIsLoggedIn, role, setRole]
     );
-    console.log(isLoggedIn);
 
     return (
         <div className="App">
             <Router>
                 <UserContext.Provider value={value}>
                     <Routes>
-                        <Route exact path="/login" element={<Login />}></Route>
+                        <Route exact path="/" element={<Login />}></Route>
 
-                        <Route exact path="/" element={<Dashboard />}></Route>
+                        <Route
+                            exact
+                            path="/dashboard"
+                            element={<Dashboard />}
+                        ></Route>
 
                         <Route
                             exact
@@ -45,6 +49,7 @@ function App() {
                             path="/accident"
                             element={<Accident />}
                         ></Route>
+
                         <Route
                             exact
                             path="/register"

@@ -2,6 +2,7 @@ import styles from "./Employee.module.css";
 import Axios from "axios";
 import { useState, useContext } from "react";
 import Navbar from "../../components/Navbar/Navbar";
+import Permission from "../../components/Permission/Permission";
 
 import { Link } from "react-router-dom";
 
@@ -10,7 +11,10 @@ import { UserContext } from "../../UserContext";
 //Hide password remaining
 
 const Inventory = () => {
-    const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
+    const { isLoggedIn, setIsLoggedIn, role } = useContext(UserContext);
+
+    const [status, setStatus] = useState("");
+    const [msg, setMsg] = useState("");
 
     const [data, setData] = useState({
         name: "",
@@ -73,15 +77,13 @@ const Inventory = () => {
         },
     };
 
-    console.log(body.data);
-
     const config = {
         // params: { unit: 277454 },
 
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     };
 
-    console.log(config.headers);
+    // console.log(config.headers);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -118,18 +120,24 @@ const Inventory = () => {
             }
         )
             .then((response) => {
-                console.log(response);
+                // console.log(response.status);
+                setStatus(response.status);
+                // setMsg(response.data.msg);
+                // console.log(response);
             })
             .catch((err) => {
-                console.log(err);
+                console.log(err.response.data.msg);
+                setMsg("Check fields!!");
             });
     };
+    // console.log(role);
 
     return (
         <>
-            {isLoggedIn ? (
-                <div className="wrapper_container">
-                    <Navbar />
+            {/* {isLoggedIn ? ( */}
+            <div className="wrapper_container">
+                <Navbar />
+                {!(role === "employee") ? (
                     <div className={styles.main_container}>
                         <form onSubmit={handleSubmit} action="">
                             <div className={styles.table_wrapper_container}>
@@ -345,19 +353,24 @@ const Inventory = () => {
                                     </div>
                                     <br />
                                 </div>
-                                <button>submit</button>
+                                <button>Submit</button>
+                                {!(status === 201) ? (
+                                    <h3>{msg}</h3>
+                                ) : (
+                                    <h3>Employee added!!</h3>
+                                )}
                             </div>
                         </form>
                     </div>
-                </div>
-            ) : (
-                <div className="not_logged_in">
-                    <h1>Click below to SignIn</h1>
-                    <Link to="/login">
-                        <button>Sign In</button>
-                    </Link>
-                </div>
-            )}
+                ) : (
+                    <div>
+                        You do not have the necessary permissions to do this!
+                    </div>
+                )}
+            </div>
+            {/* ) : (
+                <Permission />
+            )} */}
         </>
     );
 };

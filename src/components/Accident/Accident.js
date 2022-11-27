@@ -3,6 +3,7 @@ import Axios from "axios";
 import { useState, useContext } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import { Link } from "react-router-dom";
+import Permission from "../../components/Permission/Permission";
 
 import { UserContext } from "../../UserContext";
 
@@ -11,7 +12,9 @@ const Inventory = () => {
 
     const [accidents, setaccidents] = useState("");
 
-    const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
+    const { isLoggedIn, setIsLoggedIn, role } = useContext(UserContext);
+
+    const [url, setUrl] = useState("");
 
     const inputChange = (e) => {
         setaccidents(e.target.value);
@@ -31,7 +34,7 @@ const Inventory = () => {
             config
         )
             .then((response) => {
-                console.log(response);
+                setAllaccidents([response.data.accident]);
             })
             .catch((err) => {
                 console.log(err);
@@ -39,11 +42,19 @@ const Inventory = () => {
     };
 
     const getAllaccidents = () => {
-        Axios.get(`https://lc-backend-v2.herokuapp.com/api/v1/LC/accidents`, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-        })
+        if (role === "super-admin") {
+            setUrl("");
+        } else {
+            setUrl("currAccidents");
+        }
+        Axios.get(
+            `https://lc-backend-v2.herokuapp.com/api/v1/LC/accidents/${url}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            }
+        )
             .then((response) => {
                 console.log(response.data.accidents);
                 setAllaccidents(response.data.accidents);
@@ -57,14 +68,13 @@ const Inventory = () => {
 
     return (
         <>
-            {isLoggedIn ? (
-                <div className="wrapper_container">
-                    <Navbar />
-                    <div className={styles.main_container}>
-                        <button onClick={getAllaccidents}>
-                            Get All accidents
-                        </button>
-                        <form onSubmit={handleSubmit} action="">
+            {/* {!(isLoggedIn === null) ? ( */}
+            <div className="wrapper_container">
+                <Navbar />
+                <div className={styles.main_container}>
+                    <button onClick={getAllaccidents}>Get All accidents</button>
+                    <form onSubmit={handleSubmit} action="">
+                        <div className={styles.form_input_label}>
                             <input
                                 type="text"
                                 placeholder="Enter accidents"
@@ -72,128 +82,123 @@ const Inventory = () => {
                                 value={accidents}
                             />
                             <button>Get Info</button>
-                        </form>
-                        <div className={styles.table_wrapper_container}>
-                            <h1>accidents Information</h1>
-                            {allaccidents ? (
+                        </div>
+                    </form>
+                    <div className={styles.table_wrapper_container}>
+                        <h1>Accidents Information</h1>
+                        <div className={styles.table_container}>
+                            {allaccidents &&
                                 allaccidents.map((item) => (
                                     <div
-                                        className={styles.table_container}
-                                        key={item.employee_id}
+                                        className={
+                                            styles.table_fields_container
+                                        }
+                                        key={item.driver_licene_number}
                                     >
+                                        {/* <div
+                                            className={styles.table_identifier}
+                                        >
+                                            <p>
+                                                Accident Date:
+                                                {item.accident_date}
+                                            </p>
+                                        </div> */}
                                         <div
                                             className={styles.table_identifier}
                                         >
                                             <p>
-                                                Employee Name{" "}
-                                                {item.employee_name}
-                                            </p>
-                                        </div>
-                                        <div className={styles.table_content}>
-                                            <p>Start Date: {item.start_date}</p>
-                                        </div>
-                                        <div className={styles.table_content}>
-                                            <p>
-                                                Employee ID: {item.employee_id}
+                                                Accident Number:{" "}
+                                                {item.accident_number}
                                             </p>
                                         </div>
                                         <div className={styles.table_content}>
                                             <p>
-                                                Medical Expiry Date:{" "}
-                                                {item.medical_expiry_date}
-                                            </p>
-                                        </div>
-                                        <div className={styles.table_content}>
-                                            <p>Terminal: {item.terminal}</p>
-                                        </div>
-                                        <div className={styles.table_content}>
-                                            <p>Shift: {item.shift}</p>
-                                        </div>
-                                        <div className={styles.table_content}>
-                                            <p>
-                                                Employee Type:{" "}
-                                                {item.employee_type}
+                                                Accident Time:{" "}
+                                                {item.accident_time}
                                             </p>
                                         </div>
                                         <div className={styles.table_content}>
                                             <p>
-                                                Employee Status:{" "}
-                                                {item.employee_status}
+                                                Driver Name: {item.driver_name}
                                             </p>
                                         </div>
                                         <div className={styles.table_content}>
                                             <p>
-                                                Number of Axles:{" "}
-                                                {item.number_of_axles}
+                                                Driver licence number:{" "}
+                                                {item.driver_licene_number}
                                             </p>
                                         </div>
                                         <div className={styles.table_content}>
                                             <p>
-                                                Phone Number:{" "}
-                                                {item.phone_number}
+                                                Tractor number:{" "}
+                                                {item.tractor_number}
+                                            </p>
+                                        </div>
+                                        <div className={styles.table_content}>
+                                            <p>Location: {item.location}</p>
+                                        </div>
+                                        <div className={styles.table_content}>
+                                            <p>
+                                                Accident type:{" "}
+                                                {item.accident_type}
+                                            </p>
+                                        </div>
+                                        <div className={styles.table_content}>
+                                            <p>Damage: {item.damage}</p>
+                                        </div>
+                                        <div className={styles.table_content}>
+                                            <p>Towing: {item.towing}</p>
+                                        </div>
+                                        <div className={styles.table_content}>
+                                            <p>
+                                                Police report number:{" "}
+                                                {item.police_report_number}
                                             </p>
                                         </div>
                                         <div className={styles.table_content}>
                                             <p>
-                                                Emergency Contact:{" "}
-                                                {item.emergency_contact}
-                                            </p>
-                                        </div>
-                                        <div className={styles.table_content}>
-                                            <p>Supervisor: {item.supervisor}</p>
-                                        </div>
-                                        <div className={styles.table_content}>
-                                            <p>
-                                                Supervisor Notes:{" "}
-                                                {item.supervisor_notes}
+                                                Police Officer:{" "}
+                                                {item.police_officer}
                                             </p>
                                         </div>
                                         <div className={styles.table_content}>
                                             <p>
-                                                CVOR Points: {item.CVOR_points}
+                                                Driver charged:{" "}
+                                                {item.driver_charged}
                                             </p>
                                         </div>
                                         <div className={styles.table_content}>
                                             <p>
-                                                Employee Notes:{" "}
-                                                {item.employee_notes}
+                                                Action taken:{" "}
+                                                {item.action_taken}
                                             </p>
                                         </div>
                                         <div className={styles.table_content}>
-                                            <p>Other: {item.other}</p>
-                                        </div>
-                                        <div className={styles.table_content}>
                                             <p>
-                                                Accidents and citations:{" "}
-                                                {item.accidents_and_citations}
+                                                Preventable: {item.preventable}
                                             </p>
                                         </div>
                                         <div className={styles.table_content}>
-                                            <p>First PR: {item.first_PR}</p>
+                                            <p>Const: {item.const}</p>
+                                        </div>
+                                        <div className={styles.table_content}>
+                                            <p>Comments: {item.comments}</p>
                                         </div>
                                         <div className={styles.table_content}>
                                             <p>
-                                                Semi Annual PR:{" "}
-                                                {item.semi_annual_PR}
+                                                Driver statement:{" "}
+                                                {item.driver_statement}
                                             </p>
                                         </div>
                                         <br />
                                     </div>
-                                ))
-                            ) : (
-                                <span>None</span>
-                            )}
+                                ))}
                         </div>
                     </div>
                 </div>
-            ) : (
-                <div className="not_logged_in">
-                    <h1>Click below to SignIn</h1>
-                    <Link to="/login">
-                        <button>Sign In</button>
-                    </Link>
-                </div>
-            )}
+            </div>
+            // ) : ( // <Permission />
+            // )}
         </>
     );
 };

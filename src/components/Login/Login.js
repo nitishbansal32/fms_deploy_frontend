@@ -1,10 +1,8 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import Axios from "axios";
 import styles from "./Login.module.css";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../UserContext";
-
-import Navbar from "../../components/Navbar/Navbar";
 
 const Login = () => {
     const url = "https://lc-backend-v2.herokuapp.com/api/v1/LC/login";
@@ -14,7 +12,7 @@ const Login = () => {
 
     const navigate = useNavigate();
 
-    const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
+    const { isLoggedIn, setIsLoggedIn, setRole } = useContext(UserContext);
 
     const EmailChange = (e) => {
         setEmail(e.target.value);
@@ -34,10 +32,17 @@ const Login = () => {
             .then((response) => {
                 // console.log(response.data.token);
                 // console.log(response.status);
-                console.log(response);
+                // console.log(response.data.user.role);
                 localStorage.setItem("token", response.data.token);
+                const item = localStorage.getItem("token", response.data.token);
+
                 // setStatus(response.status);
-                setIsLoggedIn(true);
+                // setIsLoggedIn((prevState) => ({
+                //     prevState,
+                //     item,
+                // }));
+                setIsLoggedIn(item);
+                setRole(response.data.user.role);
             })
             .catch((err) => {
                 // localStorage.setItem("authenticated", false);
@@ -45,12 +50,12 @@ const Login = () => {
                 // setIsLoggedIn(false);
             });
 
-        // console.log(isLoggedIn);
+        console.log(isLoggedIn);
     };
 
     setTimeout(() => {
         if (isLoggedIn) {
-            navigate("/");
+            navigate("/dashboard");
         }
     }, 700);
 

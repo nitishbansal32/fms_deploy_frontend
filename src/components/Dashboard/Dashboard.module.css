@@ -8,16 +8,25 @@
 }
 
 .container {
-    gap: 2rem;
+    gap: 3rem;
+    height: 90%;
+    background-color: #000842;
+    border-radius: 8px;
+    margin-left: 2%;
+    display: flex;
+    justify-self: center;
+    align-self: center;
+    padding: 4rem;
 }
 
 .container div {
     gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
-.container div h1,
-.container div p {
-    text-align: center;
+.container h1,
+.container p {
+    color: white;
 }
-
-

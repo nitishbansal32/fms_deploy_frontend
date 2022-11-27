@@ -3,6 +3,7 @@ import Axios from "axios";
 import { useState, useContext } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import { Link } from "react-router-dom";
+import Permission from "../../components/Permission/Permission";
 
 import { UserContext } from "../../UserContext";
 
@@ -11,7 +12,10 @@ const Inventory = () => {
 
     const [drivers, setdrivers] = useState("");
 
-    const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
+    const [url, setUrl] = useState("");
+
+    const { isLoggedIn, setIsLoggedIn, role, setRole } =
+        useContext(UserContext);
 
     const inputChange = (e) => {
         setdrivers(e.target.value);
@@ -22,7 +26,7 @@ const Inventory = () => {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     };
 
-    console.log(config.headers);
+    // console.log(config.headers);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -32,20 +36,30 @@ const Inventory = () => {
         )
             .then((response) => {
                 console.log(response);
+                setAlldrivers([response.data.driver]);
             })
             .catch((err) => {
                 console.log(err);
             });
+        setAlldrivers("");
     };
 
     const getAlldrivers = () => {
-        Axios.get(`https://lc-backend-v2.herokuapp.com/api/v1/LC/drivers`, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-        })
+        if (role === "super-admin") {
+            setUrl("");
+        } else {
+            setUrl("currDrivers");
+        }
+        Axios.get(
+            `https://lc-backend-v2.herokuapp.com/api/v1/LC/drivers/${url}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            }
+        )
             .then((response) => {
-                console.log(response.data.drivers);
+                console.log(response);
                 setAlldrivers(response.data.drivers);
             })
             .catch((err) => {
@@ -57,12 +71,13 @@ const Inventory = () => {
 
     return (
         <>
-            {isLoggedIn ? (
-                <div className="wrapper_container">
-                    <Navbar />
-                    <div className={styles.main_container}>
-                        <button onClick={getAlldrivers}>Get All drivers</button>
-                        <form onSubmit={handleSubmit} action="">
+            {/* {isLoggedIn ? ( */}
+            <div className="wrapper_container">
+                <Navbar />
+                <div className={styles.main_container}>
+                    <button onClick={getAlldrivers}>Get All drivers</button>
+                    <form onSubmit={handleSubmit} action="">
+                        <div className={styles.form_input_label}>
                             <input
                                 type="text"
                                 placeholder="Enter drivers"
@@ -70,13 +85,17 @@ const Inventory = () => {
                                 value={drivers}
                             />
                             <button>Get Info</button>
-                        </form>
-                        <div className={styles.table_wrapper_container}>
-                            <h1>Drivers Information</h1>
-                            {alldrivers ? (
+                        </div>
+                    </form>
+                    <div className={styles.table_wrapper_container}>
+                        <h1>Drivers Information</h1>
+                        <div className={styles.table_container}>
+                            {alldrivers &&
                                 alldrivers.map((item) => (
                                     <div
-                                        className={styles.table_container}
+                                        className={
+                                            styles.table_fields_container
+                                        }
                                         key={item.employee_id}
                                     >
                                         <div
@@ -177,21 +196,14 @@ const Inventory = () => {
                                         </div>
                                         <br />
                                     </div>
-                                ))
-                            ) : (
-                                <span>None</span>
-                            )}
+                                ))}
                         </div>
                     </div>
                 </div>
-            ) : (
-                <div className="not_logged_in">
-                    <h1>Click below to SignIn</h1>
-                    <Link to="/login">
-                        <button>Sign In</button>
-                    </Link>
-                </div>
-            )}
+            </div>
+            {/* ) : (
+                <Permission />
+            )} */}
         </>
     );
 };

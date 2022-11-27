@@ -9,8 +9,8 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     const handleLogOut = () => {
-        setIsLoggedIn(false);
-        navigate("/login", { replace: true });
+        setIsLoggedIn(null);
+        navigate("/", { replace: true });
         localStorage.removeItem("token");
         console.log(localStorage.getItem("token"));
     };
@@ -19,7 +19,7 @@ const Navbar = () => {
         <div className={styles.container}>
             <img src alt="" />
             <ul>
-                <Link to="/">
+                <Link to="/dashboard">
                     {" "}
                     <button>Dashboard</button>{" "}
                 </Link>
@@ -47,7 +47,10 @@ const Navbar = () => {
                 </Link>
             </div> */}
 
-            <button onClick={handleLogOut} style={{ color: "red" }}>
+            <button
+                onClick={handleLogOut}
+                style={{ color: "red", fontWeight: 550 }}
+            >
                 LogOut
             </button>
         </div>

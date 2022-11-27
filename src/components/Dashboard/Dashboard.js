@@ -3,6 +3,8 @@ import { useState, useEffect, useContext } from "react";
 import styles from "./Dashboard.module.css";
 import Navbar from "../../components/Navbar/Navbar";
 
+import Permission from "../../components/Permission/Permission";
+
 import { UserContext } from "../../UserContext";
 
 const Dashboard = () => {
@@ -10,7 +12,7 @@ const Dashboard = () => {
 
     return (
         <>
-            {isLoggedIn ? (
+            {/* {!(isLoggedIn===null) ? ( */}
                 <div className="wrapper_container">
                     <Navbar />
                     <div className={styles.container}>
@@ -57,14 +59,9 @@ const Dashboard = () => {
                         </div>
                     </div>
                 </div>
-            ) : (
-                <div className="not_logged_in">
-                    <h1>Click below to SignIn</h1>
-                    <Link to="/login">
-                        <button>Sign In</button>
-                    </Link>
-                </div>
-            )}
+            {/* ) : (
+                <Permission />
+            )} */}
         </>
     );
     // }

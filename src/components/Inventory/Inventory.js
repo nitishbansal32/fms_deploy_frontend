@@ -2,19 +2,23 @@ import styles from "./Inventory.module.css";
 import Axios from "axios";
 import { useState, useContext } from "react";
 import Navbar from "../../components/Navbar/Navbar";
+import Permission from "../../components/Permission/Permission";
 
 import { Link } from "react-router-dom";
 
 import { UserContext } from "../../UserContext";
 
 const Inventory = () => {
-    const [alltractors, setAllTractors] = useState("");
+    const [alltractors, setAllTractors] = useState(); //For Displaying infor
 
-    const [tractor, setTractor] = useState("");
+    const [tractor, setTractor] = useState(""); //Url For displaying data according to user input
 
-    const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
+    const [url, setUrl] = useState(""); //For changing getalltractors according to super admin or admin
 
-    console.log(isLoggedIn);
+    const { isLoggedIn, setIsLoggedIn, role, setRole } =
+        useContext(UserContext); //Using context API to manage state across application
+
+    // console.log(isLoggedIn);
     const inputChange = (e) => {
         setTractor(e.target.value);
     };
@@ -34,20 +38,36 @@ const Inventory = () => {
         )
             .then((response) => {
                 console.log(response);
+                setAllTractors([response.data.tractor]);
             })
             .catch((err) => {
                 console.log(err);
             });
     };
 
+    // console.log(role);
+
     const getAllTractors = () => {
-        Axios.get(`https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/`, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-        })
+        if (role === "super-admin") {
+            setUrl("");
+        } else {
+            setUrl("currTractors");
+        }
+        Axios.get(
+            `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/${url}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            }
+        )
             .then((response) => {
-                console.log(response.data.tractors);
+                console.log(response);
+
+                // setAllTractors((prevState) => ({
+                //     ...prevState,
+                //     ...response.data.tractors,
+                // }));
                 setAllTractors(response.data.tractors);
             })
             .catch((err) => {
@@ -57,30 +77,35 @@ const Inventory = () => {
         setAllTractors("");
     };
 
+    // console.log(alltractors);
+
     return (
         <>
-            {isLoggedIn ? (
-                <div className="wrapper_container">
-                    <Navbar />
-                    <div className={styles.main_container}>
-                        <button onClick={getAllTractors}>
-                            Get All Tractors
-                        </button>
-                        <form onSubmit={handleSubmit} action="">
+            {/* {isLoggedIn ? ( */}
+            <div className="wrapper_container">
+                <Navbar />
+                <div className={styles.main_container}>
+                    <button onClick={getAllTractors}>Get All Tractors</button>
+                    <form onSubmit={handleSubmit} action="">
+                        <div className={styles.form_input_label}>
                             <input
                                 type="text"
-                                placeholder="Enter Tractor"
+                                placeholder="Enter tractor"
                                 onChange={inputChange}
                                 value={tractor}
                             />
                             <button>Get Info</button>
-                        </form>
-                        <div className={styles.table_wrapper_container}>
-                            <h1>Tractor Information</h1>
-                            {alltractors ? (
+                        </div>
+                    </form>
+                    <div className={styles.table_wrapper_container}>
+                        <h1>Tractor Information</h1>
+                        <div className={styles.table_container}>
+                            {alltractors &&
                                 alltractors.map((item) => (
                                     <div
-                                        className={styles.table_container}
+                                        className={
+                                            styles.table_fields_container
+                                        }
                                         key={item.unit}
                                     >
                                         <div
@@ -134,21 +159,14 @@ const Inventory = () => {
                                         </div>
                                         <br />
                                     </div>
-                                ))
-                            ) : (
-                                <span>None</span>
-                            )}
+                                ))}
                         </div>
                     </div>
                 </div>
-            ) : (
-                <div className="not_logged_in">
-                    <h1>Click below to SignIn</h1>
-                    <Link to="/login">
-                        <button>Sign In</button>
-                    </Link>
-                </div>
-            )}
+            </div>
+            {/* ) : (
+                <Permission />
+            )} */}
         </>
     );
 };
