@@ -1,20 +1,23 @@
-div {
+.container,
+.container div {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 80%;
 }
 
-div ul {
-    display: flex;
+.container {
     gap: 2rem;
 }
 
-div ul button {
-    padding: 0.75em 1em;
-    border: 0;
-    outline: 0;
-    font-size: 1em;
-    border-radius: 8px;
-    color: white;
-    background-color: rgb(7, 136, 172);
+.container div {
+    gap: 1rem;
 }
+
+.container div h1,
+.container div p {
+    text-align: center;
+}
+
+

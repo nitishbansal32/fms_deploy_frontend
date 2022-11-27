@@ -3,7 +3,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 80vh;
     width: 100%;
     gap: 1rem;
     padding: 2rem 0;
@@ -55,7 +55,7 @@
     font-weight: 600;
 }
 
-.table_content {
+.table_content input {
     padding: 1rem;
     background-color: white;
     border-radius: 8px;
