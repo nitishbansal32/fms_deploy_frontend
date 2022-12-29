@@ -1,211 +1,271 @@
 import styles from "./Drivers.module.css";
+import ModalDrivers from "./ModalDrivers";
 import Axios from "axios";
-import { useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import { Link } from "react-router-dom";
 import Permission from "../../components/Permission/Permission";
+import plus from "../../../src/Images/plus.svg";
 
 import { UserContext } from "../../UserContext";
 
 const Inventory = () => {
-    const [alldrivers, setAlldrivers] = useState("");
+  const [alldrivers, setAlldrivers] = useState("");
 
-    const [drivers, setdrivers] = useState("");
+  const [modalDrivers, setModalDrivers] = useState("");
 
-    const [url, setUrl] = useState("");
+  const [drivers, setdrivers] = useState("");
 
-    const { isLoggedIn, setIsLoggedIn, role, setRole } =
-        useContext(UserContext);
+  const [modal, setModal] = useState(false); //For setting the modal state
 
-    const inputChange = (e) => {
-        setdrivers(e.target.value);
-    };
+  const [file, setFile] = useState({
+    licence_disclosure: null,
+    driving_license: null,
+    abstract_request_form: null,
+    current_abstract: null,
+    personal_investigation_consent: null,
+    criminal_record_check: null,
+    pre_employment_road_test: null,
+    employment_application: null,
+    release_and_authorization: null,
+    reference_checks: null,
+    on_duty_hours_statement: null,
+    certificate_of_violation: null,
+    training: null,
+    certificate_of_road_test: null,
+  });
 
-    const config = {
-        // params: { unit: 277454 },
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-    };
+  const {
+    isLoggedIn,
+    setIsLoggedIn,
+    role,
+    setRole,
+    msg,
+    setMsg,
+    display,
+    setDisplay,
+  } = useContext(UserContext);
 
-    // console.log(config.headers);
+  const [url, setUrl] = useState(role ? "" : "currDrivers"); // Url is dynamic, checking state of role
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+  const [urlState, seturlState] = useState();
+
+  const inputChange = (e) => {
+    setdrivers(e.target.value);
+  };
+
+  const config = {
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+  };
+
+  // Input Box Handler
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    console.log(e.target[0].value);
+    setModal(false);
+
+    try {
+      if (!(e.target[0].value == "")) {
         Axios.get(
-            `https://lc-backend-v2.herokuapp.com/api/v1/LC/drivers/${drivers}`,
-            config
+          `https://lc-backend-v2.herokuapp.com/api/v1/LC/drivers/${drivers}`,
+          config
         )
-            .then((response) => {
-                console.log(response);
-                setAlldrivers([response.data.driver]);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-        setAlldrivers("");
-    };
+          .then((response) => {
+            console.log(response);
 
-    const getAlldrivers = () => {
-        if (role === "super-admin") {
-            setUrl("");
-        } else {
-            setUrl("currDrivers");
+            setAlldrivers([response.data.driver]);
+            setModal(false);
+          })
+          .catch((err) => {
+            console.log(err);
+            setModal(true);
+            // if (err.request.status === 404) {
+            //   setMsg("Enter correct detail");
+            // } else if (err.request.status === 400) {
+            //   setMsg("Enter correct detail");
+            // } else if (err.request.status === 403) {
+            //   setMsg("You are forbidden!");
+            // }
+          });
+      }
+    } catch (exc) {
+      console.log(exc); //Set a state to
+    } finally {
+      setAlldrivers("");
+    }
+  };
+
+  //For Getting all tractors
+
+  const getAlldrivers = () => {
+    console.log(role);
+    try {
+      Axios.get(
+        `https://lc-backend-v2.herokuapp.com/api/v1/LC/drivers/${url}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
-        Axios.get(
-            `https://lc-backend-v2.herokuapp.com/api/v1/LC/drivers/${url}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-            }
-        )
-            .then((response) => {
-                console.log(response);
-                setAlldrivers(response.data.drivers);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+      )
+        .then((response) => {
+          console.log(response);
+          setAlldrivers(response.data.drivers);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (exc) {
+      console.log(exc);
+    } finally {
+      setAlldrivers("");
+    }
+  };
 
-        setAlldrivers("");
-    };
+  //Field Click Modal
+  const handleInput = (e) => {
+    console.log(e.target.value);
+    e.preventDefault();
+    const InputClick = e.target.value;
 
-    return (
-        <>
-            {/* {isLoggedIn ? ( */}
-            <div className="wrapper_container">
-                <Navbar />
-                <div className={styles.main_container}>
-                    <button onClick={getAlldrivers}>Get All drivers</button>
-                    <form onSubmit={handleSubmit} action="">
-                        <div className={styles.form_input_label}>
-                            <input
-                                type="text"
-                                placeholder="Enter drivers"
-                                onChange={inputChange}
-                                value={drivers}
-                            />
-                            <button>Get Info</button>
-                        </div>
-                    </form>
-                    <div className={styles.table_wrapper_container}>
-                        <h1>Drivers Information</h1>
-                        <div className={styles.table_container}>
-                            {alldrivers &&
-                                alldrivers.map((item) => (
-                                    <div
-                                        className={
-                                            styles.table_fields_container
-                                        }
-                                        key={item.employee_id}
-                                    >
-                                        <div
-                                            className={styles.table_identifier}
-                                        >
-                                            <p>
-                                                Employee Name{" "}
-                                                {item.employee_name}
-                                            </p>
-                                        </div>
-                                        <div className={styles.table_content}>
-                                            <p>Start Date: {item.start_date}</p>
-                                        </div>
-                                        <div className={styles.table_content}>
-                                            <p>
-                                                Employee ID: {item.employee_id}
-                                            </p>
-                                        </div>
-                                        <div className={styles.table_content}>
-                                            <p>
-                                                Medical Expiry Date:{" "}
-                                                {item.medical_expiry_date}
-                                            </p>
-                                        </div>
-                                        <div className={styles.table_content}>
-                                            <p>Terminal: {item.terminal}</p>
-                                        </div>
-                                        <div className={styles.table_content}>
-                                            <p>Shift: {item.shift}</p>
-                                        </div>
-                                        <div className={styles.table_content}>
-                                            <p>
-                                                Employee Type:{" "}
-                                                {item.employee_type}
-                                            </p>
-                                        </div>
-                                        <div className={styles.table_content}>
-                                            <p>
-                                                Employee Status:{" "}
-                                                {item.employee_status}
-                                            </p>
-                                        </div>
-                                        <div className={styles.table_content}>
-                                            <p>
-                                                Number of Axles:{" "}
-                                                {item.number_of_axles}
-                                            </p>
-                                        </div>
-                                        <div className={styles.table_content}>
-                                            <p>
-                                                Phone Number:{" "}
-                                                {item.phone_number}
-                                            </p>
-                                        </div>
-                                        <div className={styles.table_content}>
-                                            <p>
-                                                Emergency Contact:{" "}
-                                                {item.emergency_contact}
-                                            </p>
-                                        </div>
-                                        <div className={styles.table_content}>
-                                            <p>Supervisor: {item.supervisor}</p>
-                                        </div>
-                                        <div className={styles.table_content}>
-                                            <p>
-                                                Supervisor Notes:{" "}
-                                                {item.supervisor_notes}
-                                            </p>
-                                        </div>
-                                        <div className={styles.table_content}>
-                                            <p>
-                                                CVOR Points: {item.CVOR_points}
-                                            </p>
-                                        </div>
-                                        <div className={styles.table_content}>
-                                            <p>
-                                                Employee Notes:{" "}
-                                                {item.employee_notes}
-                                            </p>
-                                        </div>
-                                        <div className={styles.table_content}>
-                                            <p>Other: {item.other}</p>
-                                        </div>
-                                        <div className={styles.table_content}>
-                                            <p>
-                                                Accidents and citations:{" "}
-                                                {item.accidents_and_citations}
-                                            </p>
-                                        </div>
-                                        <div className={styles.table_content}>
-                                            <p>First PR: {item.first_PR}</p>
-                                        </div>
-                                        <div className={styles.table_content}>
-                                            <p>
-                                                Semi Annual PR:{" "}
-                                                {item.semi_annual_PR}
-                                            </p>
-                                        </div>
-                                        <br />
-                                    </div>
-                                ))}
-                        </div>
-                    </div>
+    setDisplay((prevState) => !prevState);
+
+    try {
+      Axios.get(
+        `https://lc-backend-v2.herokuapp.com/api/v1/LC/drivers/${InputClick}`,
+        config
+      )
+        .then((response) => {
+          console.log(response);
+          console.log(response.data.driver);
+          file.license_disclosure = response.data.driver.license_disclosure;
+          file.driving_license = response.data.driver.driving_license;
+          file.abstract_request_form =
+            response.data.driver.abstract_request_form;
+          file.current_abstract = response.data.driver.current_abstract;
+          file.personal_investigation_consent =
+            response.data.driver.personal_investigation_consent;
+          file.criminal_record_check =
+            response.data.driver.criminal_record_check;
+          file.pre_employment_road_test =
+            response.data.driver.pre_employment_road_test;
+          file.employment_application =
+            response.data.driver.employment_application;
+          file.release_and_authorization =
+            response.data.driver.release_and_authorization;
+          file.reference_checks = response.data.driver.reference_checks;
+          file.on_duty_hours_statement =
+            response.data.driver.on_duty_hours_statement;
+          file.certificate_of_violation =
+            response.data.driver.certificate_of_violation;
+          file.training = response.data.driver.training;
+          file.certificate_of_road_test =
+            response.data.driver.certificate_of_road_test;
+          setModalDrivers([response.data.driver]);
+        })
+        .catch((err) => {
+          console.log(err);
+          // setModal(true);
+          // if (err.request.status === 404) {
+          //   setMsg("Enter correct detail");
+          // } else if (err.request.status === 400) {
+          //   setMsg("Enter correct detail");
+          // } else if (err.request.status === 403) {
+          //   setMsg("You are forbidden!");
+          // }
+        });
+    } catch (exc) {
+      console.log(exc);
+    } finally {
+      setModalDrivers("");
+    }
+  };
+
+  return (
+    <>
+      <div className="wrapper_container">
+        <Navbar />
+        <div className={styles.main_container}>
+          <div className={styles.button_heading}>
+            <form onSubmit={handleSubmit} action="">
+              <div className={styles.form_input_label}>
+                <input
+                  type="text"
+                  placeholder="Enter drivers"
+                  onChange={inputChange}
+                  value={drivers}
+                  style={{
+                    border: modal ? "1.5px solid red" : "0",
+                  }}
+                />
+                <button className="button_get">Get Info</button>
+              </div>
+            </form>
+            <button onClick={getAlldrivers} className="button_all">
+              Get All Drivers
+            </button>
+            <Link to="/registerDriver">
+              <button className="button_add">
+                <img src={plus} alt="" />
+                Add new driver
+              </button>
+            </Link>
+          </div>
+
+          <div className={styles.table_wrapper_container}>
+            <h1>Drivers Information</h1>
+
+            <div className={styles.table_container}>
+              <div className={styles.table_main_container}>
+                <div className={styles.grid_headings}>
+                  <span>Employee Name</span>
+                  <span>Employee ID</span>
+                  <span>Terminal</span>
+                  <span>Shift</span>
+                  <span>Employee Type</span>
                 </div>
+                <hr />
+                {alldrivers &&
+                  alldrivers.map((item) => (
+                    <div>
+                      <div
+                        className={styles.input_container}
+                        key={item.employee_name}
+                      >
+                        <div className={styles.grid_inputs}>
+                          <input
+                            type="text"
+                            value={item.employee_name}
+                            onClick={handleInput}
+                          />
+                          <input type="text" value={item.employee_id} />
+                          <input type="text" value={item.terminal} />
+                          <input type="text" value={item.shift} />
+                          <input type="text" value={item.employee_type} />
+                        </div>
+                        <hr />
+                      </div>
+                    </div>
+                  ))}
+              </div>
             </div>
-            {/* ) : (
+          </div>
+          {display && (
+            <ModalDrivers
+              modalDrivers={modalDrivers}
+              display={display}
+              file={file}
+            />
+          )}
+        </div>
+      </div>
+      {/* ) : (
                 <Permission />
             )} */}
-        </>
-    );
+    </>
+  );
 };
 
 export default Inventory;
