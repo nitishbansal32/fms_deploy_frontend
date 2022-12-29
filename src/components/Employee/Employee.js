@@ -107,7 +107,7 @@ const Inventory = () => {
           <div className={styles.main_container}>
             <form onSubmit={handleSubmit} action="">
               <div className={styles.table_wrapper_container}>
-                <h1>Register employee</h1>
+                <h1>Register Employee</h1>
 
                 <div className={styles.table_container}>
                   <div className={styles.table_content}>
@@ -141,10 +141,10 @@ const Inventory = () => {
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">Email:</label>
+                    <label htmlFor="">Email ID:</label>
                     <input
                       type="email"
-                      placeholder="Enter email"
+                      placeholder="Enter email id"
                       name="email"
                       onChange={inputChange}
                       value={data.email}
@@ -330,7 +330,7 @@ const Inventory = () => {
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">Posatal code:</label>
+                    <label htmlFor="">Postal code:</label>
 
                     <input
                       type="text"

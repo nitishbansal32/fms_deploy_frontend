@@ -5,6 +5,8 @@ import FMS from "../../../src/Images/Logo(signIn).jpeg";
 import LabourCentral from "../../../src/Images/LabourCentral.jpeg";
 import LabourConnect from "../../../src/Images/LabourConnect.jpeg";
 import LoadCentral from "../../../src/Images/LoadCentral.jpeg";
+import ERS from "../../../src/Images/ERS.svg";
+import IT from "../../../src/Images/IT.svg";
 
 import { UserContext } from "../../UserContext";
 import { useNavigate, Link } from "react-router-dom";
@@ -37,7 +39,7 @@ const ServiceDash = () => {
             <div className={styles.service}>
               <Link to="/dashboard">
                 <div className={styles.service_desc}>
-                  <img src={FMS} alt="" style={{ width: "150px" }} />
+                  <img src={FMS} alt="" style={{ height: "80px" }} />
                   <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Est
                     molestiae cumque velit? Dolore veritatis quam laborum odio
@@ -50,7 +52,7 @@ const ServiceDash = () => {
             </div>
             <div className={styles.service}>
               <div className={styles.service_desc}>
-                <img src={LabourCentral} alt="" style={{ width: "170px" }} />
+                <img src={LabourCentral} alt="" style={{ height: "80px" }} />
                 <p>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Est
                   molestiae cumque velit? Dolore veritatis quam laborum odio
@@ -61,7 +63,7 @@ const ServiceDash = () => {
             </div>
             <div className={styles.service}>
               <div className={styles.service_desc}>
-                <img src={LabourConnect} alt="" style={{ width: "170px" }} />
+                <img src={LabourConnect} alt="" style={{ height: "80px" }} />
                 <p>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Est
                   molestiae cumque velit? Dolore veritatis quam laborum odio
@@ -73,7 +75,29 @@ const ServiceDash = () => {
 
             <div className={styles.service}>
               <div className={styles.service_desc}>
-                <img src={LoadCentral} alt="" style={{ width: "170px" }} />
+                <img src={LoadCentral} alt="" style={{ height: "80px" }} />
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Est
+                  molestiae cumque velit? Dolore veritatis quam laborum odio
+                  impedit doloremque a aspernatur, rerum similique consequuntur
+                  magnam mollitia minima! Aliquam, consequuntur voluptas.
+                </p>
+              </div>
+            </div>
+            <div className={styles.service}>
+              <div className={styles.service_desc}>
+                <img src={ERS} alt="" style={{ height: "80px" }} />
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Est
+                  molestiae cumque velit? Dolore veritatis quam laborum odio
+                  impedit doloremque a aspernatur, rerum similique consequuntur
+                  magnam mollitia minima! Aliquam, consequuntur voluptas.
+                </p>
+              </div>
+            </div>
+            <div className={styles.service}>
+              <div className={styles.service_desc}>
+                <img src={IT} alt="" style={{ height: "80px" }} />
                 <p>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Est
                   molestiae cumque velit? Dolore veritatis quam laborum odio

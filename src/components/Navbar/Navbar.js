@@ -38,7 +38,7 @@ const Navbar = () => {
           <div className={styles.nav_container}>
             <div className={styles.nav_child}>
               <img src={equipment} alt="" />
-              <button>Equipments</button>{" "}
+              <button>Equipment</button>{" "}
             </div>
           </div>
         </Link>

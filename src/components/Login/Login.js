@@ -34,10 +34,16 @@ const Login = () => {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      Axios.post(url, {
-        email: `testing@email.com`,
-        password: `123456`,
-      })
+      Axios.post(
+        url,
+        {
+          // email: email,
+          // password: password,
+          email: `testing@email.com`,
+          password: `123456`,
+        },
+        headers
+      )
         .then((response) => {
           localStorage.setItem("token", response.data.token);
           const item = localStorage.getItem("token", response.data.token);
@@ -71,7 +77,7 @@ const Login = () => {
     //     <Navbar />
     <div className={styles.parent_container}>
       <div className={styles.main_container}>
-        <img src={logo} alt="" style={{ width: "25%" }} />
+        <img src={logo} alt="" style={{ width: "30%" }} />
 
         <div>
           <div className={styles.heading_container}>

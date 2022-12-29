@@ -164,11 +164,11 @@ const Inventory = () => {
                     border: modal ? "1.5px solid red" : "0",
                   }}
                 />
-                <button className="button_get">Get Info</button>
+                <button className="button_get">Get info</button>
               </div>
             </form>
             <button onClick={getAlldrivers} className="button_all">
-              Get All Equipments
+              Get all equipments
             </button>
             <Link to="/registerInventory">
               <button className="button_add">

@@ -183,11 +183,11 @@ const Inventory = () => {
                     border: modal ? "1.5px solid red" : "0",
                   }}
                 />
-                <button className="button_get">Get Info</button>
+                <button className="button_get">Get info</button>
               </div>
             </form>
             <button onClick={getAlldrivers} className="button_all">
-              Get All Accidents
+              Get all accidents
             </button>
             <Link to="/registerAccident">
               <button className="button_add">
