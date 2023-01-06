@@ -15,6 +15,14 @@ const Inventory = () => {
   const { isLoggedIn, setIsLoggedIn, role, modal, setModal, msg, setMsg } =
     useContext(UserContext);
 
+  const [validator, setValidator] = useState({
+    email: false,
+    password: false,
+    phone: false,
+    date: false,
+    dateDOB: false,
+  });
+
   const [status, setStatus] = useState("");
 
   const [data, setData] = useState({
@@ -80,8 +88,94 @@ const Inventory = () => {
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
   };
 
+  console.log(validator.email);
+
+  const ValidatorFunc = () => {
+    //Email Validator
+    if (!/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(data.email)) {
+      setValidator((prev) => ({
+        ...prev,
+        [`email`]: true,
+      }));
+    } else {
+      setValidator((prev) => ({
+        ...prev,
+        [`email`]: false,
+      }));
+    }
+
+    //Password Validator
+    if (data.password.length < 8) {
+      setValidator((prev) => ({
+        ...prev,
+        [`password`]: true,
+      }));
+    } else {
+      setValidator((prev) => ({
+        ...prev,
+        [`password`]: false,
+      }));
+    }
+
+    //Phone Validator
+    if (
+      !/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/.test(
+        data.phone_number
+      )
+    ) {
+      setValidator((prev) => ({
+        ...prev,
+        [`phone`]: true,
+      }));
+    } else {
+      setValidator((prev) => ({
+        ...prev,
+        [`phone`]: false,
+      }));
+    }
+
+    //StartDate Validator
+    if (
+      !/\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])*/.test(
+        data.start_date
+      )
+    ) {
+      setValidator((prev) => ({
+        ...prev,
+        [`date`]: true,
+      }));
+    } else {
+      setValidator((prev) => ({
+        ...prev,
+        [`date`]: false,
+      }));
+    }
+
+    //DOB Validator
+    if (
+      !/\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])*/.test(
+        data.start_date
+      )
+    ) {
+      setValidator((prev) => ({
+        ...prev,
+        [`dateDOB`]: true,
+      }));
+    } else {
+      setValidator((prev) => ({
+        ...prev,
+        [`dateDOB`]: false,
+      }));
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    ValidatorFunc();
+
+    console.log(validator.email);
+
     Axios.post(`https://lc-backend-v2.herokuapp.com/api/v1/LC/register`, body, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -107,7 +201,7 @@ const Inventory = () => {
           <div className={styles.main_container}>
             <form onSubmit={handleSubmit} action="">
               <div className={styles.table_wrapper_container}>
-                <h1>Register Employee</h1>
+                <h1>Add new user</h1>
 
                 <div className={styles.table_container}>
                   <div className={styles.table_content}>
@@ -148,6 +242,7 @@ const Inventory = () => {
                       name="email"
                       onChange={inputChange}
                       value={data.email}
+                      style={{ borderColor: validator.email ? "red" : "" }}
                     />
                   </div>
                   <div className={styles.table_content}>
@@ -158,6 +253,7 @@ const Inventory = () => {
                       name="password"
                       onChange={inputChange}
                       value={data.password}
+                      style={{ borderColor: validator.password ? "red" : "" }}
                     />
                   </div>
                   <div className={styles.table_content}>
@@ -248,6 +344,7 @@ const Inventory = () => {
                       name="DOB"
                       onChange={inputChange}
                       value={data.DOB}
+                      style={{ borderColor: validator.dateDOB ? "red" : "" }}
                     />
                   </div>
                   <div className={styles.table_content}>
@@ -259,6 +356,7 @@ const Inventory = () => {
                       name="start_date"
                       onChange={inputChange}
                       value={data.start_date}
+                      style={{ borderColor: validator.date ? "red" : "" }}
                     />
                   </div>
                   <div className={styles.table_content}>
@@ -294,6 +392,7 @@ const Inventory = () => {
                       name="phone_number"
                       onChange={inputChange}
                       value={data.phone_number}
+                      style={{ borderColor: validator.phone ? "red" : "" }}
                     />
                   </div>
                   <div className={styles.table_content}>

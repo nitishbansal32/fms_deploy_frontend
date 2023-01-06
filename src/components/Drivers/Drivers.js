@@ -19,7 +19,7 @@ const Inventory = () => {
   const [modal, setModal] = useState(false); //For setting the modal state
 
   const [file, setFile] = useState({
-    licence_disclosure: null,
+    license_disclosure: null,
     driving_license: null,
     abstract_request_form: null,
     current_abstract: null,
@@ -44,6 +44,7 @@ const Inventory = () => {
     setMsg,
     display,
     setDisplay,
+    setDriverData,
   } = useContext(UserContext);
 
   const [url, setUrl] = useState(role ? "" : "currDrivers"); // Url is dynamic, checking state of role
@@ -140,6 +141,7 @@ const Inventory = () => {
         .then((response) => {
           console.log(response);
           console.log(response.data.driver);
+
           file.license_disclosure = response.data.driver.license_disclosure;
           file.driving_license = response.data.driver.driving_license;
           file.abstract_request_form =
@@ -164,6 +166,7 @@ const Inventory = () => {
           file.certificate_of_road_test =
             response.data.driver.certificate_of_road_test;
           setModalDrivers([response.data.driver]);
+          setDriverData(response.data.driver);
         })
         .catch((err) => {
           console.log(err);
@@ -193,14 +196,14 @@ const Inventory = () => {
               <div className={styles.form_input_label}>
                 <input
                   type="text"
-                  placeholder="Enter drivers"
+                  placeholder="Enter driver's name"
                   onChange={inputChange}
                   value={drivers}
                   style={{
                     border: modal ? "1.5px solid red" : "0",
                   }}
                 />
-                <button className="button_get">Get info</button>
+                <button className="button_get">Search</button>
               </div>
             </form>
             <button onClick={getAlldrivers} className="button_all">

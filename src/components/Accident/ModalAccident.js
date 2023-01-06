@@ -1,240 +1,175 @@
 import styles from "./Accident.module.css";
-
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../UserContext";
 import { useEffect, useState, useContext } from "react";
-import Logo from "../../../src/Images/AccidentLogo.png";
 
-const ModalInventory = (props) => {
+import modalbg from "../../../src/Images/modalAccidentBg.svg";
+
+const ModalAccident = (props) => {
   const { display, setDisplay } = useContext(UserContext);
 
+  const navigate = useNavigate();
+
+  console.log(props.modalAccident);
+
   const handleDisplay = () => {
-    setDisplay((prevState) => !prevState);
+    setDisplay(false);
+  };
+
+  const handleUpdate = () => {
+    navigate("/updateAccident");
+    setDisplay(false);
   };
 
   return (
     <div className={styles.main_modal_container}>
       <div className={styles.modal_container}>
-        {props.modalInventory &&
-          props.modalInventory.map((item) => (
+        {props.modalAccident &&
+          props.modalAccident.map((item) => (
             <div className={styles.wrap_container}>
-              <div className={styles.licence_container}>
-                <div className={styles.main_top_container}>
-                  <div className={styles.top_container}>
-                    <img src={Logo} alt="" className={styles.equi_logo} />
-                    <div className={styles.title}>
-                      <label>
-                        Plate
-                        <br /> Plaque
-                      </label>
-                      <p>{item.licence_plate}</p>
-                    </div>
-                  </div>
-                  <p>
-                    Issued pursuant to the <i>Highway Traffic Act</i> / Délivré
-                    en vertu du <i>Code da la route</i>
-                  </p>
-                  <div className={styles.black_top_container}>
-                    <p>
-                      PERMIT - PLATE PORTION / CERTIFICATION D'IMM. - PLAQUE
-                    </p>
-                  </div>
-                </div>
-
-                <div className={styles.desc_container}>
-                  <div className={styles.container_1}>
-                    <div>
-                      <label>
-                        V.I.N. <br /> N.I.V.
-                      </label>
-                      <p> {item.VIN}</p>
-                    </div>
-                    <div>
-                      <label>
-                        MAKE <br /> MARQUE
-                      </label>
-                      <p>{item.made_by}</p>
-                    </div>
-                    <div>
-                      <label>
-                        VALTAG NO. <br /> N DE VALIDATION
-                      </label>
-                      <p></p>
-                    </div>
-                    <div>
-                      <label>
-                        CODE <br />
-                      </label>
-                      <p></p>
-                    </div>
-                    <div>
-                      <label>
-                        NAME <br /> NOM
-                      </label>
-                      <p> {item.ownership} </p>
-                    </div>
-                    <div>
-                      <label>
-                        ADDRESS <br /> ADDRESSE
-                      </label>
-                      <p></p>
-                    </div>
-                    <div>
-                      <label>
-                        MAILING ADDRESS <br /> ADDRESSE POSTALE
-                      </label>
-                      <p></p>
-                    </div>
-
-                    <div>
-                      <label>Accidents and citations:</label>
-                      <p>{item.accidents_and_citations} </p>
-                    </div>
-                  </div>
-
-                  <div className={styles.container_2}>
-                    <div>
-                      <label>
-                        R.I.N. <br /> N.I.T.
-                      </label>
-                      <p></p>
-                    </div>
-
-                    <div>
-                      <label>
-                        MODEL <br /> MODÉLE
-                      </label>
-                      <p></p>
-                    </div>
-                    <div>
-                      <label>
-                        Year <br /> ANŃEE
-                      </label>
-                      <p>{item.year}</p>
-                    </div>
-
-                    <div>
-                      <label>
-                        EXPIRY DATE <br /> DATE D'EXPIRATION
-                      </label>
-                      <p>{item.safety_expiry_date.substr(0, 10)}</p>
-                    </div>
-                    <div>
-                      <label>
-                        REG. GROSS WT. <br /> POIDS BRUT ENR.
-                      </label>
-                      <p />
-                    </div>
-                  </div>
-                </div>
-                <div className={styles.bottom_container}>
-                  <div className={styles.bottom_wrap_container}>
-                    <div className={styles.bottom_upper_container}>
-                      <div className={styles.upper_info_container}>
-                        <label>OFFICE/BUREAU</label>
-                        <p>1212121</p>
-                      </div>
-                      <div className={styles.upper_info_container}>
-                        <label>EFF. DATE/EN VIGUEUR</label>
-                        <p></p>
-                      </div>
-                      <div className={styles.upper_info_container}>
-                        <label>PERMIT NO./N' DE CERTIFACT</label>
-                        <p></p>
-                      </div>
-                    </div>
-                    <div className={styles.signature_container}>
-                      <label>Signature</label>
-                      <img src alt="" />
-                    </div>
-                  </div>
-                  <div className={styles.bottom_right_container}>
-                    <p>
-                      Minister of transportation <br /> Ministre des Transports
-                    </p>
-                  </div>
-                </div>
+              <div className={styles.content}>
+                <h3>Accident number</h3>
+                <p>{item.accident_number}</p>
               </div>
-              <div className={styles.container_3}>
-                <h2>Other information</h2>
-                <div className={styles.container_3_main}>
-                  <div className={styles.left_container}>
-                    <div>
-                      <label>Unit:</label>
-                      <p>{item.unit}</p>
-                    </div>
-                    <div>
-                      <label>Plate expiry date:</label>
-                      <p> {item.plate_expiry_date.substr(0, 10)}</p>
-                    </div>
-                    <div>
-                      <label>Terminal:</label>
-                      <p>{item.terminal}</p>
-                    </div>
-                    <div>
-                      <label>ELD:</label>
-                      <p>{item.ELD}</p>
-                    </div>
-                    <div>
-                      <label>Color:</label>
-                      <p>{item.color}</p>
-                    </div>
-                    <div>
-                      <label>Description:</label>
-                      <p>{item.description}</p>
-                    </div>
-                    <div>
-                      <label>Number of axles:</label>
-                      <p>{item.number_of_axles}</p>
-                    </div>
-                    <div>
-                      <label>Weight:</label>
-                      <p>{item.weight}</p>
-                    </div>
-                  </div>
-
-                  <div className={styles.right_container}>
-                    <div>
-                      <label>Supervisor:</label>
-                      <p>{item.supervisor} </p>
-                    </div>
-                    <div>
-                      <label>Other:</label>
-                      <p>{item.other}</p>
-                    </div>
-                    <div>
-                      <label>Tyre size:</label>
-                      <p>{item.tyre_size} </p>
-                    </div>
-                    <div>
-                      <label>Standard job:</label>
-                      <p>{item.standard_job}</p>
-                    </div>
-                    <div>
-                      <label>Annual Inspection:</label>
-                      <p>{item.annual_inspection.substr(0, 10)}</p>
-                    </div>
-                    <div>
-                      <label>Next Annual Inspection:</label>
-                      <p>{item.next_annual_inspection} </p>
-                    </div>
-                    <div>
-                      <label>Status:</label>
-                      <p>{item.status}</p>
-                    </div>
-                  </div>
-                </div>
+              <hr style={{ width: "80%" }} />
+              <div className={styles.content}>
+                <h3>Accident date</h3>
+                <p>{item.accident_date.substr(0, 10)}</p>
               </div>
+              <hr style={{ width: "80%" }} />
+
+              <div className={styles.content}>
+                <h3>Accident time</h3>
+                <p>{item.accident_time}</p>
+              </div>
+              <hr style={{ width: "80%" }} />
+
+              <div className={styles.content}>
+                <h3>Driver name</h3>
+                <p>{item.driver_name}</p>
+              </div>
+              <hr style={{ width: "80%" }} />
+
+              <div className={styles.content}>
+                <h3>Driver licence number</h3>
+                <p>{item.driver_licene_number}</p>
+              </div>
+              <hr style={{ width: "80%" }} />
+
+              <div className={styles.content}>
+                <h3>Tractor number</h3>
+                <p>{item.tractor_number}</p>
+              </div>
+              <hr style={{ width: "80%" }} />
+
+              <div className={styles.content}>
+                <h3>Location</h3>
+                <p>{item.location}</p>
+              </div>
+              <hr style={{ width: "80%" }} />
+
+              <div className={styles.content}>
+                <h3>Accident type</h3>
+                <p>{item.accident_type}</p>
+              </div>
+              <hr style={{ width: "80%" }} />
+
+              <div className={styles.content}>
+                <h3>Damage</h3>
+                <p>{item.damage}</p>
+              </div>
+              <hr style={{ width: "80%" }} />
+
+              <div className={styles.content}>
+                <h3>Towing</h3>
+                <p>{item.towing}</p>
+              </div>
+              <hr style={{ width: "80%" }} />
+
+              <div className={styles.content}>
+                <h3>Police report number</h3>
+                <p>{item.police_report_number}</p>
+              </div>
+              <hr style={{ width: "80%" }} />
+
+              <div className={styles.content}>
+                <h3>Police officer</h3>
+                <p>{item.police_officer}</p>
+              </div>
+              <hr style={{ width: "80%" }} />
+
+              <div className={styles.content}>
+                <h3>Company accident report</h3>
+                <p>{item.company_accident_report}</p>
+              </div>
+              <hr style={{ width: "80%" }} />
+
+              <div className={styles.content}>
+                <h3>Claim number</h3>
+                <p>{item.claim_number}</p>
+              </div>
+              <hr style={{ width: "80%" }} />
+
+              <div className={styles.content}>
+                <h3>Adjuster</h3>
+                <p>{item.adjuster}</p>
+              </div>
+              <hr style={{ width: "80%" }} />
+
+              <div className={styles.content}>
+                <h3>Driver charged</h3>
+                <p>{item.driver_charged}</p>
+              </div>
+              <hr style={{ width: "80%" }} />
+
+              <div className={styles.content}>
+                <h3>Action taken</h3>
+                <p>{item.action_taken}</p>
+              </div>
+              <hr style={{ width: "80%" }} />
+
+              <div className={styles.content}>
+                <h3>Cause of accident</h3>
+                <p>{item.cause_of_accident}</p>
+              </div>
+              <hr style={{ width: "80%" }} />
+
+              <div className={styles.content}>
+                <h3>Preventable</h3>
+                <p>{item.preventable}</p>
+              </div>
+              <hr style={{ width: "80%" }} />
+
+              <div className={styles.content}>
+                <h3>Const</h3>
+                <p>{item.const}</p>
+              </div>
+              <hr style={{ width: "80%" }} />
+
+              <div className={styles.content}>
+                <h3>Comments</h3>
+                <p>{item.comments}</p>
+              </div>
+              <hr style={{ width: "80%" }} />
+
+              <div className={styles.content}>
+                <h3>Driver statement</h3>
+                <p>{item.driver_statement}</p>
+              </div>
+              <hr style={{ width: "80%" }} />
             </div>
           ))}
         <div className={styles.button_container}>
           <button onClick={handleDisplay} className="button_general">
             Close
           </button>
-          <button className="button_general">Update</button>
+          <button onClick={handleUpdate} className="button_general">
+            Update
+          </button>
         </div>
       </div>
     </div>
   );
 };
 
-export default ModalInventory;
+export default ModalAccident;

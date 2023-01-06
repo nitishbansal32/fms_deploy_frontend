@@ -8,12 +8,19 @@ import equipment from "../../../src/Images/equipment.svg";
 import driver from "../../../src/Images/driver.svg";
 import accident from "../../../src/Images/accident.svg";
 import register from "../../../src/Images/register.svg";
+import settings from "../../../src/Images/settings.svg";
 import logout from "../../../src/Images/logout.svg";
 
 const Navbar = () => {
   const { setIsLoggedIn } = useContext(UserContext);
 
   const navigate = useNavigate();
+
+  const { display, setDisplay } = useContext(UserContext);
+
+  const handleDisplay = () => {
+    setDisplay(false);
+  };
 
   const handleLogOut = () => {
     setIsLoggedIn(null);
@@ -26,43 +33,75 @@ const Navbar = () => {
     <div className={styles.container}>
       <img src={Logo} />
       <ul>
-        <Link to="/dashboard">
+        <Link to="/dashboard" onClick={handleDisplay}>
           <div className={styles.nav_container}>
             <div className={styles.nav_child}>
-              <img src={dashboard} alt="" />
+              <img
+                src={dashboard}
+                alt=""
+                style={{ height: "24px", width: "22px" }}
+              />
               <button>Dashboard</button>{" "}
             </div>
           </div>
         </Link>
-        <Link to="/inventory">
+        <Link to="/inventory" onClick={handleDisplay}>
           <div className={styles.nav_container}>
             <div className={styles.nav_child}>
-              <img src={equipment} alt="" />
+              <img
+                src={equipment}
+                alt=""
+                style={{ height: "24px", width: "22px" }}
+              />
               <button>Equipment</button>{" "}
             </div>
           </div>
         </Link>
-        <Link to="/drivers">
+        <Link to="/drivers" onClick={handleDisplay}>
           <div className={styles.nav_container}>
             <div className={styles.nav_child}>
-              <img src={driver} alt="" />
+              <img
+                src={driver}
+                alt=""
+                style={{ height: "24px", width: "22px" }}
+              />
               <button>Drivers</button>
             </div>
           </div>
         </Link>
-        <Link to="/accident">
+        <Link to="/accident" onClick={handleDisplay}>
           <div className={styles.nav_container}>
             <div className={styles.nav_child}>
-              <img src={accident} alt="" />
+              <img
+                src={accident}
+                alt=""
+                style={{ height: "24px", width: "22px" }}
+              />
               <button>Accident</button>
             </div>
           </div>
         </Link>
-        <Link to="/register">
+        <Link to="/register" onClick={handleDisplay}>
           <div className={styles.nav_container}>
             <div className={styles.nav_child}>
-              <img src={register} alt="" />
+              <img
+                src={register}
+                alt=""
+                style={{ height: "24px", width: "22px" }}
+              />
               <button>Register</button>
+            </div>
+          </div>
+        </Link>
+        <Link to="/settings" onClick={handleDisplay}>
+          <div className={styles.nav_container}>
+            <div className={styles.nav_child}>
+              <img
+                src={settings}
+                alt=""
+                style={{ height: "24px", width: "22px" }}
+              />
+              <button>Settings</button>
             </div>
           </div>
         </Link>

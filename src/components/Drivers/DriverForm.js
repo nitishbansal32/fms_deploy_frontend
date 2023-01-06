@@ -4,6 +4,7 @@ import { useState, useContext } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import Permission from "../../components/Permission/Permission";
 import Modal from "../../components/Modal/Modal";
+import { useNavigate } from "react-router-dom";
 
 import { Link } from "react-router-dom";
 
@@ -17,21 +18,133 @@ const Inventory = () => {
 
   const [status, setStatus] = useState("");
 
+  const navigate = useNavigate();
+
+  const [validator, setValidator] = useState({
+    StartDate: false,
+    Expiry: false,
+    MedicalExpiry: false,
+    SemiAnnualPR: false,
+    FirstPR: false,
+    phone: false,
+  });
+
+  const ValidateFunc = () => {
+    //Start date
+    if (
+      !/\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])*/.test(
+        data.start_date
+      )
+    ) {
+      setValidator((prev) => ({
+        ...prev,
+        [`StartDate`]: true,
+      }));
+    } else {
+      setValidator((prev) => ({
+        ...prev,
+        [`StartDate`]: false,
+      }));
+    }
+
+    //Expiry date
+    if (
+      !/\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])*/.test(data.expiry)
+    ) {
+      setValidator((prev) => ({
+        ...prev,
+        [`Expiry`]: true,
+      }));
+    } else {
+      setValidator((prev) => ({
+        ...prev,
+        [`Expiry`]: false,
+      }));
+    }
+
+    //Medical Expiry date
+    if (
+      !/\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])*/.test(
+        data.medical_expiry_date
+      )
+    ) {
+      setValidator((prev) => ({
+        ...prev,
+        [`MedicalExpiry`]: true,
+      }));
+    } else {
+      setValidator((prev) => ({
+        ...prev,
+        [`MedicalExpiry`]: false,
+      }));
+    }
+
+    //Semi annual PR
+    if (
+      !/\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])*/.test(
+        data.semi_annual_PR
+      )
+    ) {
+      setValidator((prev) => ({
+        ...prev,
+        [`SemiAnnualPR`]: true,
+      }));
+    } else {
+      setValidator((prev) => ({
+        ...prev,
+        [`SemiAnnualPR`]: false,
+      }));
+    }
+
+    //First PR
+    if (
+      !/\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])*/.test(data.first_PR)
+    ) {
+      setValidator((prev) => ({
+        ...prev,
+        [`FirstPR`]: true,
+      }));
+    } else {
+      setValidator((prev) => ({
+        ...prev,
+        [`FirstPR`]: false,
+      }));
+    }
+
+    //phone
+    if (
+      !/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/.test(
+        data.phone_number
+      )
+    ) {
+      setValidator((prev) => ({
+        ...prev,
+        [`phone`]: true,
+      }));
+    } else {
+      setValidator((prev) => ({
+        ...prev,
+        [`phone`]: false,
+      }));
+    }
+  };
+
   const [file, setFile] = useState({
-    licence_disclosure: null,
-    driving_license: null,
-    abstract_request_form: null,
-    current_abstract: null,
-    personal_investigation_consent: null,
-    criminal_record_check: null,
-    pre_employment_road_test: null,
-    employment_application: null,
-    release_and_authorization: null,
-    reference_checks: null,
-    on_duty_hours_statement: null,
-    certificate_of_violation: null,
-    training: null,
-    certificate_of_road_test: null,
+    profile_picture: "",
+    license_disclosure: "",
+    driving_license: "",
+    abstract_request_form: "",
+    current_abstract: "",
+    personal_investigation_consent: "",
+    criminal_record_check: "",
+    pre_employment_road_test: "",
+    employment_application: "",
+    release_and_authorization: "",
+    reference_checks: "",
+    on_duty_hours_statement: "",
+    certificate_of_violation: "",
+    training: "",
+    certificate_of_road_test: "",
   });
 
   const [data, setData] = useState({
@@ -57,12 +170,13 @@ const Inventory = () => {
     accidents_and_citations: "",
   });
 
+  // console.log(data.emloyee_name);
+
   const inputChange = (e) => {
     setData({
       ...data,
       [e.target.name]: e.target.value,
     });
-    console.log(e.target.name);
   };
 
   const fileInputChange = (e) => {
@@ -72,46 +186,66 @@ const Inventory = () => {
     });
   };
 
-  console.log("file", file);
-
   const formData = new FormData();
 
-  const body = {
-    employee_name: data.employee_name,
-    start_date: `${data.start_date}`,
-    employee_id: data.employee_id,
-    DL_number: data.DL_number,
-    expiry: `${data.expiry}`,
-    medical_expiry_date: `${data.medical_expiry_date}`,
-    terminal: data.terminal,
-    shift: data.shift,
-    employee_type: data.employee_type,
-    employee_status: data.employee_status,
-    phone_number: data.phone_number,
-    emergency_contact: data.emergency_contact,
-    supervisor: data.supervisor,
-    supervisor_notes: data.supervisor_notes,
-    first_PR: `${data.first_PR}`,
-    semi_annual_PR: `${data.semi_annual_PR}`,
-    CVOR_points: data.CVOR_points,
-    employee_notes: data.employee_notes,
-    other: data.other,
-    accidents_and_citations: data.accidents_and_citations,
-    files: file,
-  };
+  //Form Data
+  formData.append("employee_name", data.employee_name);
+  formData.append("start_date", data.start_date);
+  formData.append("employee_id", data.employee_id);
+  formData.append("DL_number", data.DL_number);
+  formData.append("expiry", data.expiry);
+  formData.append("medical_expiry_date", data.medical_expiry_date);
+  formData.append("terminal", data.terminal);
+  formData.append("shift", data.shift);
+  formData.append("employee_type", data.employee_type);
+  formData.append("employee_status", data.employee_status);
+  formData.append("phone_number", data.phone_number);
+  formData.append("emergency_contact", data.emergency_contact);
+  formData.append("supervisor", data.supervisor);
+  formData.append("supervisor_notes", data.supervisor_notes);
+  formData.append("first_PR", data.first_PR);
+  formData.append("semi_annual_PR", data.semi_annual_PR);
+  formData.append("CVOR_points", data.CVOR_points);
+  formData.append("employee_notes", data.employee_notes);
+  formData.append("other", data.other);
+  formData.append("accidents_and_citations", data.accidents_and_citations);
 
-  console.log("body.files", body.files);
+  //Files
+  formData.append("profile_picture", file.profile_picture);
+  formData.append("license_disclosure", file.license_disclosure);
+  formData.append("driving_license", file.driving_license);
+  formData.append("abstract_request_form", file.abstract_request_form);
+  formData.append("current_abstract", file.current_abstract);
+  formData.append(
+    "personal_investigation_consent",
+    file.personal_investigation_consent
+  );
+  formData.append("criminal_record_check", file.criminal_record_check);
+  formData.append("pre_employment_road_test", file.pre_employment_road_test);
+  formData.append("employment_application", file.employment_application);
+  formData.append("release_and_authorization", file.release_and_authorization);
+  formData.append("reference_checks", file.reference_checks);
+  formData.append("on_duty_hours_statement", file.on_duty_hours_statement);
+  formData.append("certificate_of_violation", file.certificate_of_violation);
+  formData.append("training", file.training);
+  formData.append("certificate_of_road_test", file.certificate_of_road_test);
 
-  const config = {
-    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-  };
+  for (var [key, value] of formData.entries()) {
+    console.log(key, value);
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    ValidateFunc();
+
+    for (var [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
     Axios.post(
       `https://lc-backend-v2.herokuapp.com/api/v1/LC/drivers/createDriver`,
-      body,
+      // `http://localhost:8000/api/v1/LC/drivers/createDriver`,
+      formData,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -122,14 +256,18 @@ const Inventory = () => {
       .then((response) => {
         setStatus(response.status);
         console.log(response);
-        // setMsg("Driver Added!");
-        // setModal(true);
+        setMsg("Driver Added!");
+        setModal(true);
       })
       .catch((err) => {
         console.log(err);
         // setMsg("Check fields!!");
         // setModal(true);
       });
+  };
+
+  const handleBack = () => {
+    navigate("/drivers", { replace: true });
   };
 
   return (
@@ -139,9 +277,12 @@ const Inventory = () => {
         <Navbar />
         {!(role === "employee") ? (
           <div className={styles.main_container}>
+            <button onClick={handleBack} className={styles.back_button}>
+              Back
+            </button>
             <form onSubmit={handleSubmit} action="">
               <div className={styles.table_wrapper_container}>
-                <h1>Register Driver</h1>
+                <h1>Add new driver</h1>
 
                 <div className={styles.table_container}>
                   <div className={styles.table_content}>
@@ -155,13 +296,14 @@ const Inventory = () => {
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">Star date:</label>
+                    <label htmlFor="">Start date:</label>
                     <input
                       type="text"
                       placeholder="Enter start date"
                       name="start_date"
                       onChange={inputChange}
                       value={data.start_date}
+                      style={{ borderColor: validator.StartDate ? "red" : "" }}
                     />
                   </div>
                   <div className={styles.table_content}>
@@ -192,6 +334,7 @@ const Inventory = () => {
                       name="expiry"
                       onChange={inputChange}
                       value={data.expiry}
+                      style={{ borderColor: validator.Expiry ? "red" : "" }}
                     />
                   </div>
                   <div className={styles.table_content}>
@@ -203,6 +346,9 @@ const Inventory = () => {
                       name="medical_expiry_date"
                       onChange={inputChange}
                       value={data.medical_expiry_date}
+                      style={{
+                        borderColor: validator.MedicalExpiry ? "red" : "",
+                      }}
                     />
                   </div>
                   <div className={styles.table_content}>
@@ -218,36 +364,44 @@ const Inventory = () => {
                   </div>
                   <div className={styles.table_content}>
                     <label htmlFor="">Shift:</label>
-
-                    <input
-                      type="text"
-                      placeholder="Enter Shift"
+                    <select
                       name="shift"
+                      id=""
                       onChange={inputChange}
                       value={data.shift}
-                    />
+                      // default={}
+                    >
+                      <option selected="selected" value="AM">
+                        AM
+                      </option>
+                      <option value="PM">PM</option>
+                    </select>
                   </div>
                   <div className={styles.table_content}>
                     <label htmlFor="">Employee type:</label>
-
-                    <input
-                      type="text"
-                      placeholder="Enter Employee type"
+                    <select
                       name="employee_type"
+                      id=""
                       onChange={inputChange}
                       value={data.employee_type}
-                    />
+                    >
+                      <option selected="selected" value="PT">
+                        PT
+                      </option>
+                      <option value="FT">FT</option>
+                    </select>
                   </div>
                   <div className={styles.table_content}>
                     <label htmlFor="shift">Employee status</label>
-                    <input
-                      type="text"
+                    <select
                       name="employee_status"
-                      placeholder="Enter Employee status"
+                      id=""
                       onChange={inputChange}
                       value={data.employee_status}
-                      //   default="Select Shift"
-                    />
+                    >
+                      <option value="active">active</option>
+                      <option value="active">active</option>
+                    </select>
                   </div>
                   <div className={styles.table_content}>
                     <label htmlFor="">Semi annual PR:</label>
@@ -258,6 +412,9 @@ const Inventory = () => {
                       name="semi_annual_PR"
                       onChange={inputChange}
                       value={data.semi_annual_PR}
+                      style={{
+                        borderColor: validator.SemiAnnualPR ? "red" : "",
+                      }}
                     />
                   </div>
                   <div className={styles.table_content}>
@@ -314,6 +471,9 @@ const Inventory = () => {
                       name="phone_number"
                       onChange={inputChange}
                       value={data.phone_number}
+                      style={{
+                        borderColor: validator.phone ? "red" : "",
+                      }}
                     />
                   </div>
                   <div className={styles.table_content}>
@@ -328,7 +488,7 @@ const Inventory = () => {
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">supervisor</label>
+                    <label htmlFor="">Supervisor</label>
 
                     <input
                       type="text"
@@ -339,7 +499,7 @@ const Inventory = () => {
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">supervisor_notes</label>
+                    <label htmlFor="">Supervisor notes</label>
 
                     <input
                       type="text"
@@ -350,7 +510,7 @@ const Inventory = () => {
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">first_PR</label>
+                    <label htmlFor="">First PR</label>
 
                     <input
                       type="text"
@@ -358,15 +518,27 @@ const Inventory = () => {
                       name="first_PR"
                       onChange={inputChange}
                       value={data.first_PR}
+                      style={{
+                        borderColor: validator.FirstPR ? "red" : "",
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <label>Profile picture</label>
+                    <input
+                      type="file"
+                      name="profile_picture"
+                      onChange={fileInputChange}
+                      // value={file.license_disclosure}
                     />
                   </div>
                   <div>
                     <label>Single licence disclosure</label>
                     <input
                       type="file"
-                      name="licence_disclosure"
+                      name="license_disclosure"
                       onChange={fileInputChange}
-                      // value={file.licence_disclosure}
+                      // value={file.license_disclosure}
                     />
                   </div>
                   <div>

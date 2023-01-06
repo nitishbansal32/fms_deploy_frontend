@@ -1,5 +1,5 @@
 import styles from "./Inventory.module.css";
-
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../UserContext";
 import { useEffect, useState, useContext } from "react";
 import Logo from "../../../src/Images/EquipmentsLogo.png";
@@ -7,8 +7,17 @@ import Logo from "../../../src/Images/EquipmentsLogo.png";
 const ModalInventory = (props) => {
   const { display, setDisplay } = useContext(UserContext);
 
+  const [updateDisplay, setUpdateDisplay] = useState(false);
+
+  const navigate = useNavigate();
+
   const handleDisplay = () => {
-    setDisplay((prevState) => !prevState);
+    setDisplay(false);
+  };
+
+  const handleUpdate = () => {
+    navigate("/updateInventory");
+    setDisplay(false);
   };
 
   return (
@@ -230,7 +239,10 @@ const ModalInventory = (props) => {
           <button onClick={handleDisplay} className="button_general">
             Close
           </button>
-          <button className="button_general">Update</button>
+
+          <button className="button_general" onClick={handleUpdate}>
+            Update
+          </button>
         </div>
       </div>
     </div>

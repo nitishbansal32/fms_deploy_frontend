@@ -5,6 +5,7 @@ import { useEffect, useState, useContext } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import { Link } from "react-router-dom";
 import Permission from "../../components/Permission/Permission";
+import { useNavigate } from "react-router-dom";
 
 import plus from "../../../src/Images/plus.svg";
 
@@ -30,6 +31,8 @@ const Inventory = () => {
     setMsg,
     display,
     setDisplay,
+    inventoryData,
+    setInventoryData,
   } = useContext(UserContext);
 
   const [url, setUrl] = useState(role ? "" : "currTractors"); // Url is dynamic, checking state of role
@@ -127,6 +130,7 @@ const Inventory = () => {
         .then((response) => {
           console.log(response);
           setModalInventory([response.data.tractor]);
+          setInventoryData(response.data.tractor);
         })
         .catch((err) => {
           console.log(err);
@@ -145,6 +149,8 @@ const Inventory = () => {
     }
   };
 
+ 
+
   return (
     <>
       {/* {isLoggedIn ? ( */}
@@ -157,18 +163,18 @@ const Inventory = () => {
                 {/* <h2>Get details of a single driver: </h2> */}
                 <input
                   type="text"
-                  placeholder="Enter equipment"
+                  placeholder="Enter equipment number"
                   onChange={inputChange}
                   value={drivers}
                   style={{
                     border: modal ? "1.5px solid red" : "0",
                   }}
                 />
-                <button className="button_get">Get info</button>
+                <button className="button_get">Search</button>
               </div>
             </form>
             <button onClick={getAlldrivers} className="button_all">
-              Get all equipments
+              Get all equipment
             </button>
             <Link to="/registerInventory">
               <button className="button_add">
@@ -179,7 +185,7 @@ const Inventory = () => {
           </div>
 
           <div className={styles.table_wrapper_container}>
-            <h1>Equipments Information</h1>
+            <h1>Equipment Information</h1>
             {/* <h1>DRIVERS INFORMATION</h1> */}
             <div
               className={styles.table_container}

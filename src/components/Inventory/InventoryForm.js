@@ -4,6 +4,7 @@ import { useState, useContext } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import Permission from "../../components/Permission/Permission";
 import Modal from "../../components/Modal/Modal";
+import { useNavigate } from "react-router-dom";
 
 import { Link } from "react-router-dom";
 
@@ -18,6 +19,67 @@ const Inventory = () => {
   const [status, setStatus] = useState("");
 
   const [postdata, setPostData] = useState("");
+
+  const navigate = useNavigate();
+
+  const [yearStyle, setYearStyle] = useState(false);
+
+  const [validator, setValidator] = useState({
+    AnnualInsp: false,
+    NextAnnualInsp: false,
+    SafetyExpiry: false,
+    PlateExpiry: false,
+  });
+
+  const ValidateFunc = () => {
+    //Annual Inspection
+    if (
+      !/\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])*/.test(
+        data.annual_inspection
+      )
+    ) {
+      setValidator((prev) => ({
+        ...prev,
+        [`AnnualInsp`]: true,
+      }));
+    }
+
+    //Next Annual Inspection
+    if (
+      !/\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])*/.test(
+        data.next_annual_inspection
+      )
+    ) {
+      setValidator((prev) => ({
+        ...prev,
+        [`NextAnnualInsp`]: true,
+      }));
+    }
+
+    //Safety Expiry Date
+    if (
+      !/\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])*/.test(
+        data.safety_expiry_date
+      )
+    ) {
+      setValidator((prev) => ({
+        ...prev,
+        [`SafetyExpiry`]: true,
+      }));
+    }
+
+    //Plate Expiry Date
+    if (
+      !/\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])*/.test(
+        data.plate_expiry_date
+      )
+    ) {
+      setValidator((prev) => ({
+        ...prev,
+        [`PlateExpiry`]: true,
+      }));
+    }
+  };
 
   const [data, setData] = useState({
     unit: "",
@@ -35,10 +97,16 @@ const Inventory = () => {
     tyre_size: "",
     standard_job: "",
     annual_inspection: "",
+    next_annual_inspection: "",
     safety_expiry_date: "",
+    status: "",
     plate_expiry_date: "",
-    days_remaining_for_next_inspection: "",
+    // PM1: "",
+    // PM2: "",
+    // PM3: "",
+    // days_remaining_for_next_inspection: "",
     mechanical_notes: "",
+    maintenance_duration: "",
   });
 
   const inputChange = (e) => {
@@ -63,13 +131,18 @@ const Inventory = () => {
     number_of_axles: data.number_of_axles,
     weight: data.weight,
     tyre_size: data.tyre_size,
-    supervisor_notes: data.supervisor_notes,
-    first_PR: data.first_PR,
-    semi_annual_PR: data.semi_annual_PR,
-    CVOR_points: data.CVOR_points,
-    employee_notes: data.employee_notes,
-    other: data.other,
-    accidents_and_citations: data.accidents_and_citations,
+    standard_job: data.standard_job,
+    annual_inspection: data.annual_inspection,
+    next_annual_inspection: data.next_annual_inspection,
+    safety_expiry_date: data.safety_expiry_date,
+    status: data.status,
+    plate_expiry_date: data.plate_expiry_date,
+    // PM1: data.PM1,
+    // PM2: data.PM2,
+    // PM3: data.PM3,
+    // days_remaining_for_next_inspection: data.days_remaining_for_next_inspection,
+    mechanical_notes: data.mechanical_notes,
+    maintenance_duration: data.maintenance_duration,
   };
 
   const config = {
@@ -78,8 +151,9 @@ const Inventory = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    ValidateFunc();
     Axios.post(
-      `https://lc-backend-v2.herokuapp.com/api/v1/LC/drivers/createDriver`,
+      `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/createTractor`,
       body,
       {
         headers: {
@@ -99,6 +173,10 @@ const Inventory = () => {
       });
   };
 
+  const handleBack = () => {
+    navigate("/inventory", { replace: true });
+  };
+
   return (
     <>
       {/* {isLoggedIn ? ( */}
@@ -106,13 +184,15 @@ const Inventory = () => {
         <Navbar />
         {!(role === "employee") ? (
           <div className={styles.main_container}>
+            <button onClick={handleBack} className={styles.back_button}>
+              Back
+            </button>
             <form onSubmit={handleSubmit} action="">
               <div className={styles.table_wrapper_container}>
-                <h1>Register Equipments</h1>
-
+                <h1>Add new equipment</h1>
                 <div className={styles.table_container}>
                   <div className={styles.table_content}>
-                    <label htmlFor="">unit :</label>
+                    <label htmlFor="">Unit :</label>
                     <input
                       type="text"
                       placeholder="Enter unit "
@@ -132,7 +212,7 @@ const Inventory = () => {
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">Made By:</label>
+                    <label htmlFor="">Made by:</label>
                     <input
                       type="text"
                       placeholder="Made by"
@@ -152,7 +232,7 @@ const Inventory = () => {
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">description</label>
+                    <label htmlFor="">Description</label>
                     <input
                       type="text"
                       placeholder="Enter description"
@@ -184,7 +264,7 @@ const Inventory = () => {
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">terminal:</label>
+                    <label htmlFor="">Terminal:</label>
 
                     <input
                       type="text"
@@ -216,7 +296,7 @@ const Inventory = () => {
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">Number of Axles:</label>
+                    <label htmlFor="">Number of axles:</label>
 
                     <input
                       type="text"
@@ -238,37 +318,160 @@ const Inventory = () => {
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">Supervisor:</label>
+                    <label htmlFor="">Tyre size:</label>
 
                     <input
                       type="text"
-                      placeholder="Enter supervisor"
-                      name="supervisor"
+                      placeholder="Enter tyre size"
+                      name="tyre_size"
                       onChange={inputChange}
-                      value={data.supervisor}
+                      value={data.tyre_size}
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">Other:</label>
+                    <label htmlFor="">Standard job:</label>
 
                     <input
                       type="text"
-                      placeholder="Enter other"
-                      name="other"
+                      placeholder="Enter standard job"
+                      name="tyre_size"
                       onChange={inputChange}
-                      value={data.other}
+                      value={data.tyre_size}
                     />
                   </div>
-
                   <div className={styles.table_content}>
-                    <label htmlFor="">Accidents and Citations:</label>
+                    <label htmlFor="">Annual inspection:</label>
 
                     <input
                       type="text"
-                      placeholder="Enter accidents and citations"
-                      name="accidents_and_citations"
+                      placeholder="Enter annual inspection"
+                      name="annual_inspection"
                       onChange={inputChange}
-                      value={data.accidents_and_citations}
+                      value={data.annual_inspection}
+                      style={{ borderColor: validator.AnnualInsp ? "red" : "" }}
+                    />
+                  </div>
+                  <div className={styles.table_content}>
+                    <label htmlFor="">Next annual inspection:</label>
+
+                    <input
+                      type="text"
+                      placeholder="Enter next annual inspection"
+                      name="next_annual_inspection"
+                      onChange={inputChange}
+                      value={data.next_annual_inspection}
+                      style={{
+                        borderColor: validator.NextAnnualInsp ? "red" : "",
+                      }}
+                    />
+                  </div>
+                  <div className={styles.table_content}>
+                    <label htmlFor="">Safety expiry date:</label>
+
+                    <input
+                      type="text"
+                      placeholder="Enter safety expiry date"
+                      name="safety_expiry_date"
+                      onChange={inputChange}
+                      value={data.safety_expiry_date}
+                      style={{
+                        borderColor: validator.SafetyExpiry ? "red" : "",
+                      }}
+                    />
+                  </div>
+                  <div className={styles.table_content}>
+                    <label htmlFor="">Status:</label>
+                    <select
+                      name="status"
+                      id=""
+                      onChange={inputChange}
+                      value={data.status}
+                    >
+                      <option value="active">active</option>
+                      <option value="inactive">inactive</option>
+                      <option value="safety due">safety due</option>
+                    </select>
+                  </div>
+                  <div className={styles.table_content}>
+                    <label htmlFor="">Plate expiry date:</label>
+
+                    <input
+                      type="text"
+                      placeholder="Enter plate expiry date"
+                      name="plate_expiry_date"
+                      onChange={inputChange}
+                      value={data.plate_expiry_date}
+                      style={{
+                        borderColor: validator.PlateExpiry ? "red" : "",
+                      }}
+                    />
+                  </div>
+                  {/* <div className={styles.table_content}>
+                    <label htmlFor="">PM1:</label>
+
+                    <input
+                      type="text"
+                      placeholder="Enter PM1"
+                      name="PM1"
+                      onChange={inputChange}
+                      value={data.PM1}
+                    />
+                  </div>
+                  <div className={styles.table_content}>
+                    <label htmlFor="">PM2:</label>
+
+                    <input
+                      type="text"
+                      placeholder="Enter PM2"
+                      name="PM2"
+                      onChange={inputChange}
+                      value={data.PM2}
+                    />
+                  </div>
+                  <div className={styles.table_content}>
+                    <label htmlFor="">PM3:</label>
+
+                    <input
+                      type="text"
+                      placeholder="Enter PM3"
+                      name="PM3"
+                      onChange={inputChange}
+                      value={data.PM3}
+                    />
+                  </div>
+                  <div className={styles.table_content}>
+                    <label htmlFor="">
+                      Days remaining for next inspection:
+                    </label>
+
+                    <input
+                      type="text"
+                      placeholder="Enter days remaining for next inspection"
+                      name="days_remaining_for_next_inspection"
+                      onChange={inputChange}
+                      value={data.days_remaining_for_next_inspection}
+                    />
+                  </div> */}
+                  <div className={styles.table_content}>
+                    <label htmlFor="">Mechanical notes:</label>
+
+                    <input
+                      type="text"
+                      placeholder="Enter mechanical notes"
+                      name="mechanical_notes"
+                      onChange={inputChange}
+                      value={data.mechanical_notes}
+                    />
+                  </div>
+                  <div className={styles.table_content}>
+                    <label htmlFor="">Maintainence duration:</label>
+
+                    <input
+                      type="text"
+                      placeholder="Enter maintainence duration"
+                      name="maintenance_duration"
+                      onChange={inputChange}
+                      value={data.maintenance_duration}
                     />
                   </div>
                 </div>

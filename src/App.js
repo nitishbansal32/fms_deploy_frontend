@@ -6,10 +6,19 @@ import Drivers from "./components/Drivers/Drivers";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Login from "./components/Login/Login";
 import Employee from "./components/Employee/Employee";
+import Settings from "./components/Settings/Settings";
 import Modal from "./components/Modal/Modal";
 import ServiceDash from "./components/ServiceDash/ServiceDash";
 import DriverForm from "./components/Drivers/DriverForm";
+import AccidentForm from "./components/Accident/AccidentForm";
 import InventoryForm from "./components/Inventory/InventoryForm";
+
+import Loading from "./components/Loading";
+
+import UpdateInventory from "./components/Inventory/UpdateInventory";
+import UpdateAccident from "./components/Accident/UpdateAccident";
+import UpdateDriver from "./components/Drivers/UpdateDriver";
+// import UpdateDriver from "./components/Drivers/UpdateDriver";
 
 import { UserContext } from "./UserContext";
 
@@ -23,6 +32,11 @@ function App() {
   const [role, setRole] = useState(""); //For passing the role of the user
   const [msg, setMsg] = useState(""); //For setting the modal message
   const [display, setDisplay] = useState(false);
+  const [modal, setModal] = useState(false);
+
+  const [inventoryData, setInventoryData] = useState([]);
+  const [driverData, setDriverData] = useState([]);
+  const [accidentData, setAccidentData] = useState([]);
 
   const value = useMemo(
     () => ({
@@ -30,13 +44,37 @@ function App() {
       setIsLoggedIn,
       role,
       setRole,
-
+      modal,
+      setModal,
       msg,
       setMsg,
       display,
       setDisplay,
+      inventoryData,
+      setInventoryData,
+      driverData,
+      setDriverData,
+      accidentData,
+      setAccidentData,
     }),
-    [isLoggedIn, setIsLoggedIn, role, setRole, msg, setMsg, display, setDisplay]
+    [
+      isLoggedIn,
+      setIsLoggedIn,
+      role,
+      setRole,
+      modal,
+      setModal,
+      msg,
+      setMsg,
+      display,
+      setDisplay,
+      inventoryData,
+      setInventoryData,
+      driverData,
+      setDriverData,
+      accidentData,
+      setAccidentData,
+    ]
   );
 
   return (
@@ -51,8 +89,8 @@ function App() {
             <Route exact path="/inventory" element={<Inventory />}></Route>
             <Route exact path="/drivers" element={<Drivers />}></Route>
             <Route exact path="/accident" element={<Accident />}></Route>
-
             <Route exact path="/register" element={<Employee />}></Route>
+            <Route exact path="/settings" element={<Settings />}></Route>
             <Route
               exact
               path="/registerDriver"
@@ -60,13 +98,35 @@ function App() {
             ></Route>
             <Route
               exact
+              path="/updateDriver"
+              element={<UpdateDriver />}
+            ></Route>
+            <Route
+              exact
               path="/registerInventory"
               element={<InventoryForm />}
             ></Route>
+            <Route
+              exact
+              path="/updateInventory"
+              element={<UpdateInventory />}
+            ></Route>
+            <Route
+              exact
+              path="/registerAccident"
+              element={<AccidentForm />}
+            ></Route>
+            <Route
+              exact
+              path="/updateAccident"
+              element={<UpdateAccident />}
+            ></Route>
             <Route exact path="/allservices" element={<ServiceDash />}></Route>
+
+            <Route exact path="/loading" element={<Loading />}></Route>
           </Routes>
         </Router>
-        {/* {modal && <Modal />} */}
+        {modal && <Modal />}
       </div>
     </UserContext.Provider>
   );
