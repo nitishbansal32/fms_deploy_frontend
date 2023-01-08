@@ -108,13 +108,20 @@
 }
 
 .table_content input,
-.table_content select {
+.table_content select,
+.table_content textarea {
   padding: 0.5rem 0.5rem;
   border-radius: 4px;
   font-size: 0.75rem;
   outline: 0;
   border: 1px solid #f4f4f4;
   background-color: #f4f4f4;
+}
+
+.table_content input,
+.table_content select,
+.table_content textarea {
+  width: 100%;
 }
 
 .table_content input:focus,
@@ -135,4 +142,16 @@
   background-color: transparent !important;
   color: var(--primary-color) !important;
   font-size: 600 !important;
+}
+
+.table_file_container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.table_file_container h1 {
+  color: black;
+  font-size: 1.25em;
 }

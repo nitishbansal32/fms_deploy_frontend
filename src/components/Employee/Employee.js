@@ -12,8 +12,16 @@ import { UserContext } from "../../UserContext";
 //Hide password remaining
 
 const Inventory = () => {
-  const { isLoggedIn, setIsLoggedIn, role, modal, setModal, msg, setMsg } =
-    useContext(UserContext);
+  const {
+    isLoggedIn,
+    setIsLoggedIn,
+    role,
+    modal,
+    setModal,
+    msg,
+    setMsg,
+    setModalColor,
+  } = useContext(UserContext);
 
   const [validator, setValidator] = useState({
     email: false,
@@ -69,18 +77,19 @@ const Inventory = () => {
     location: data.location,
     title: data.title,
     supervisor: data.supervisor,
-    shift: data.shift,
+    shift: `${!data.shift ? "AM" : data.shift}`,
     contact: data.contact,
     emergency_contact: data.emergency_contact,
     DOB: `${data.DOB}`,
     start_date: `${data.start_date}`,
-    employee_type: data.employee_type,
+    employee_type: `${!data.employee_type ? "Full Time" : data.employee_type}`,
     phone_number: data.phone_number,
     address: data.address,
     city: data.city,
     province: data.province,
     postal_code: data.postal_code,
     country: data.country,
+    role: `${!data.role ? "employee" : data.role}`,
     is_active: true,
   };
 
@@ -172,9 +181,9 @@ const Inventory = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    ValidatorFunc();
-
-    console.log(validator.email);
+    setModal(true);
+    setMsg("Adding new user.... Please wait");
+    setModalColor("green");
 
     Axios.post(`https://lc-backend-v2.herokuapp.com/api/v1/LC/register`, body, {
       headers: {
@@ -185,11 +194,23 @@ const Inventory = () => {
         setStatus(response.status);
         setMsg("Employee Added!");
         setModal(true);
+        setModalColor("green");
       })
       .catch((err) => {
         console.log(err.response);
-        setMsg("Check fields!!");
-        setModal(true);
+        if (err.response.data.msg == "Email already exists") {
+          setMsg("Email ID already exists!");
+          setModal(true);
+          setModalColor("red");
+        } else if (err.response.data.msg == "Please provide valid email") {
+          setMsg("Please provide valid email!");
+          setModal(true);
+          setModalColor("red");
+        } else {
+          setMsg("Try again");
+          setModal(true);
+          setModalColor("red");
+        }
       });
   };
 
@@ -208,28 +229,34 @@ const Inventory = () => {
                     <label htmlFor="">Name:</label>
                     <input
                       type="text"
-                      placeholder="Enter Name"
+                      placeholder="E.g. David Williams"
                       name="name"
                       onChange={inputChange}
                       value={data.name}
+                      required
                     />
                   </div>
                   <div className={styles.table_content}>
                     <label htmlFor="">First name:</label>
                     <input
                       type="text"
-                      placeholder="Enter First Name"
+                      placeholder="E.g. David"
                       name="first_name"
+                      minlength="3"
+                      maxlength="50"
                       onChange={inputChange}
                       value={data.first_name}
+                      required
                     />
                   </div>
                   <div className={styles.table_content}>
                     <label htmlFor="">Last name:</label>
                     <input
                       type="text"
-                      placeholder="Enter Last Name"
+                      placeholder="E.g. Williams"
                       name="last_name"
+                      minlength="3"
+                      maxlength="50"
                       onChange={inputChange}
                       value={data.last_name}
                     />
@@ -238,22 +265,23 @@ const Inventory = () => {
                     <label htmlFor="">Email ID:</label>
                     <input
                       type="email"
-                      placeholder="Enter email id"
+                      placeholder="E.g. abcd@email.com"
                       name="email"
                       onChange={inputChange}
                       value={data.email}
-                      style={{ borderColor: validator.email ? "red" : "" }}
+                      required
                     />
                   </div>
                   <div className={styles.table_content}>
                     <label htmlFor="">Password:</label>
                     <input
                       type="text"
-                      placeholder="Enter Password"
+                      placeholder="Something discrete"
                       name="password"
+                      minlength="6"
                       onChange={inputChange}
                       value={data.password}
-                      style={{ borderColor: validator.password ? "red" : "" }}
+                      required
                     />
                   </div>
                   <div className={styles.table_content}>
@@ -261,10 +289,11 @@ const Inventory = () => {
 
                     <input
                       type="text"
-                      placeholder="Enter Employee ID"
+                      placeholder="E.g. ABCD1234"
                       name="employee_id"
                       onChange={inputChange}
                       value={data.employee_id}
+                      required
                     />
                   </div>
                   <div className={styles.table_content}>
@@ -272,10 +301,11 @@ const Inventory = () => {
 
                     <input
                       type="text"
-                      placeholder="Enter Location"
+                      placeholder="E.g. Ontario"
                       name="location"
                       onChange={inputChange}
                       value={data.location}
+                      required
                     />
                   </div>
                   <div className={styles.table_content}>
@@ -283,10 +313,11 @@ const Inventory = () => {
 
                     <input
                       type="text"
-                      placeholder="Enter Title"
+                      placeholder="E.g. Driver"
                       name="title"
                       onChange={inputChange}
                       value={data.title}
+                      required
                     />
                   </div>
                   <div className={styles.table_content}>
@@ -294,10 +325,11 @@ const Inventory = () => {
 
                     <input
                       type="text"
-                      placeholder="Enter supervisor"
+                      placeholder="E.g. Ronda"
                       name="supervisor"
                       onChange={inputChange}
                       value={data.supervisor}
+                      required
                     />
                   </div>
                   <div className={styles.table_content}>
@@ -307,9 +339,12 @@ const Inventory = () => {
                       id=""
                       onChange={inputChange}
                       value={data.shift}
+                      required
                       //   default="Select Shift"
                     >
-                      <option value="AM">AM</option>
+                      <option selected="selected" value="AM">
+                        AM
+                      </option>
                       <option value="PM">PM</option>
                     </select>
                   </div>
@@ -318,10 +353,11 @@ const Inventory = () => {
 
                     <input
                       type="text"
-                      placeholder="Enter contact"
+                      placeholder="Email or contact number"
                       name="contact"
                       onChange={inputChange}
                       value={data.contact}
+                      required
                     />
                   </div>
                   <div className={styles.table_content}>
@@ -329,34 +365,37 @@ const Inventory = () => {
 
                     <input
                       type="text"
-                      placeholder="Enter emergency contact"
+                      placeholder="Email or contact number"
                       name="emergency_contact"
                       onChange={inputChange}
                       value={data.emergency_contact}
+                      required
                     />
                   </div>
                   <div className={styles.table_content}>
                     <label htmlFor="">DOB:</label>
 
                     <input
-                      type="text"
+                      type="date"
+                      data-date-format="YYYY MM DD"
                       placeholder="Enter DOB"
                       name="DOB"
                       onChange={inputChange}
                       value={data.DOB}
-                      style={{ borderColor: validator.dateDOB ? "red" : "" }}
+                      required
                     />
                   </div>
                   <div className={styles.table_content}>
                     <label htmlFor="">Start date:</label>
 
                     <input
-                      type="text"
+                      type="date"
+                      data-date-format="YYYY MM DD"
                       placeholder="Enter start date"
                       name="start_date"
                       onChange={inputChange}
                       value={data.start_date}
-                      style={{ borderColor: validator.date ? "red" : "" }}
+                      required
                     />
                   </div>
                   <div className={styles.table_content}>
@@ -366,7 +405,7 @@ const Inventory = () => {
                       id=""
                       onChange={inputChange}
                       value={data.employee_type}
-                      //   default="Select Shift"
+                      required
                     >
                       <option value="Full Time">Full Time</option>
                       <option value="Part Time">Part Time</option>
@@ -388,11 +427,11 @@ const Inventory = () => {
 
                     <input
                       type="text"
-                      placeholder="Enter Phone number"
+                      placeholder="E.g. 1234567890"
                       name="phone_number"
                       onChange={inputChange}
                       value={data.phone_number}
-                      style={{ borderColor: validator.phone ? "red" : "" }}
+                      required
                     />
                   </div>
                   <div className={styles.table_content}>
@@ -400,10 +439,13 @@ const Inventory = () => {
 
                     <input
                       type="text"
-                      placeholder="Enter address"
+                      placeholder="Must be above 50 letters"
                       name="address"
                       onChange={inputChange}
                       value={data.address}
+                      minlength="50"
+                      maxlength="500"
+                      required
                     />
                   </div>
                   <div className={styles.table_content}>
@@ -411,10 +453,13 @@ const Inventory = () => {
 
                     <input
                       type="text"
-                      placeholder="Enter city"
+                      placeholder="E.g. Richmond"
                       name="city"
                       onChange={inputChange}
                       value={data.city}
+                      required
+                      minlength="3"
+                      maxlength="50"
                     />
                   </div>
                   <div className={styles.table_content}>
@@ -422,10 +467,13 @@ const Inventory = () => {
 
                     <input
                       type="text"
-                      placeholder="Enter province"
+                      placeholder="E.g. Alberta"
                       name="province"
                       onChange={inputChange}
                       value={data.province}
+                      required
+                      minlength="3"
+                      maxlength="50"
                     />
                   </div>
                   <div className={styles.table_content}>
@@ -433,20 +481,26 @@ const Inventory = () => {
 
                     <input
                       type="text"
-                      placeholder="Enter postal code"
+                      placeholder="E.g. K0A0A2"
                       name="postal_code"
                       onChange={inputChange}
                       value={data.postal_code}
+                      required
+                      minlength="3"
+                      maxlength="10"
                     />
                   </div>
                   <div className={styles.table_content}>
                     <label htmlFor="">Country:</label>
                     <input
                       type="text"
-                      placeholder="Enter country"
+                      placeholder="E.g. Canada"
                       name="country"
                       onChange={inputChange}
                       value={data.country}
+                      required
+                      minlength="3"
+                      maxlength="10"
                     />
                   </div>
                   <div className={styles.table_content}>
@@ -457,8 +511,10 @@ const Inventory = () => {
                       onChange={inputChange}
                       value={data.role}
                     >
+                      <option selected="selected" value="employee">
+                        employee
+                      </option>
                       <option value="admin">admin</option>
-                      <option value="employee">employee</option>
                       <option value="insurance-company">
                         insurance-company
                       </option>

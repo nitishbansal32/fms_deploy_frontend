@@ -9,6 +9,11 @@ import Employee from "./components/Employee/Employee";
 import Settings from "./components/Settings/Settings";
 import Modal from "./components/Modal/Modal";
 import ServiceDash from "./components/ServiceDash/ServiceDash";
+
+import DashDriverForm from "./components/Dashboard/DriverForm";
+import DashAccidentForm from "./components/Dashboard/AccidentForm";
+import DashInventoryForm from "./components/Dashboard/InventoryForm";
+
 import DriverForm from "./components/Drivers/DriverForm";
 import AccidentForm from "./components/Accident/AccidentForm";
 import InventoryForm from "./components/Inventory/InventoryForm";
@@ -33,6 +38,7 @@ function App() {
   const [msg, setMsg] = useState(""); //For setting the modal message
   const [display, setDisplay] = useState(false);
   const [modal, setModal] = useState(false);
+  const [modalColor, setModalColor] = useState("");
 
   const [inventoryData, setInventoryData] = useState([]);
   const [driverData, setDriverData] = useState([]);
@@ -56,6 +62,8 @@ function App() {
       setDriverData,
       accidentData,
       setAccidentData,
+      modalColor,
+      setModalColor,
     }),
     [
       isLoggedIn,
@@ -74,6 +82,8 @@ function App() {
       setDriverData,
       accidentData,
       setAccidentData,
+      modalColor,
+      setModalColor,
     ]
   );
 
@@ -85,6 +95,21 @@ function App() {
             <Route exact path="/" element={<Login />}></Route>
 
             <Route exact path="/dashboard" element={<Dashboard />}></Route>
+            <Route
+              exact
+              path="/registerDashAccident"
+              element={<DashAccidentForm />}
+            ></Route>
+            <Route
+              exact
+              path="/registerDashInventory"
+              element={<DashInventoryForm />}
+            ></Route>
+            <Route
+              exact
+              path="/registerDashDriver"
+              element={<DashDriverForm />}
+            ></Route>
 
             <Route exact path="/inventory" element={<Inventory />}></Route>
             <Route exact path="/drivers" element={<Drivers />}></Route>

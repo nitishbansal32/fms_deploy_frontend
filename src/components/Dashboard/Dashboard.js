@@ -20,13 +20,18 @@ const Dashboard = () => {
   const [expPlate, setExpPlate] = useState([]);
   const [expSafety, setExpSafety] = useState([]);
 
+  const [dlState, setDlState] = useState(false);
+  const [mlState, setMlState] = useState(false);
+  const [plateState, setPlateState] = useState(false);
+  const [safetyState, setSafetyState] = useState(false);
+
   const config = {
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
   };
 
   useEffect(() => {
-    // Axios.get("https://lc-backend-v2.herokuapp.com/api/v1/LC/expired", config)
-    Axios.get("http://localhost:8000/api/v1/LC/expired", config)
+    Axios.get("https://lc-backend-v2.herokuapp.com/api/v1/LC/expired", config)
+      // Axios.get("http://localhost:8000/api/v1/LC/expired", config)
       .then((res) => {
         console.log(res.data);
         setExpDrivingLicense(res.data.expired_driving_licenses);
@@ -38,8 +43,8 @@ const Dashboard = () => {
         console.log(err);
       });
 
-    // Axios.get("https://lc-backend-v2.herokuapp.com/api/v1/LC/activity", config)
-    Axios.get("http://localhost:8000/api/v1/LC/activity", config)
+    Axios.get("https://lc-backend-v2.herokuapp.com/api/v1/LC/activity", config)
+      // Axios.get("http://localhost:8000/api/v1/LC/activity", config)
       .then((res) => {
         setActivity(res.data.activities);
         // console.log(res.data.activities);
@@ -59,11 +64,58 @@ const Dashboard = () => {
             <div className={styles.left_top_container}>
               <div className={styles.expiry_main_container}>
                 <h2>Expiry</h2>
+                <div className={styles.expiry_button}>
+                  <button
+                    onClick={() => {
+                      setDlState((prevState) => !prevState);
+                    }}
+                    style={{
+                      backgroundColor: dlState ? "#e84b01" : "white",
+                      color: dlState ? "white" : "black",
+                    }}
+                  >
+                    Expired driving licences
+                  </button>
+                  <button
+                    onClick={() => {
+                      setMlState((prevState) => !prevState);
+                    }}
+                    style={{
+                      backgroundColor: mlState ? "#e84b01" : "white",
+                      color: mlState ? "white" : "black",
+                    }}
+                  >
+                    Expired medical licences
+                  </button>
+                  <button
+                    onClick={() => {
+                      setPlateState((prevState) => !prevState);
+                    }}
+                    style={{
+                      backgroundColor: plateState ? "#e84b01" : "white",
+                      color: plateState ? "white" : "black",
+                    }}
+                  >
+                    Expired plates
+                  </button>
+                  <button
+                    onClick={() => {
+                      setSafetyState((prevState) => !prevState);
+                    }}
+                    style={{
+                      backgroundColor: safetyState ? "#e84b01" : "white",
+                      color: safetyState ? "white" : "black",
+                    }}
+                  >
+                    Expired safety
+                  </button>
+                </div>
 
                 <div className={styles.expiry_container}>
                   <div className={styles.expiry_content_container}>
-                    <h3>Expired driving licenses</h3>
-                    {expDrivingLicense &&
+                    {dlState && <h3>Expired driving licenses</h3>}
+                    {dlState &&
+                      expDrivingLicense &&
                       expDrivingLicense.map((item) => (
                         <>
                           <div className={styles.expiry_content}>
@@ -75,46 +127,53 @@ const Dashboard = () => {
                       ))}
                   </div>
                   <div className={styles.expiry_content_container}>
-                    <h3>Expired medical licenses</h3>
-                    {expMedicalLicense.map((item) => (
-                      <>
-                        <div className={styles.expiry_content}>
-                          <div>{item.employee_name}</div>
-                          <div>{item.medical_expiry_date.substr(0, 10)}</div>
-                        </div>
-                        <hr />
-                      </>
-                    ))}
+                    {mlState && <h3>Expired medical licenses</h3>}
+                    {mlState &&
+                      expMedicalLicense &&
+                      expMedicalLicense.map((item) => (
+                        <>
+                          <div className={styles.expiry_content}>
+                            <div>{item.employee_name}</div>
+                            <div>{item.medical_expiry_date.substr(0, 10)}</div>
+                          </div>
+                          <hr />
+                        </>
+                      ))}
                   </div>
                   <div className={styles.expiry_content_container}>
-                    <h3>Expired plates</h3>
-                    {expPlate.map((item) => (
-                      <>
-                        <div className={styles.expiry_content}>
-                          <div>{item.licence_plate}</div>
-                          <div>{item.plate_expiry_date.substr(0, 10)}</div>
-                        </div>
-                        <hr />
-                      </>
-                    ))}
+                    {plateState && <h3>Expired plates</h3>}
+
+                    {plateState &&
+                      expPlate &&
+                      expPlate.map((item) => (
+                        <>
+                          <div className={styles.expiry_content}>
+                            <div>{item.licence_plate}</div>
+                            <div>{item.plate_expiry_date.substr(0, 10)}</div>
+                          </div>
+                          <hr />
+                        </>
+                      ))}
                   </div>
                   <div className={styles.expiry_content_container}>
-                    <h3>Expired safety</h3>
-                    {expSafety.map((item) => (
-                      <>
-                        <div className={styles.expiry_content}>
-                          <div>{item.licence_plate}</div>
-                          <div>{item.safety_expiry_date.substr(0, 10)}</div>
-                        </div>
-                        <hr />
-                      </>
-                    ))}
+                    {safetyState && <h3>Expired safety</h3>}
+                    {safetyState &&
+                      expSafety &&
+                      expSafety.map((item) => (
+                        <>
+                          <div className={styles.expiry_content}>
+                            <div>{item.licence_plate}</div>
+                            <div>{item.safety_expiry_date.substr(0, 10)}</div>
+                          </div>
+                          <hr />
+                        </>
+                      ))}
                   </div>
                 </div>
               </div>
             </div>
             <div className={styles.main_add_container}>
-              <Link to="/registerInventory">
+              <Link to="/registerDashInventory">
                 <div className={styles.add_container}>
                   <h2>Add equipment:</h2>
                   <button className="button_add">
@@ -123,7 +182,7 @@ const Dashboard = () => {
                   </button>
                 </div>
               </Link>
-              <Link to="/registerDriver">
+              <Link to="/registerDashDriver">
                 <div className={styles.add_container}>
                   <h2>Add driver:</h2>
                   <button className="button_add">
@@ -132,7 +191,7 @@ const Dashboard = () => {
                   </button>
                 </div>
               </Link>
-              <Link to="/registerAccident">
+              <Link to="/registerDashAccident">
                 <div className={styles.add_container}>
                   <h2>Add accident:</h2>
                   <button className="button_add">
@@ -147,18 +206,26 @@ const Dashboard = () => {
             <div className={styles.activity_main}>
               <div className={styles.activity_heading}>
                 <h1>Activity</h1>
-                <span>View All</span>
+
+                <button>View All</button>
               </div>
               <img src alt="" />
               <div className={styles.activity_desc}>
-                {activity.map((item) => (
-                  <div className={styles.activity}>
-                    <p className={styles.heading}>{item.heading}</p>
-                    <p className={styles.date}>
-                      {item.updatedAt.substr(0, 10)}
-                    </p>
-                  </div>
-                ))}
+                {activity &&
+                  activity.map((item) => (
+                    <div
+                      className={styles.activity}
+                      // style={{
+                      //   backgroundColor:
+                      //     activity.type === "CREATION" ? "green" : "#f5f5f5",
+                      // }}
+                    >
+                      <p className={styles.heading}>{item.heading}</p>
+                      <p className={styles.date}>
+                        {item.updatedAt.substr(0, 10)}
+                      </p>
+                    </div>
+                  ))}
               </div>
             </div>
           </div>

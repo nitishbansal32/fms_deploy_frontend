@@ -47,10 +47,18 @@ code {
   gap: 2rem;
 }
 
-.not_logged_in button {
+.not_logged_in button,
+.button_get,
+.button_add,
+.button_all,
+.button_general {
   width: fit-content;
-  padding: 0.5em 2em;
+  height: 40px;
+  padding: 0 1rem;
   font-size: 1em;
+}
+
+.not_logged_in button {
   border: 0;
   outline: 0;
   background-color: #0c21c1;
@@ -59,10 +67,6 @@ code {
 }
 
 .button_get {
-  width: fit-content;
-  height: 40px;
-  padding: 0 1rem;
-  font-size: 1em;
   font-weight: 500;
   justify-self: center;
   border: 0;
@@ -75,10 +79,6 @@ code {
 
 .button_add,
 .button_all {
-  width: fit-content;
-  height: 40px;
-  padding: 0 1rem;
-  font-size: 1em;
   font-weight: 500;
   justify-self: center;
   border: 0;
@@ -103,10 +103,6 @@ code {
 }
 
 .button_general {
-  width: fit-content;
-  height: 40px;
-  padding: 0 1rem;
-  font-size: 1em;
   font-weight: 500;
   justify-self: center;
   border: 0;
@@ -116,3 +112,5 @@ code {
   color: white;
   transition: all 300ms ease;
 }
+
+/* Media Queries  */

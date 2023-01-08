@@ -14,8 +14,9 @@ import { useContext } from "react";
 import Logo from "../../../src/Images/Logo.jpeg";
 
 const ServiceDash = () => {
-  const { setIsLoggedIn } = useContext(UserContext);
+  const { setIsLoggedIn, setModal } = useContext(UserContext);
 
+  setModal(false);
   const navigate = useNavigate();
 
   const handleLogOut = () => {

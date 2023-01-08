@@ -208,7 +208,7 @@ const Inventory = () => {
   };
 
   const handleBack = () => {
-    navigate("/drivers", { replace: true });
+    navigate("/dashboard", { replace: true });
     setModal(false);
   };
 

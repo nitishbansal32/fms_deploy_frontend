@@ -22,6 +22,7 @@ const Inventory = () => {
     msg,
     setMsg,
     driverData,
+    setModalColor,
   } = useContext(UserContext);
 
   const [status, setStatus] = useState("");
@@ -129,6 +130,9 @@ const Inventory = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setMsg("Updating driver info... Please wait!");
+    setModal(true);
+    setModalColor("green");
 
     Axios.patch(
       `https://lc-backend-v2.herokuapp.com/api/v1/LC/drivers/${driverData.employee_name}`,
@@ -145,15 +149,19 @@ const Inventory = () => {
         console.log(response);
         setMsg("Driver information updated!");
         setModal(true);
+        setModalColor("green");
       })
       .catch((err) => {
         console.log(err);
-        // setMsg("Check fields!!");
-        // setModal(true);
+        setMsg("Try again!");
+        setModal(true);
+        setModalColor("red");
       });
   };
 
   const handleBack = () => {
+    setModal(false);
+
     navigate("/drivers", { replace: true });
   };
 
@@ -173,64 +181,123 @@ const Inventory = () => {
 
                 <div className={styles.table_container}>
                   <div className={styles.table_content}>
-                    <label htmlFor="">Employee Name:</label>
+                    <label htmlFor="">*Employee ID:</label>
                     <input
                       type="text"
-                      placeholder="Enter employee Name"
-                      name="employee_name"
+                      placeholder="E.g. 1234ABCD"
+                      name="employee_id"
                       onChange={inputChange}
-                      value={data.employee_name}
+                      value={data.employee_id}
+                      required
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">Star date:</label>
+                    <label htmlFor="">*Employee Name:</label>
                     <input
                       type="text"
+                      placeholder="E.g. David"
+                      name="employee_name"
+                      onChange={inputChange}
+                      value={data.employee_name}
+                      required
+                    />
+                  </div>
+                  <div className={styles.table_content}>
+                    <label htmlFor="">*Start date:</label>
+                    <input
+                      type="date"
+                      data-date-format="YYYY MM DD"
                       placeholder="Enter start date"
                       name="start_date"
                       onChange={inputChange}
                       value={data.start_date.substr(0, 10)}
+                      required
                     />
                   </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">Employee ID</label>
-                    <input
-                      type="text"
-                      placeholder="Enter employee id"
-                      name="employee_id"
-                      onChange={inputChange}
-                      value={data.employee_id}
-                    />
-                  </div>
+
                   <div className={styles.table_content}>
                     <label htmlFor="">Driver license number:</label>
                     <input
                       type="text"
-                      placeholder="Enter driver licence"
+                      placeholder="E.g. ABCD1234"
                       name="DL_number"
                       onChange={inputChange}
                       value={data.DL_number}
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">Expiry</label>
+                    <label htmlFor="">*Expiry:</label>
                     <input
-                      type="text"
+                      type="date"
+                      placeholder="YYYY-MM-DD"
                       placeholder="Enter epiry"
                       name="expiry"
                       onChange={inputChange}
                       value={data.expiry.substr(0, 10)}
+                      required
                     />
                   </div>
                   <div className={styles.table_content}>
                     <label htmlFor="">Medical expiry:</label>
 
                     <input
-                      type="text"
+                      type="date"
+                      placeholder="YYYY-MM-DD"
                       placeholder="Enter Medical expiry"
                       name="medical_expiry_date"
                       onChange={inputChange}
                       value={data.medical_expiry_date.substr(0, 10)}
+                      required
+                    />
+                  </div>
+                  <div className={styles.table_content}>
+                    <label htmlFor="">*Shift:</label>
+                    <select
+                      name="shift"
+                      id=""
+                      onChange={inputChange}
+                      value={data.shift}
+                      required
+                    >
+                      <option value="AM">AM</option>
+                      <option value="PM">PM</option>
+                    </select>
+                  </div>
+                  <div className={styles.table_content}>
+                    <label htmlFor="">*Employee type:</label>
+                    <select
+                      name="employee_type"
+                      id=""
+                      onChange={inputChange}
+                      value={data.employee_type}
+                      required
+                    >
+                      <option value="PT">PT</option>
+                      <option value="FT">FT</option>
+                    </select>
+                  </div>
+                  <div className={styles.table_content}>
+                    <label htmlFor="">*Phone number:</label>
+
+                    <input
+                      type="text"
+                      placeholder="E.g. 1234567890"
+                      name="phone_number"
+                      onChange={inputChange}
+                      value={data.phone_number}
+                      required
+                    />
+                  </div>
+                  <div className={styles.table_content}>
+                    <label htmlFor="">*Emergency_contact</label>
+
+                    <input
+                      type="text"
+                      placeholder="E.g. 1234567890"
+                      name="emergency_contact"
+                      onChange={inputChange}
+                      value={data.emergency_contact}
+                      required
                     />
                   </div>
                   <div className={styles.table_content}>
@@ -238,38 +305,15 @@ const Inventory = () => {
 
                     <input
                       type="text"
-                      placeholder="Enter Terminal"
+                      placeholder="E.g. MIS"
                       name="terminal"
                       onChange={inputChange}
                       value={data.terminal}
                     />
                   </div>
+
                   <div className={styles.table_content}>
-                    <label htmlFor="">Shift:</label>
-                    <select
-                      name="shift"
-                      id=""
-                      onChange={inputChange}
-                      value={data.shift}
-                    >
-                      <option value="AM">AM</option>
-                      <option value="PM">PM</option>
-                    </select>
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">Employee type:</label>
-                    <select
-                      name="employee_type"
-                      id=""
-                      onChange={inputChange}
-                      value={data.employee_type}
-                    >
-                      <option value="PT">PT</option>
-                      <option value="FT">FT</option>
-                    </select>
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="shift">Employee status</label>
+                    <label htmlFor="shift">Employee status:</label>
                     <select
                       name="employee_status"
                       id=""
@@ -277,7 +321,7 @@ const Inventory = () => {
                       value={data.employee_status}
                     >
                       <option value="active">active</option>
-                      <option value="active">active</option>
+                      <option value="inactive">active</option>
                     </select>
                   </div>
                   <div className={styles.table_content}>
@@ -295,7 +339,7 @@ const Inventory = () => {
                     <label htmlFor="">CVOR points:</label>
 
                     <input
-                      type="text"
+                      type="number"
                       placeholder="Enter CVOR points"
                       name="CVOR_points"
                       onChange={inputChange}
@@ -305,7 +349,9 @@ const Inventory = () => {
                   <div className={styles.table_content}>
                     <label htmlFor="">Employee notes:</label>
 
-                    <input
+                    <textarea
+                      rows="2"
+                      cols="25"
                       type="text"
                       placeholder="Enter employee notes"
                       name="employee_notes"
@@ -336,56 +382,37 @@ const Inventory = () => {
                       value={data.accidents_and_citations}
                     />
                   </div>
+
                   <div className={styles.table_content}>
-                    <label htmlFor="">Phone number:</label>
+                    <label htmlFor="">Supervisor</label>
 
                     <input
                       type="text"
-                      placeholder="Enter accidents and citations"
-                      name="phone_number"
-                      onChange={inputChange}
-                      value={data.phone_number}
-                    />
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">emergency_contact</label>
-
-                    <input
-                      type="text"
-                      placeholder="Enter accidents and citations"
-                      name="emergency_contact"
-                      onChange={inputChange}
-                      value={data.emergency_contact}
-                    />
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">supervisor</label>
-
-                    <input
-                      type="text"
-                      placeholder="Enter accidents and citations"
+                      placeholder="E.g. David"
                       name="supervisor"
                       onChange={inputChange}
                       value={data.supervisor}
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">supervisor_notes</label>
+                    <label htmlFor="">Supervisor notes</label>
 
-                    <input
+                    <textarea
+                      rows="2"
+                      cols="25"
                       type="text"
-                      placeholder="Enter accidents and citations"
+                      placeholder="E.g. This driver is..."
                       name="supervisor_notes"
                       onChange={inputChange}
                       value={data.supervisor_notes}
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">first_PR</label>
+                    <label htmlFor="">First_PR</label>
 
                     <input
                       type="text"
-                      placeholder="Enter accidents and citations"
+                      placeholder="This is first PR"
                       name="first_PR"
                       onChange={inputChange}
                       value={data.first_PR.substr(0, 10)}

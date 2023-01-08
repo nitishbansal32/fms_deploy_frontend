@@ -16,10 +16,11 @@ const Navbar = () => {
 
   const navigate = useNavigate();
 
-  const { display, setDisplay } = useContext(UserContext);
+  const { display, setDisplay, setModal } = useContext(UserContext);
 
   const handleDisplay = () => {
     setDisplay(false);
+    setModal(false);
   };
 
   const handleLogOut = () => {

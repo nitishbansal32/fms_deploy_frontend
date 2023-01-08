@@ -230,6 +230,16 @@ const ModalInventory = (props) => {
                       <label>Status:</label>
                       <p>{item.status}</p>
                     </div>
+
+                    <div>
+                      <label>Plate expiry date:</label>
+                      <p>{item.plate_expiry_date}</p>
+                    </div>
+
+                    <div>
+                      <label>Maintainence duration:</label>
+                      <p>{item.maintenance_duration}</p>
+                    </div>
                   </div>
                 </div>
               </div>

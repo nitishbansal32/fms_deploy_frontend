@@ -164,7 +164,7 @@ const Inventory = () => {
   };
 
   const handleBack = () => {
-    navigate("/inventory", { replace: true });
+    navigate("/dashboard", { replace: true });
     setModal(false);
   };
 

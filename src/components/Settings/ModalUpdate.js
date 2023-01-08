@@ -5,7 +5,7 @@ import Axios from "axios";
 import { UserContext } from "../../UserContext";
 
 const ModalUpdate = () => {
-  const { display, setDisplay, modal, setModal, msg, setMsg } =
+  const { display, setDisplay, modal, setModal, msg, setMsg, setModalColor } =
     useContext(UserContext);
 
   const [data, setData] = useState({
@@ -32,6 +32,9 @@ const ModalUpdate = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setMsg("Updating password...");
+    setModal(true);
+    setModalColor("green");
     Axios.patch(
       `https://lc-backend-v2.herokuapp.com/api/v1/LC/updatePassword`,
       body,
@@ -45,13 +48,24 @@ const ModalUpdate = () => {
         console.log(res);
         setMsg("Password updated!");
         setModal(true);
+        setModalColor("green");
+
         if (res.data.msg === "Invalid Credentials") {
-          setMsg("Check Password!");
+          setMsg("Invalid credentials!");
           setModal(true);
+          setModalColor("red");
         }
       })
       .catch((err) => {
-        console.log(err);
+        if (err.respone.data.msg === "Invalid Credentials") {
+          setMsg("Invalid credentials!");
+          setModal(true);
+          setModalColor("red");
+        } else {
+          setMsg("Try again later!");
+          setModal(true);
+          setModalColor("red");
+        }
       });
   };
 
@@ -66,6 +80,7 @@ const ModalUpdate = () => {
               type="text"
               onChange={handleInput}
               value={data.oldPassword}
+              required
             />
           </div>
           <div className={styles.modal_content}>
@@ -75,6 +90,7 @@ const ModalUpdate = () => {
               type="text"
               onChange={handleInput}
               value={data.newPassword}
+              required
             />
           </div>
         </div>

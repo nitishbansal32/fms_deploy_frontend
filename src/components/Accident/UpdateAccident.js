@@ -23,6 +23,8 @@ const Inventory = () => {
     setMsg,
     accidentData,
     setAccidentData,
+    modalColor,
+    setModalColor,
   } = useContext(UserContext);
 
   const navigate = useNavigate();
@@ -51,7 +53,7 @@ const Inventory = () => {
     action_taken: accidentData.action_taken,
     cause_of_accident: accidentData.cause_of_accident,
     preventable: accidentData.preventable,
-    const: accidentData.const,
+    cost: accidentData.cost,
     comments: accidentData.comments,
     driver_statement: accidentData.driver_statement,
   });
@@ -84,7 +86,7 @@ const Inventory = () => {
     action_taken: data.action_taken,
     cause_of_accident: data.cause_of_accident,
     preventable: data.preventable,
-    const: data.const,
+    cost: data.cost,
     comments: data.comments,
     driver_statement: data.driver_statement,
   };
@@ -95,6 +97,9 @@ const Inventory = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setModal(true);
+    setMsg("Updating accident info....");
+    setModalColor("green");
     Axios.patch(
       `https://lc-backend-v2.herokuapp.com/api/v1/LC/accidents/${accidentData.accident_number}`,
       body,
@@ -106,18 +111,22 @@ const Inventory = () => {
     )
       .then((response) => {
         setStatus(response.status);
-        setMsg("Accident updated!");
+        setMsg("Accident info updated!");
+        setModalColor("green");
+
         setModal(true);
       })
       .catch((err) => {
         console.log(err.response);
-        // setMsg("Check fields!!");
-        // setModal(true);
+        setMsg("Try again after sometime!");
+        setModal(true);
+        setModalColor("red");
       });
   };
 
   const handleBack = () => {
     navigate("/accident", { replace: true });
+    setModal(false);
   };
 
   return (
@@ -136,68 +145,76 @@ const Inventory = () => {
 
                 <div className={styles.table_container}>
                   <div className={styles.table_content}>
-                    <label htmlFor="">Accident number :</label>
+                    <label htmlFor="">*Accident number :</label>
                     <input
-                      type="text"
-                      placeholder="Enter accident_number "
+                      type="number"
+                      min="0"
+                      placeholder="E.g. 1234"
                       name="accident_number"
                       onChange={inputChange}
                       value={data.accident_number}
+                      required
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">Accident date: </label>
+                    <label htmlFor="">*Accident date: </label>
                     <input
-                      type="text"
+                      type="date"
+                      data-date-format="YYYY MM DD"
                       placeholder="Enter accident_date"
                       name="accident_date"
                       onChange={inputChange}
                       value={data.accident_date}
+                      required
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">Accident time:</label>
+                    <label htmlFor="">*Accident time:</label>
                     <input
-                      type="text"
-                      placeholder="Enter accident time"
+                      type="time"
+                      placeholder="E.g. 22:10:23"
                       name="accident_time"
                       onChange={inputChange}
                       value={data.accident_time}
+                      required
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">Driver name:</label>
+                    <label htmlFor="">*Driver name:</label>
                     <input
                       type="text"
-                      placeholder="Enter driver_name"
+                      placeholder="E.g. Ryder"
                       name="driver_name"
                       onChange={inputChange}
                       value={data.driver_name}
+                      required
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">Driver licene number</label>
+                    <label htmlFor="">*Driver licene number</label>
                     <input
                       type="text"
-                      placeholder="Enter driver_licene_number"
+                      placeholder="E.g. ABCD1234"
                       name="driver_licene_number"
                       onChange={inputChange}
                       value={data.driver_licene_number}
+                      required
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">Tractor number:</label>
+                    <label htmlFor="">*Tractor number:</label>
 
                     <input
                       type="text"
-                      placeholder="Enter tractor_number"
+                      placeholder="E.g. 123ABC"
                       name="tractor_number"
                       onChange={inputChange}
                       value={data.tractor_number}
+                      required
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">location:</label>
+                    <label htmlFor="">*Location:</label>
 
                     <input
                       type="text"
@@ -205,10 +222,11 @@ const Inventory = () => {
                       name="location"
                       onChange={inputChange}
                       value={data.location}
+                      required
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">Accident type:</label>
+                    <label htmlFor="">*Accident type:</label>
 
                     <input
                       type="text"
@@ -216,57 +234,69 @@ const Inventory = () => {
                       name="accident_type"
                       onChange={inputChange}
                       value={data.accident_type}
+                      required
                     />
                   </div>
                   <div className={styles.table_content}>
                     <label htmlFor="">Damage:</label>
-
-                    <input
-                      type="text"
-                      placeholder="Enter damage"
+                    <select
                       name="damage"
+                      id=""
                       onChange={inputChange}
                       value={data.damage}
-                    />
+                    >
+                      <option selected="selected" value="Y">
+                        Y
+                      </option>
+                      <option value="N">N</option>
+                    </select>
                   </div>
                   <div className={styles.table_content}>
                     <label htmlFor="shift">Towing:</label>
-                    <input
-                      type="text"
+                    <select
                       name="towing"
-                      placeholder="Enter towing"
+                      id=""
                       onChange={inputChange}
                       value={data.towing}
-                    />
+                    >
+                      <option selected="selected" value="Y">
+                        Y
+                      </option>
+                      <option value="N">N</option>
+                    </select>
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">Police report number:</label>
+                    <label htmlFor="">*Police report number:</label>
 
                     <input
                       type="text"
-                      placeholder="Enter police report number"
+                      placeholder="E.g. ABC1234"
                       name="police_report_number"
                       onChange={inputChange}
                       value={data.police_report_number}
+                      required
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">Police officer:</label>
+                    <label htmlFor="">*Police officer:</label>
 
                     <input
                       type="text"
-                      placeholder="Enter police_officer"
+                      placeholder="E.g. Williams"
                       name="police_officer"
                       onChange={inputChange}
                       value={data.police_officer}
+                      required
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">Company accident report:</label>
+                    <label htmlFor="">Company incident report:</label>
 
-                    <input
+                    <textarea
+                      rows="2"
+                      cols="25"
                       type="text"
-                      placeholder="Enter company accident report"
+                      placeholder="Incident info"
                       name="company_accident_report"
                       onChange={inputChange}
                       value={data.company_accident_report}
@@ -276,8 +306,8 @@ const Inventory = () => {
                     <label htmlFor="">Claim number:</label>
 
                     <input
-                      type="text"
-                      placeholder="Enter claim number"
+                      type="number"
+                      placeholder="E.g. 1234.."
                       name="claim_number"
                       onChange={inputChange}
                       value={data.claim_number}
@@ -296,32 +326,38 @@ const Inventory = () => {
                   </div>
                   <div className={styles.table_content}>
                     <label htmlFor="">Driver charged:</label>
-
-                    <input
-                      type="text"
-                      placeholder="Enter driver charged"
+                    <select
                       name="driver_charged"
+                      id=""
                       onChange={inputChange}
                       value={data.driver_charged}
-                    />
+                    >
+                      <option selected="selected" value="No">
+                        No
+                      </option>
+                      <option value="Yes">Yes</option>
+                    </select>
                   </div>
                   <div className={styles.table_content}>
                     <label htmlFor="">Action taken:</label>
-
-                    <input
-                      type="text"
-                      placeholder="Enter action taken"
+                    <select
                       name="action_taken"
+                      id=""
                       onChange={inputChange}
                       value={data.action_taken}
-                    />
+                    >
+                      <option value="No">No</option>
+                      <option value="Yes">Yes</option>
+                    </select>
                   </div>
                   <div className={styles.table_content}>
                     <label htmlFor="">Cause of accident:</label>
 
-                    <input
+                    <textarea
+                      rows="2"
+                      cols="25"
                       type="text"
-                      placeholder="Enter cause of accident"
+                      placeholder="E.g. break failure"
                       name="cause_of_accident"
                       onChange={inputChange}
                       value={data.cause_of_accident}
@@ -329,31 +365,36 @@ const Inventory = () => {
                   </div>
                   <div className={styles.table_content}>
                     <label htmlFor="">Preventable:</label>
-                    <input
-                      type="text"
-                      placeholder="Enter preventable"
+                    <select
                       name="preventable"
+                      id=""
                       onChange={inputChange}
                       value={data.preventable}
-                    />
+                    >
+                      <option value="No">No</option>
+                      <option value="Yes">Yes</option>
+                    </select>
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">Const:</label>
+                    <label htmlFor="">Cost:</label>
 
                     <input
-                      type="text"
-                      placeholder="Enter const"
-                      name="const"
+                      type="number"
+                      min="0"
+                      placeholder="Enter cost"
+                      name="cost"
                       onChange={inputChange}
-                      value={data.const}
+                      value={data.cost}
                     />
                   </div>
                   <div className={styles.table_content}>
                     <label htmlFor="">Comments:</label>
 
-                    <input
+                    <textarea
+                      rows="2"
+                      cols="25"
                       type="text"
-                      placeholder="Enter comments"
+                      placeholder="E.g. Negligence"
                       name="comments"
                       onChange={inputChange}
                       value={data.comments}
@@ -362,9 +403,11 @@ const Inventory = () => {
                   <div className={styles.table_content}>
                     <label htmlFor="">Driver statement:</label>
 
-                    <input
+                    <textarea
+                      rows="2"
+                      cols="25"
                       type="text"
-                      placeholder="Enter driver statement"
+                      placeholder="E.g. Front car was.."
                       name="driver_statement"
                       onChange={inputChange}
                       value={data.driver_statement}
