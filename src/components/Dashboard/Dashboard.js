@@ -207,7 +207,7 @@ const Dashboard = () => {
               <div className={styles.activity_heading}>
                 <h1>Activity</h1>
 
-                <button>View All</button>
+                <span>View All</span>
               </div>
               <img src alt="" />
               <div className={styles.activity_desc}>
