@@ -65,7 +65,7 @@ const ServiceDash = () => {
                   )}
                   <div className={styles.button_container}>
                     <Link to="/loading">
-                      <button>Enter</button>
+                      <button>Continue</button>
                     </Link>
                     <button
                       onClick={() => {
@@ -75,7 +75,7 @@ const ServiceDash = () => {
                         });
                       }}
                     >
-                      View
+                      About
                     </button>
                   </div>
                 </div>
@@ -96,7 +96,7 @@ const ServiceDash = () => {
                     </p>
                   )}
                   <div className={styles.button_container}>
-                    <button>Enter</button>
+                    <button>Continue</button>
                     <button
                       onClick={() => {
                         setOpen({
@@ -105,7 +105,7 @@ const ServiceDash = () => {
                         });
                       }}
                     >
-                      View
+                      About
                     </button>
                   </div>
                 </div>
@@ -123,7 +123,7 @@ const ServiceDash = () => {
                     </p>
                   )}
                   <div className={styles.button_container}>
-                    <button>Enter</button>
+                    <button>Continue</button>
                     <button
                       onClick={() => {
                         setOpen({
@@ -132,7 +132,7 @@ const ServiceDash = () => {
                         });
                       }}
                     >
-                      View
+                      About
                     </button>
                   </div>
                 </div>
@@ -150,7 +150,7 @@ const ServiceDash = () => {
                     </p>
                   )}
                   <div className={styles.button_container}>
-                    <button>Enter</button>
+                    <button>Continue</button>
                     <button
                       onClick={() => {
                         setOpen({
@@ -159,7 +159,7 @@ const ServiceDash = () => {
                         });
                       }}
                     >
-                      View
+                      About
                     </button>
                   </div>
                 </div>
@@ -182,7 +182,7 @@ const ServiceDash = () => {
                     </p>
                   )}
                   <div className={styles.button_container}>
-                    <button>Enter</button>
+                    <button>Continue</button>
                     <button
                       onClick={() => {
                         setOpen({
@@ -191,7 +191,7 @@ const ServiceDash = () => {
                         });
                       }}
                     >
-                      View
+                      About
                     </button>
                   </div>
                 </div>
