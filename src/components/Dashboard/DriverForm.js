@@ -94,6 +94,8 @@ const Inventory = () => {
     employee_notes: "",
     other: "",
     accidents_and_citations: "",
+    DOB: "",
+    gender: "",
   });
 
   // console.log(data.emloyee_name);
@@ -141,6 +143,8 @@ const Inventory = () => {
   formData.append("employee_notes", data.employee_notes);
   formData.append("other", data.other);
   formData.append("accidents_and_citations", data.accidents_and_citations);
+  formData.append("DOB", data.DOB);
+  formData.append("gender", data.gender);
 
   //Files
   formData.append("profile_picture", file.profile_picture);
@@ -208,7 +212,7 @@ const Inventory = () => {
   };
 
   const handleBack = () => {
-    navigate("/dashboard", { replace: true });
+    navigate("/drivers", { replace: true });
     setModal(false);
   };
 
@@ -249,6 +253,42 @@ const Inventory = () => {
                       required
                     />
                   </div>
+
+                  <div className={styles.table_content}>
+                    <label htmlFor="">*Gender:</label>
+                    <input
+                      type="text"
+                      placeholder="E.g. Male"
+                      name="gender"
+                      onChange={inputChange}
+                      value={data.gender}
+                      required
+                    />
+                  </div>
+                  <div className={styles.table_content}>
+                    <label htmlFor="">Driver license number:</label>
+                    <input
+                      type="text"
+                      minlength="17"
+                      maxlength="17"
+                      placeholder="E.g. ABCD1234"
+                      name="DL_number"
+                      onChange={inputChange}
+                      value={data.DL_number}
+                    />
+                  </div>
+                  <div className={styles.table_content}>
+                    <label htmlFor="">*DOB:</label>
+                    <input
+                      type="date"
+                      data-date-format="YYYY MM DD"
+                      placeholder="E.g. David"
+                      name="DOB"
+                      onChange={inputChange}
+                      value={data.DOB}
+                      required
+                    />
+                  </div>
                   <div className={styles.table_content}>
                     <label htmlFor="">*Start date:</label>
                     <input
@@ -262,16 +302,6 @@ const Inventory = () => {
                     />
                   </div>
 
-                  <div className={styles.table_content}>
-                    <label htmlFor="">Driver license number:</label>
-                    <input
-                      type="text"
-                      placeholder="E.g. ABCD1234"
-                      name="DL_number"
-                      onChange={inputChange}
-                      value={data.DL_number}
-                    />
-                  </div>
                   <div className={styles.table_content}>
                     <label htmlFor="">*Expiry</label>
                     <input
@@ -340,7 +370,7 @@ const Inventory = () => {
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">*Emergency_contact</label>
+                    <label htmlFor="">*Emergency contact:</label>
 
                     <input
                       type="text"
@@ -424,7 +454,7 @@ const Inventory = () => {
                   </div>
 
                   <div className={styles.table_content}>
-                    <label htmlFor="">Supervisor</label>
+                    <label htmlFor="">Supervisor:</label>
 
                     <input
                       type="text"
@@ -435,7 +465,7 @@ const Inventory = () => {
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">Supervisor notes</label>
+                    <label htmlFor="">Supervisor notes:</label>
 
                     <textarea
                       type="text"

@@ -545,9 +545,9 @@ const Inventory = () => {
                 </div>
                 <div className={styles.button_container}>
                   <button>Submit</button>
-                  <Link to="">
+                  {/* <Link to="">
                     <button onClick={handleUpdateUser}>Update user</button>
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             </form>

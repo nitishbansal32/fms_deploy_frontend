@@ -140,7 +140,7 @@ const ModalDrivers = (props) => {
                       </div>
                       <div>
                         <label>DOB</label>
-                        <p></p>
+                        <p>{item.DOB ? item.DOB.substr(0, 10) : ""}</p>
                       </div>
                     </div>
                     <div className={styles.right_container}>
@@ -178,7 +178,7 @@ const ModalDrivers = (props) => {
                       </div>
                       <div className={styles.gap_column_container}>
                         <label>SEX/SEXE</label>
-                        <p></p>
+                        <p>{item.gender} </p>
                       </div>
                     </div>
                   </div>

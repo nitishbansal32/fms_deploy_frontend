@@ -431,7 +431,7 @@ const Inventory = () => {
           </div>
         ) : (
           <div className="permission_tag">
-            <p>You do not have the necessary permissions to do this!</p>
+            <p>You are not authorized to make updates!</p>
             <button onClick={permissionHandler}>Go back</button>
           </div>
         )}

@@ -164,7 +164,7 @@ const Inventory = () => {
   };
 
   const handleBack = () => {
-    navigate("/dashboard", { replace: true });
+    navigate("/inventory", { replace: true });
     setModal(false);
   };
 
@@ -198,6 +198,7 @@ const Inventory = () => {
                     <input
                       type="number"
                       placeholder="E.g. 2022"
+                      minlength="4"
                       name="year"
                       onChange={inputChange}
                       value={data.year}
@@ -245,6 +246,8 @@ const Inventory = () => {
                     <input
                       type="text"
                       placeholder="17 digits"
+                      minlength="17"
+                      maxlength="17"
                       name="VIN"
                       onChange={inputChange}
                       value={data.VIN}

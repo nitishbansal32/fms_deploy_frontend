@@ -213,7 +213,7 @@ const Inventory = () => {
                         name="year"
                         onChange={inputChange}
                         value={data.year}
-                        required
+                        disabled
                       />
                     </div>
                     <div className={styles.table_content}>
@@ -231,7 +231,7 @@ const Inventory = () => {
                         id=""
                         onChange={inputChange}
                         value={data.made_by}
-                        required
+                        disabled
                       >
                         <option value="Volvo" selected>
                           Volvo
@@ -259,12 +259,11 @@ const Inventory = () => {
                         type="text"
                         placeholder="17 digits"
                         name="VIN"
+                        minlength="17"
+                        maxlength="17"
                         onChange={inputChange}
                         value={data.VIN}
-                        style={{
-                          borderColor: validator.VinValidate ? "red" : "",
-                        }}
-                        required
+                        disabled
                       />
                     </div>
                     <div className={styles.table_content}>
@@ -412,7 +411,12 @@ const Inventory = () => {
                         placeholder="Enter date"
                         name="next_maintenance_at"
                         onChange={inputChange}
-                        value={data.next_maintenance_at}
+                        value={
+                          data.next_maintenance_at
+                            ? data.next_maintenance_at.substr(0, 10)
+                            : ""
+                        }
+                        disabled
                       />
                     </div>
                     <div className={styles.table_content}>
@@ -460,10 +464,11 @@ const Inventory = () => {
 
                       <input
                         type="text"
-                        placeholder="E.g. 30"
+                        placeholder=""
                         name="days_remaining_for_next_inspection"
                         onChange={inputChange}
                         value={data.days_remaining_for_next_inspection}
+                        disabled
                       />
                     </div>
                     <div className={styles.table_content}>
@@ -488,7 +493,12 @@ const Inventory = () => {
                         placeholder="Enter date"
                         name="last_maintenance_at"
                         onChange={inputChange}
-                        value={data.last_maintenance_at}
+                        value={
+                          data.last_maintenance_at
+                            ? data.last_maintenance_at.substr(0, 10)
+                            : ""
+                        }
+                        disabled
                       />
                     </div>
 
@@ -501,6 +511,7 @@ const Inventory = () => {
                         name="maintenance_delay"
                         onChange={inputChange}
                         value={data.maintenance_delay}
+                        disabled
                       />
                     </div>
                     <div className={styles.table_content}>
@@ -522,7 +533,7 @@ const Inventory = () => {
           </div>
         ) : (
           <div className="permission_tag">
-            <p>You do not have the necessary permissions to do this!</p>
+            <p>You are not authorized to make updates!</p>
             <button onClick={permissionHandler}>Go back</button>
           </div>
         )}

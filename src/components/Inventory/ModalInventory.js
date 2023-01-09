@@ -226,10 +226,7 @@ const ModalInventory = (props) => {
                           : ""}
                       </p>
                     </div>
-                    <div>
-                      <label>Next Annual Inspection:</label>
-                      <p>{item.next_annual_inspection} </p>
-                    </div>
+
                     <div>
                       <label>Status:</label>
                       <p>{item.status}</p>

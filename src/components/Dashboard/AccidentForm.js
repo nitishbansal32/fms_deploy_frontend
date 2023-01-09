@@ -121,7 +121,6 @@ const Inventory = () => {
     setModal(true);
     setMsg("Adding new accident....");
     setModalColor("green");
-
     Axios.post(
       `https://lc-backend-v2.herokuapp.com/api/v1/LC/accidents/createAccident`,
       body,
@@ -146,7 +145,7 @@ const Inventory = () => {
   };
 
   const handleBack = () => {
-    navigate("/dashboard", { replace: true });
+    navigate("/accident", { replace: true });
     setModal(false);
   };
 
@@ -217,6 +216,8 @@ const Inventory = () => {
                       type="text"
                       placeholder="E.g. ABCD1234"
                       name="driver_licene_number"
+                      minlength="17"
+                      maxlength="17"
                       onChange={inputChange}
                       value={data.driver_licene_number}
                       required

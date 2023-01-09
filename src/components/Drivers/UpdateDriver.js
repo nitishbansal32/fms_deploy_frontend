@@ -68,6 +68,8 @@ const Inventory = () => {
     employee_notes: driverData.employee_notes,
     other: driverData.other,
     accidents_and_citations: driverData.accidents_and_citations,
+    DOB: driverData.DOB,
+    gender: driverData.gender,
   });
 
   const inputChange = (e) => {
@@ -107,6 +109,8 @@ const Inventory = () => {
   formData.append("employee_notes", data.employee_notes);
   formData.append("other", data.other);
   formData.append("accidents_and_citations", data.accidents_and_citations);
+  formData.append("DOB", data.DOB);
+  formData.append("gender", data.gender);
 
   //Files
   formData.append("profile_picture", file.profile_picture);
@@ -208,6 +212,39 @@ const Inventory = () => {
                     />
                   </div>
                   <div className={styles.table_content}>
+                    <label htmlFor="">*Gender:</label>
+                    <input
+                      type="text"
+                      placeholder="E.g. Male"
+                      name="gender"
+                      onChange={inputChange}
+                      value={data.gender}
+                      required
+                    />
+                  </div>
+                  <div className={styles.table_content}>
+                    <label htmlFor="">Driver license number:</label>
+                    <input
+                      type="text"
+                      placeholder="E.g. ABCD1234"
+                      name="DL_number"
+                      onChange={inputChange}
+                      value={data.DL_number}
+                    />
+                  </div>
+                  <div className={styles.table_content}>
+                    <label htmlFor="">*DOB:</label>
+                    <input
+                      type="date"
+                      data-date-format="YYYY MM DD"
+                      placeholder="E.g. David"
+                      name="DOB"
+                      onChange={inputChange}
+                      value={data.DOB}
+                      required
+                    />
+                  </div>
+                  <div className={styles.table_content}>
                     <label htmlFor="">*Start date:</label>
                     <input
                       type="date"
@@ -220,16 +257,6 @@ const Inventory = () => {
                     />
                   </div>
 
-                  <div className={styles.table_content}>
-                    <label htmlFor="">Driver license number:</label>
-                    <input
-                      type="text"
-                      placeholder="E.g. ABCD1234"
-                      name="DL_number"
-                      onChange={inputChange}
-                      value={data.DL_number}
-                    />
-                  </div>
                   <div className={styles.table_content}>
                     <label htmlFor="">*Expiry:</label>
                     <input
@@ -329,17 +356,7 @@ const Inventory = () => {
                       <option value="inactive">active</option>
                     </select>
                   </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">Semi annual PR:</label>
 
-                    <input
-                      type="text"
-                      placeholder="Enter Semi annual PR"
-                      name="semi_annual_PR"
-                      onChange={inputChange}
-                      value={data.semi_annual_PR.substr(0, 10)}
-                    />
-                  </div>
                   <div className={styles.table_content}>
                     <label htmlFor="">CVOR points:</label>
 
@@ -413,14 +430,29 @@ const Inventory = () => {
                     />
                   </div>
                   <div className={styles.table_content}>
+                    <label htmlFor="">Semi annual PR:</label>
+
+                    <input
+                      type="date"
+                      data-date-format="YYYY MM DD"
+                      placeholder="Enter Semi annual PR"
+                      name="semi_annual_PR"
+                      onChange={inputChange}
+                      value={data.semi_annual_PR.substr(0, 10)}
+                      disabled
+                    />
+                  </div>
+                  <div className={styles.table_content}>
                     <label htmlFor="">First PR:</label>
 
                     <input
-                      type="text"
+                      type="date"
+                      data-date-format="YYYY MM DD"
                       placeholder="This is first PR"
                       name="first_PR"
                       onChange={inputChange}
                       value={data.first_PR.substr(0, 10)}
+                      disabled
                     />
                   </div>
                   <div className={styles.table_file_container}>
@@ -715,7 +747,7 @@ const Inventory = () => {
           </div>
         ) : (
           <div className="permission_tag">
-            <p>You do not have the necessary permissions to do this!</p>
+            <p>You are not authorized to make updates!</p>
             <button onClick={permissionHandler}>Go back</button>
           </div>
         )}
