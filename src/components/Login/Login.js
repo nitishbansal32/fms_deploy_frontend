@@ -73,6 +73,7 @@ const Login = () => {
     )
       .then((response) => {
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("role", response.data.user.role);
         const item = localStorage.getItem("token", response.data.token);
         console.log(response);
         if (response.data == "Too many requests, please try again later.") {
@@ -89,26 +90,19 @@ const Login = () => {
           setMsg("User authenticated!");
           setModalColor("green");
         }
-        const roleValue = response.data.user.role;
-        if (roleValue === "super-admin") {
-          setRole(true);
-        } else {
-          setRole(false);
-        }
         setIsLoggedIn(item);
       })
       .catch((err) => {
         console.log(err);
-
-        // if (err.data.msg === "Invalid Credentials") {
-        //   setModal(true);
-        //   setMsg("Invalid credentials!");
-        //   setModalColor("red");
-        // } else {
-        setModal(true);
-        setMsg("Please Try again!");
-        setModalColor("red");
-        // }
+        if (err.response.data.msg === "Invalid Credentials") {
+          setModal(true);
+          setMsg("Invalid credentials!");
+          setModalColor("red");
+        } else {
+          setModal(true);
+          setMsg("Please Try again!");
+          setModalColor("red");
+        }
       });
   }
 

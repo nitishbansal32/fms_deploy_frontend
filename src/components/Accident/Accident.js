@@ -17,8 +17,6 @@ const Inventory = () => {
 
   const [viewState, setViewState] = useState(false);
 
-  const [modal, setModal] = useState(false);
-
   const [modalAccident, setModalAccident] = useState([]);
 
   const {
@@ -31,6 +29,8 @@ const Inventory = () => {
     setDisplay,
     setMsg,
     setAccidentData,
+    setModalColor,
+    setModal,
   } = useContext(UserContext);
 
   const [url, setUrl] = useState(role ? "" : "currAccidents"); // Url is dynamic, checking state of role
@@ -49,10 +49,9 @@ const Inventory = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log(e.target[0].value);
-
-    setModal(false);
+    setModal(true);
+    setMsg("Fetching data...");
+    setModalColor("green");
 
     try {
       if (!(e.target[0].value == "")) {
@@ -67,14 +66,11 @@ const Inventory = () => {
           })
           .catch((err) => {
             console.log(err);
-            setModal(true);
-            // if (err.request.status === 404) {
-            //   setMsg("Enter correct detail");
-            // } else if (err.request.status === 400) {
-            //   setMsg("Enter correct detail");
-            // } else if (err.request.status === 403) {
-            //   setMsg("You are forbidden!");
-            // }
+            if (err.response.status === 404) {
+              setModal(true);
+              setMsg("No data found");
+              setModalColor("red");
+            }
           });
       }
     } catch (exc) {
@@ -87,7 +83,9 @@ const Inventory = () => {
   //For Getting all tractors
 
   const getAlldrivers = () => {
-    console.log(role);
+    setModal(true);
+    setMsg("Fetching data...");
+    setModalColor("green");
     try {
       Axios.get(
         `https://lc-backend-v2.herokuapp.com/api/v1/LC/accidents/${url}`,
@@ -100,9 +98,18 @@ const Inventory = () => {
         .then((response) => {
           console.log(response);
           setAlldrivers(response.data.accidents);
+          setModal(false);
         })
         .catch((err) => {
-          console.log(err);
+          if (err.response.status === 404) {
+            setModal(true);
+            setMsg("No data found");
+            setModalColor("red");
+          } else {
+            setModal(true);
+            setMsg("Please try again...");
+            setModalColor("red");
+          }
         });
     } catch (exc) {
       console.log(exc);
@@ -118,7 +125,9 @@ const Inventory = () => {
   };
 
   const handleInput = (e) => {
-    console.log(e.target.value);
+    setModal(true);
+    setMsg("Fetching data...");
+    setModalColor("green");
     e.preventDefault();
     const InputClick = e.target.value;
 
@@ -133,16 +142,13 @@ const Inventory = () => {
           console.log(response);
           setModalAccident([response.data.accident]);
           setAccidentData(response.data.accident);
+          setModal(false);
         })
         .catch((err) => {
           console.log(err);
-          // if (err.request.status === 404) {
-          //   setMsg("Enter correct detail");
-          // } else if (err.request.status === 400) {
-          //   setMsg("Enter correct detail");
-          // } else if (err.request.status === 403) {
-          //   setMsg("You are forbidden!");
-          // }
+          setModal(true);
+          setMsg("Please try again...");
+          setModalColor("red");
         });
     } catch (exc) {
       console.log(exc);
@@ -166,9 +172,6 @@ const Inventory = () => {
                   placeholder="Enter accident number"
                   onChange={inputChange}
                   value={drivers}
-                  style={{
-                    border: modal ? "1.5px solid red" : "0",
-                  }}
                 />
                 <button className="button_get">Search</button>
               </div>

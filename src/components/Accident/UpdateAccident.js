@@ -58,6 +58,8 @@ const Inventory = () => {
     driver_statement: accidentData.driver_statement,
   });
 
+  console.log(accidentData.accident_date);
+
   const inputChange = (e) => {
     setData({
       ...data,
@@ -129,12 +131,17 @@ const Inventory = () => {
     setModal(false);
   };
 
+  const permissionHandler = () => {
+    navigate("/accident", { replace: true });
+    setModal(false);
+  };
+
   return (
     <>
       {/* {isLoggedIn ? ( */}
       <div className="wrapper_container">
         <Navbar />
-        {!(role === "employee") ? (
+        {!(localStorage.getItem("role") === "employee") ? (
           <div className={styles.main_container}>
             <button onClick={handleBack} className={styles.back_button}>
               Back
@@ -164,7 +171,11 @@ const Inventory = () => {
                       placeholder="Enter accident_date"
                       name="accident_date"
                       onChange={inputChange}
-                      value={data.accident_date}
+                      value={
+                        data.accident_date
+                          ? data.accident_date.substr(0, 10)
+                          : ""
+                      }
                       required
                     />
                   </div>
@@ -419,7 +430,10 @@ const Inventory = () => {
             </form>
           </div>
         ) : (
-          <div>You do not have the necessary permissions to do this!</div>
+          <div className="permission_tag">
+            <p>You do not have the necessary permissions to do this!</p>
+            <button onClick={permissionHandler}>Go back</button>
+          </div>
         )}
       </div>
       {/* ) : (

@@ -25,6 +25,7 @@ const Navbar = () => {
 
   const handleLogOut = () => {
     setIsLoggedIn(null);
+    setModal(false);
     navigate("/", { replace: true });
     localStorage.removeItem("token");
     console.log(localStorage.getItem("token"));

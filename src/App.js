@@ -23,6 +23,7 @@ import Loading from "./components/Loading";
 import UpdateInventory from "./components/Inventory/UpdateInventory";
 import UpdateAccident from "./components/Accident/UpdateAccident";
 import UpdateDriver from "./components/Drivers/UpdateDriver";
+// import UpdateEmployee from "./components/Employee/UpdateEmployee";
 // import UpdateDriver from "./components/Drivers/UpdateDriver";
 
 import { UserContext } from "./UserContext";
@@ -146,6 +147,12 @@ function App() {
               path="/updateAccident"
               element={<UpdateAccident />}
             ></Route>
+            {/* <Route
+              exact
+              path="/updateUser"
+              element={<UpdateEmployee />}
+            ></Route> */}
+
             <Route exact path="/allservices" element={<ServiceDash />}></Route>
 
             <Route exact path="/loading" element={<Loading />}></Route>

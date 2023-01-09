@@ -20,10 +20,10 @@ const Dashboard = () => {
   const [expPlate, setExpPlate] = useState([]);
   const [expSafety, setExpSafety] = useState([]);
 
-  const [dlState, setDlState] = useState(false);
-  const [mlState, setMlState] = useState(false);
-  const [plateState, setPlateState] = useState(false);
-  const [safetyState, setSafetyState] = useState(false);
+  // const [dlState, setDlState] = useState(false);
+  // const [mlState, setMlState] = useState(false);
+  // const [plateState, setPlateState] = useState(false);
+  // const [safetyState, setSafetyState] = useState(false);
 
   const config = {
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -54,6 +54,8 @@ const Dashboard = () => {
       });
   }, []);
 
+  console.log(expDrivingLicense.length);
+
   return (
     <>
       {/* {!(isLoggedIn===null) ? ( */}
@@ -64,7 +66,7 @@ const Dashboard = () => {
             <div className={styles.left_top_container}>
               <div className={styles.expiry_main_container}>
                 <h2>Expiry</h2>
-                <div className={styles.expiry_button}>
+                {/* <div className={styles.expiry_button}>
                   <button
                     onClick={() => {
                       setDlState((prevState) => !prevState);
@@ -109,13 +111,14 @@ const Dashboard = () => {
                   >
                     Expired safety
                   </button>
-                </div>
+                </div> */}
 
                 <div className={styles.expiry_container}>
                   <div className={styles.expiry_content_container}>
-                    {dlState && <h3>Expired driving licenses</h3>}
-                    {dlState &&
-                      expDrivingLicense &&
+                    {!(expDrivingLicense.length === 0) && (
+                      <h3>Expired driving licenses</h3>
+                    )}
+                    {expDrivingLicense &&
                       expDrivingLicense.map((item) => (
                         <>
                           <div className={styles.expiry_content}>
@@ -127,9 +130,10 @@ const Dashboard = () => {
                       ))}
                   </div>
                   <div className={styles.expiry_content_container}>
-                    {mlState && <h3>Expired medical licenses</h3>}
-                    {mlState &&
-                      expMedicalLicense &&
+                    {!(expMedicalLicense.length === 0) && (
+                      <h3>Expired medical licenses</h3>
+                    )}
+                    {expMedicalLicense &&
                       expMedicalLicense.map((item) => (
                         <>
                           <div className={styles.expiry_content}>
@@ -141,10 +145,8 @@ const Dashboard = () => {
                       ))}
                   </div>
                   <div className={styles.expiry_content_container}>
-                    {plateState && <h3>Expired plates</h3>}
-
-                    {plateState &&
-                      expPlate &&
+                    {!(expPlate.length === 0) && <h3>Expired plates</h3>}
+                    {expPlate &&
                       expPlate.map((item) => (
                         <>
                           <div className={styles.expiry_content}>
@@ -156,9 +158,8 @@ const Dashboard = () => {
                       ))}
                   </div>
                   <div className={styles.expiry_content_container}>
-                    {safetyState && <h3>Expired safety</h3>}
-                    {safetyState &&
-                      expSafety &&
+                    {!(expSafety.length === 0) && <h3>Expired safety</h3>}
+                    {expSafety &&
                       expSafety.map((item) => (
                         <>
                           <div className={styles.expiry_content}>
@@ -213,13 +214,7 @@ const Dashboard = () => {
               <div className={styles.activity_desc}>
                 {activity &&
                   activity.map((item) => (
-                    <div
-                      className={styles.activity}
-                      // style={{
-                      //   backgroundColor:
-                      //     activity.type === "CREATION" ? "green" : "#f5f5f5",
-                      // }}
-                    >
+                    <div className={styles.activity}>
                       <p className={styles.heading}>{item.heading}</p>
                       <p className={styles.date}>
                         {item.updatedAt.substr(0, 10)}

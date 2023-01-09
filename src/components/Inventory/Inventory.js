@@ -20,8 +20,6 @@ const Inventory = () => {
 
   const [modalInventory, setModalInventory] = useState("");
 
-  const [modal, setModal] = useState(false);
-
   const {
     isLoggedIn,
     setIsLoggedIn,
@@ -33,6 +31,8 @@ const Inventory = () => {
     setDisplay,
     inventoryData,
     setInventoryData,
+    setModalColor,
+    setModal,
   } = useContext(UserContext);
 
   const [url, setUrl] = useState(role ? "" : "currTractors"); // Url is dynamic, checking state of role
@@ -53,7 +53,9 @@ const Inventory = () => {
     e.preventDefault();
 
     console.log(e.target[0].value);
-    setModal(false);
+    setModal(true);
+    setMsg("Fetching data...");
+    setModalColor("green");
 
     try {
       if (!(e.target[0].value == "")) {
@@ -68,7 +70,11 @@ const Inventory = () => {
           })
           .catch((err) => {
             console.log(err);
-            setModal(true);
+            if (err.response.status === 404) {
+              setModal(true);
+              setMsg("No data found");
+              setModalColor("red");
+            }
           });
       }
     } catch (exc) {
@@ -79,12 +85,12 @@ const Inventory = () => {
     }
   };
 
-  console.log(modal);
-
   //For Getting all tractors
 
   const getAlldrivers = () => {
-    console.log(role);
+    setModal(true);
+    setMsg("Fetching data...");
+    setModalColor("green");
     try {
       Axios.get(
         `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/${url}`,
@@ -97,9 +103,19 @@ const Inventory = () => {
         .then((response) => {
           console.log(response);
           setAlldrivers(response.data.tractors);
+          setModal(false);
         })
         .catch((err) => {
           console.log(err);
+          if (err.response.status === 404) {
+            setModal(true);
+            setMsg("No data found");
+            setModalColor("red");
+          } else {
+            setModal(true);
+            setMsg("Please try again...");
+            setModalColor("red");
+          }
         });
     } catch (exc) {
       console.log(exc);
@@ -149,8 +165,6 @@ const Inventory = () => {
     }
   };
 
- 
-
   return (
     <>
       {/* {isLoggedIn ? ( */}
@@ -166,9 +180,6 @@ const Inventory = () => {
                   placeholder="Enter equipment number"
                   onChange={inputChange}
                   value={drivers}
-                  style={{
-                    border: modal ? "1.5px solid red" : "0",
-                  }}
                 />
                 <button className="button_get">Search</button>
               </div>

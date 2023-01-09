@@ -125,7 +125,11 @@ const ModalInventory = (props) => {
                       <label>
                         EXPIRY DATE <br /> DATE D'EXPIRATION
                       </label>
-                      <p>{item.safety_expiry_date.substr(0, 10)}</p>
+                      <p>
+                        {item.safety_expiry_date
+                          ? item.safety_expiry_date.substr(0, 10)
+                          : ""}
+                      </p>
                     </div>
                     <div>
                       <label>
@@ -199,13 +203,6 @@ const ModalInventory = (props) => {
                       <label>Weight:</label>
                       <p>{item.weight}</p>
                     </div>
-                  </div>
-
-                  <div className={styles.right_container}>
-                    <div>
-                      <label>Supervisor:</label>
-                      <p>{item.supervisor} </p>
-                    </div>
                     <div>
                       <label>Other:</label>
                       <p>{item.other}</p>
@@ -218,9 +215,16 @@ const ModalInventory = (props) => {
                       <label>Standard job:</label>
                       <p>{item.standard_job}</p>
                     </div>
+                  </div>
+
+                  <div className={styles.right_container}>
                     <div>
                       <label>Annual Inspection:</label>
-                      <p>{item.annual_inspection.substr(0, 10)}</p>
+                      <p>
+                        {item.annual_inspection
+                          ? item.annual_inspection.substr(0, 10)
+                          : ""}
+                      </p>
                     </div>
                     <div>
                       <label>Next Annual Inspection:</label>
@@ -233,12 +237,44 @@ const ModalInventory = (props) => {
 
                     <div>
                       <label>Plate expiry date:</label>
-                      <p>{item.plate_expiry_date}</p>
+                      <p>
+                        {item.plate_expiry_date
+                          ? item.plate_expiry_date.substr(0, 10)
+                          : ""}
+                      </p>
                     </div>
 
                     <div>
                       <label>Maintainence duration:</label>
                       <p>{item.maintenance_duration}</p>
+                    </div>
+                    <div>
+                      <label>Next maintainence at:</label>
+                      <p>
+                        {item.next_maintenance_at
+                          ? item.next_maintenance_at.substr(0, 10)
+                          : ""}
+                      </p>
+                    </div>
+                    <div>
+                      <label>Last maintainence at:</label>
+                      <p>
+                        {item.last_maintenance_at
+                          ? item.last_maintenance_at.substr(0, 10)
+                          : ""}
+                      </p>
+                    </div>
+                    <div>
+                      <label>Maintainence delay:</label>
+                      <p>{item.maintenance_delay}</p>
+                    </div>
+                    <div>
+                      <label>Days for next inpection:</label>
+                      <p>{item.days_remaining_for_next_inspection}</p>
+                    </div>
+                    <div>
+                      <label>Mechanical notes:</label>
+                      <p>{item.mechanical_notes}</p>
                     </div>
                   </div>
                 </div>

@@ -139,14 +139,22 @@ const ModalDrivers = (props) => {
                         )}
                       </div>
                       <div>
-                        <label>EMP ID</label>
-                        <p>{item.employee_id}</p>
+                        <label>DOB</label>
+                        <p></p>
                       </div>
                     </div>
                     <div className={styles.right_container}>
                       <div className={styles.gap_column_container}>
                         <label>NAME/NOM</label>
                         <p>{item.employee_name}</p>
+                      </div>
+                      <div className={styles.gap_column_container}>
+                        <label>ADDRESS</label>
+                        <p></p>
+                      </div>
+                      <div className={styles.gap_column_container}>
+                        <label>NUMBER/NUMERO</label>
+                        <p>{item.DL_number}</p>
                       </div>
                       <div className={styles.row_container}>
                         <div>
@@ -155,13 +163,22 @@ const ModalDrivers = (props) => {
                         </div>
                         <div>
                           <label>4b EXP/EXP</label>
-                          <p>{item.expiry.substr(0, 10)} </p>
+                          <p>{item.expiry ? item.expiry.substr(0, 10) : ""} </p>
                         </div>
                       </div>
-
+                      <div className={styles.row_container}>
+                        <div>
+                          <label>DD/REF</label>
+                          <p></p>
+                        </div>
+                        <div>
+                          <label>16HGT/HAUT</label>
+                          <p> </p>
+                        </div>
+                      </div>
                       <div className={styles.gap_column_container}>
-                        <label>DL NUMBER</label>
-                        <p>{item.DL_number}</p>
+                        <label>SEX/SEXE</label>
+                        <p></p>
                       </div>
                     </div>
                   </div>
@@ -171,8 +188,16 @@ const ModalDrivers = (props) => {
                   <div className={styles.extra_container}>
                     <div className={styles.left_extra_container}>
                       <div>
+                        <label>EMP ID</label>
+                        <p>{item.employee_id}</p>
+                      </div>
+                      <div>
                         <label>Medical Expiry:</label>
-                        <p>{item.medical_expiry_date.substr(0, 10)}</p>
+                        <p>
+                          {item.medical_expiry_date
+                            ? item.medical_expiry_date.substr(0, 10)
+                            : ""}
+                        </p>
                       </div>{" "}
                       <div>
                         <label>Phone Number:</label>
@@ -191,41 +216,47 @@ const ModalDrivers = (props) => {
                         <p>{item.shift}</p>
                       </div>
                       <div>
-                        <label>employee_type:</label>
+                        <label>Employee type:</label>
                         <p>{item.employee_type}</p>
                       </div>
                       <div>
-                        <label>employee_status:</label>
+                        <label>Employee status:</label>
                         <p>{item.employee_status}</p>
-                      </div>
-                      <div>
-                        <label>supervisor:</label>
-                        <p>{item.supervisor}</p>
                       </div>
                     </div>
                     <div className={styles.right_extra_container}>
                       <div>
-                        <label>supervisor_notes:</label>
+                        <label>Supervisor:</label>
+                        <p>{item.supervisor}</p>
+                      </div>
+                      <div>
+                        <label>Supervisor notes:</label>
                         <p>{item.supervisor_notes}</p>
                       </div>
                       <div>
                         <label>First PR:</label>
-                        <p>{item.first_PR.substr(0, 10)}</p>
+                        <p>
+                          {item.first_PR ? item.first_PR.substr(0, 10) : ""}
+                        </p>
                       </div>
                       <div>
                         <label>Semi annual PR:</label>
-                        <p>{item.semi_annual_PR.substr(0, 10)}</p>
+                        <p>
+                          {item.semi_annual_PR
+                            ? item.semi_annual_PR.substr(0, 10)
+                            : ""}
+                        </p>
                       </div>
                       <div>
                         <label>CVOR points:</label>
                         <p>{item.CVOR_points}</p>
                       </div>
                       <div>
-                        <label>employee_notes:</label>
+                        <label>Employee notes:</label>
                         <p> {item.employee_notes}</p>
                       </div>
                       <div>
-                        <label>other:</label>
+                        <label>Other:</label>
                         <p>{item.other}</p>
                       </div>
                       <div>

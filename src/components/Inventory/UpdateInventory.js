@@ -65,7 +65,6 @@ const Inventory = () => {
     tyre_size: inventoryData.tyre_size,
     standard_job: inventoryData.standard_job,
     annual_inspection: inventoryData.annual_inspection,
-    next_annual_inspection: inventoryData.next_annual_inspection,
     safety_expiry_date: inventoryData.safety_expiry_date,
     status: inventoryData.status,
     plate_expiry_date: inventoryData.plate_expiry_date,
@@ -104,7 +103,6 @@ const Inventory = () => {
     tyre_size: data.tyre_size,
     standard_job: data.standard_job,
     annual_inspection: data.annual_inspection,
-    next_annual_inspection: data.next_annual_inspection,
     safety_expiry_date: data.safety_expiry_date,
     status: data.status,
     plate_expiry_date: data.plate_expiry_date,
@@ -127,8 +125,6 @@ const Inventory = () => {
     setMsg("Updating equipment information...");
     setModal(true);
     setModalColor("green");
-
-    ValidateFunc();
 
     Axios.patch(
       `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/${inventoryData.unit}`,
@@ -175,12 +171,17 @@ const Inventory = () => {
     setModal(false);
   };
 
+  const permissionHandler = () => {
+    navigate("/inventory", { replace: true });
+    setModal(false);
+  };
+
   return (
     <>
       {/* {isLoggedIn ? ( */}
       <div className="wrapper_container">
         <Navbar />
-        {!(role === "employee") ? (
+        {!(localStorage.getItem("role") === "employee") ? (
           <div className={styles.main_container}>
             <button onClick={handleBack} className={styles.back_button}>
               Back
@@ -192,31 +193,32 @@ const Inventory = () => {
                 <div className={styles.table_container}>
                   {/* {arrInventoryData.map((item) => (
                     <> */}
-                  <div className={styles.table_content}>
-                    <label htmlFor="">*Unit :</label>
-                    <input
-                      type="text"
-                      placeholder="E.g. 123abc"
-                      name="unit"
-                      onChange={inputChange}
-                      value={data.unit}
-                      required
-                    />
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">*Year: </label>
-                    <input
-                      type="text"
-                      placeholder="E.g. 2022"
-                      name="year"
-                      onChange={inputChange}
-                      value={data.year}
-                      required
-                    />
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">*Make:</label>
-                    {/* <input
+                  <div className={styles.above_container}>
+                    <div className={styles.table_content}>
+                      <label htmlFor="">*Unit :</label>
+                      <input
+                        type="text"
+                        placeholder="E.g. 123abc"
+                        name="unit"
+                        onChange={inputChange}
+                        value={data.unit}
+                        required
+                      />
+                    </div>
+                    <div className={styles.table_content}>
+                      <label htmlFor="">*Year: </label>
+                      <input
+                        type="text"
+                        placeholder="E.g. 2022"
+                        name="year"
+                        onChange={inputChange}
+                        value={data.year}
+                        required
+                      />
+                    </div>
+                    <div className={styles.table_content}>
+                      <label htmlFor="">*Make:</label>
+                      {/* <input
                       type="text"
                       placeholder="Made by"
                       name="made_by"
@@ -224,304 +226,294 @@ const Inventory = () => {
                       value={data.made_by}
                       
                     /> */}
-                    <select
-                      name="made_by"
-                      id=""
-                      onChange={inputChange}
-                      value={data.made_by}
-                      required
-                    >
-                      <option value="Volvo" selected>
-                        Volvo
-                      </option>
-                      <option value="International">International</option>
-                      <option value="Freightliner">Freightliner</option>
-                      <option value="Toyota">Toyota</option>
-                    </select>
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">*Color:</label>
-                    <input
-                      type="text"
-                      placeholder="E.g. red"
-                      name="color"
-                      onChange={inputChange}
-                      value={data.color}
-                      required
-                    />
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">*VIN:</label>
+                      <select
+                        name="made_by"
+                        id=""
+                        onChange={inputChange}
+                        value={data.made_by}
+                        required
+                      >
+                        <option value="Volvo" selected>
+                          Volvo
+                        </option>
+                        <option value="International">International</option>
+                        <option value="Freightliner">Freightliner</option>
+                        <option value="Toyota">Toyota</option>
+                      </select>
+                    </div>
+                    <div className={styles.table_content}>
+                      <label htmlFor="">*Color:</label>
+                      <input
+                        type="text"
+                        placeholder="E.g. red"
+                        name="color"
+                        onChange={inputChange}
+                        value={data.color}
+                        required
+                      />
+                    </div>
+                    <div className={styles.table_content}>
+                      <label htmlFor="">*VIN:</label>
 
-                    <input
-                      type="text"
-                      placeholder="17 digits"
-                      name="VIN"
-                      onChange={inputChange}
-                      value={data.VIN}
-                      style={{
-                        borderColor: validator.VinValidate ? "red" : "",
-                      }}
-                      required
-                    />
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">Status:</label>
-                    <select
-                      name="status"
-                      id=""
-                      onChange={inputChange}
-                      value={data.status}
-                      // default="active"
-                    >
-                      <option value="active" selected="selected">
-                        Active
-                      </option>
-                      <option value="inactive">Inactive</option>
-                      <option value="safety due">Safety due</option>
-                    </select>
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">Description</label>
-                    <input
-                      type="text"
-                      placeholder="E.g. trailer is....."
-                      name="description"
-                      onChange={inputChange}
-                      value={data.description}
-                    />
-                  </div>
+                      <input
+                        type="text"
+                        placeholder="17 digits"
+                        name="VIN"
+                        onChange={inputChange}
+                        value={data.VIN}
+                        style={{
+                          borderColor: validator.VinValidate ? "red" : "",
+                        }}
+                        required
+                      />
+                    </div>
+                    <div className={styles.table_content}>
+                      <label htmlFor="">Status:</label>
+                      <select
+                        name="status"
+                        id=""
+                        onChange={inputChange}
+                        value={data.status}
+                        // default="active"
+                      >
+                        <option value="active" selected="selected">
+                          Active
+                        </option>
+                        <option value="inactive">Inactive</option>
+                        <option value="safety due">Safety due</option>
+                      </select>
+                    </div>
+                    <div className={styles.table_content}>
+                      <label htmlFor="">Description</label>
+                      <input
+                        type="text"
+                        placeholder="E.g. trailer is....."
+                        name="description"
+                        onChange={inputChange}
+                        value={data.description}
+                      />
+                    </div>
 
-                  <div className={styles.table_content}>
-                    <label htmlFor="">ELD:</label>
+                    <div className={styles.table_content}>
+                      <label htmlFor="">ELD:</label>
 
-                    <input
-                      type="text"
-                      placeholder="Enter ELD"
-                      name="ELD"
-                      onChange={inputChange}
-                      value={data.ELD}
-                    />
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">Terminal:</label>
+                      <input
+                        type="text"
+                        placeholder="Enter ELD"
+                        name="ELD"
+                        onChange={inputChange}
+                        value={data.ELD}
+                      />
+                    </div>
+                    <div className={styles.table_content}>
+                      <label htmlFor="">Terminal:</label>
 
-                    <input
-                      type="text"
-                      placeholder="Enter terminal"
-                      name="terminal"
-                      onChange={inputChange}
-                      value={data.terminal}
-                    />
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">Ownership:</label>
+                      <input
+                        type="text"
+                        placeholder="Enter terminal"
+                        name="terminal"
+                        onChange={inputChange}
+                        value={data.terminal}
+                      />
+                    </div>
+                    <div className={styles.table_content}>
+                      <label htmlFor="">Ownership:</label>
 
-                    <input
-                      type="text"
-                      placeholder="E.g. David"
-                      name="ownership"
-                      onChange={inputChange}
-                      value={data.ownership}
-                    />
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="shift">Licence plate:</label>
-                    <input
-                      type="text"
-                      name="licence_plate"
-                      placeholder="E.g. ABCD1234"
-                      onChange={inputChange}
-                      value={data.licence_plate}
-                    />
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">Number of axles:</label>
+                      <input
+                        type="text"
+                        placeholder="E.g. David"
+                        name="ownership"
+                        onChange={inputChange}
+                        value={data.ownership}
+                      />
+                    </div>
+                    <div className={styles.table_content}>
+                      <label htmlFor="shift">Licence plate:</label>
+                      <input
+                        type="text"
+                        name="licence_plate"
+                        placeholder="E.g. ABCD1234"
+                        onChange={inputChange}
+                        value={data.licence_plate}
+                      />
+                    </div>
+                    <div className={styles.table_content}>
+                      <label htmlFor="">Number of axles:</label>
 
-                    <input
-                      type="number"
-                      min="0"
-                      placeholder="E.g. 2"
-                      name="number_of_axles"
-                      onChange={inputChange}
-                      value={data.number_of_axles}
-                    />
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">Weight(Kg):</label>
+                      <input
+                        type="number"
+                        min="0"
+                        placeholder="E.g. 2"
+                        name="number_of_axles"
+                        onChange={inputChange}
+                        value={data.number_of_axles}
+                      />
+                    </div>
+                    <div className={styles.table_content}>
+                      <label htmlFor="">Weight(Kg):</label>
 
-                    <input
-                      type="number"
-                      min="0"
-                      placeholder="E.g. 15"
-                      name="weight"
-                      onChange={inputChange}
-                      value={data.weight}
-                    />
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">Tyre Size:</label>
+                      <input
+                        type="number"
+                        min="0"
+                        placeholder="E.g. 15"
+                        name="weight"
+                        onChange={inputChange}
+                        value={data.weight}
+                      />
+                    </div>
+                    <div className={styles.table_content}>
+                      <label htmlFor="">Tyre Size:</label>
 
-                    <input
-                      type="text"
-                      placeholder="E.g. 11R25"
-                      name="tyre_size"
-                      onChange={inputChange}
-                      value={data.tyre_size}
-                    />
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">Standard job:</label>
-
-                    <input
-                      type="text"
-                      placeholder="Enter standard job"
-                      name="standard_job"
-                      onChange={inputChange}
-                      value={data.standard_job}
-                    />
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">*Annual inspection:</label>
-
-                    <input
-                      type="date"
-                      data-date-format="YYYY MM DD"
-                      placeholder="Enter annual inspection"
-                      name="annual_inspection"
-                      onChange={inputChange}
-                      value={
-                        data.annual_inspection
-                          ? data.annual_inspection.substr(0, 10)
-                          : ""
-                      }
-                      required
-                    />
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">Next annual inspection:</label>
-
-                    <input
-                      type="date"
-                      data-date-format="YYYY MM DD"
-                      placeholder="Enter next annual inspection"
-                      name="next_annual_inspection"
-                      onChange={inputChange}
-                      value={
-                        data.next_annual_inspection
-                          ? data.next_annual_inspection.substr(0, 10)
-                          : ""
-                      }
-                    />
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">*Annual safety expiry:</label>
-
-                    <input
-                      type="date"
-                      placeholder="Enter safety expiry date"
-                      data-date-format="YYYY MM DD"
-                      name="safety_expiry_date"
-                      onChange={inputChange}
-                      value={
-                        data.safety_expiry_date
-                          ? data.safety_expiry_date.substr(0, 10)
-                          : ""
-                      }
-                      required
-                    />
+                      <input
+                        type="text"
+                        placeholder="E.g. 11R25"
+                        name="tyre_size"
+                        onChange={inputChange}
+                        value={data.tyre_size}
+                      />
+                    </div>
                   </div>
 
-                  <div className={styles.table_content}>
-                    <label htmlFor="">*Plate expiry:</label>
+                  <div className={styles.special_container}>
+                    <div className={styles.table_content}>
+                      <label htmlFor="">*Annual safety expiry:</label>
+                      <input
+                        type="date"
+                        placeholder="Enter safety expiry date"
+                        data-date-format="YYYY MM DD"
+                        name="safety_expiry_date"
+                        onChange={inputChange}
+                        value={
+                          data.safety_expiry_date
+                            ? data.safety_expiry_date.substr(0, 10)
+                            : ""
+                        }
+                        required
+                      />
+                    </div>
+                    <div className={styles.table_content}>
+                      <label htmlFor="">*Maintainence duration(days):</label>
 
-                    <input
-                      type="date"
-                      data-date-format="YYYY MM DD"
-                      placeholder="Enter plat expiry date"
-                      name="plate_expiry_date"
-                      onChange={inputChange}
-                      value={
-                        data.plate_expiry_date
-                          ? data.plate_expiry_date.substr(0, 10)
-                          : ""
-                      }
-                      required
-                    />
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">*Maintainence duration(days):</label>
+                      <input
+                        type="number"
+                        min="0"
+                        placeholder="E.g. 90"
+                        name="maintenance_duration"
+                        onChange={inputChange}
+                        value={data.maintenance_duration}
+                        required
+                      />
+                    </div>
+                    <div className={styles.table_content}>
+                      <label htmlFor="">Next maintainence at:</label>
+                      <input
+                        type="date"
+                        data-date-format="YYYY MM DD"
+                        placeholder="Enter date"
+                        name="next_maintenance_at"
+                        onChange={inputChange}
+                        value={data.next_maintenance_at}
+                      />
+                    </div>
+                    <div className={styles.table_content}>
+                      <label htmlFor="">*Annual inspection:</label>
 
-                    <input
-                      type="number"
-                      min="0"
-                      placeholder="E.g. 90"
-                      name="maintenance_duration"
-                      onChange={inputChange}
-                      value={data.maintenance_duration}
-                      required
-                    />
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">
-                      Days remaining for next inspection:
-                    </label>
+                      <input
+                        type="date"
+                        data-date-format="YYYY MM DD"
+                        placeholder="Enter annual inspection"
+                        name="annual_inspection"
+                        onChange={inputChange}
+                        value={
+                          data.annual_inspection
+                            ? data.annual_inspection.substr(0, 10)
+                            : ""
+                        }
+                        required
+                      />
+                    </div>
 
-                    <input
-                      type="text"
-                      placeholder="E.g. 30"
-                      name="days_remaining_for_next_inspection"
-                      onChange={inputChange}
-                      value={data.days_remaining_for_next_inspection}
-                    />
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">Mechanical notes:</label>
+                    <div className={styles.table_content}>
+                      <label htmlFor="">*Plate expiry:</label>
 
-                    <textarea
-                      rows="2"
-                      cols="25"
-                      type="text"
-                      placeholder="E.g. Axles are.."
-                      name="mechanical_notes"
-                      onChange={inputChange}
-                      value={data.mechanical_notes}
-                    />
-                  </div>
-
-                  <div className={styles.table_content}>
-                    <label htmlFor="">Next maintainence at:</label>
-                    <input
-                      type="date"
-                      data-date-format="YYYY MM DD"
-                      placeholder="Enter date"
-                      name="next_maintenance_at"
-                      onChange={inputChange}
-                      value={data.next_maintenance_at}
-                    />
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">Last maintainence at:</label>
-                    <input
-                      type="date"
-                      data-date-format="YYYY MM DD"
-                      placeholder="Enter date"
-                      name="last_maintenance_at"
-                      onChange={inputChange}
-                      value={data.last_maintenance_at}
-                    />
+                      <input
+                        type="date"
+                        data-date-format="YYYY MM DD"
+                        placeholder="Enter plat expiry date"
+                        name="plate_expiry_date"
+                        onChange={inputChange}
+                        value={
+                          data.plate_expiry_date
+                            ? data.plate_expiry_date.substr(0, 10)
+                            : ""
+                        }
+                        required
+                      />
+                    </div>
                   </div>
 
-                  <div className={styles.table_content}>
-                    <label htmlFor="">Maintainence delay:</label>
-                    <input
-                      type="number"
-                      min="0"
-                      placeholder="E.g. 2"
-                      name="maintenance_delay"
-                      onChange={inputChange}
-                      value={data.maintenance_delay}
-                    />
+                  <div className={styles.below_container}>
+                    <div className={styles.table_content}>
+                      <label htmlFor="">
+                        Days remaining for next inspection:
+                      </label>
+
+                      <input
+                        type="text"
+                        placeholder="E.g. 30"
+                        name="days_remaining_for_next_inspection"
+                        onChange={inputChange}
+                        value={data.days_remaining_for_next_inspection}
+                      />
+                    </div>
+                    <div className={styles.table_content}>
+                      <label htmlFor="">Mechanical notes:</label>
+
+                      <textarea
+                        rows="2"
+                        cols="25"
+                        type="text"
+                        placeholder="E.g. Axles are.."
+                        name="mechanical_notes"
+                        onChange={inputChange}
+                        value={data.mechanical_notes}
+                      />
+                    </div>
+
+                    <div className={styles.table_content}>
+                      <label htmlFor="">Last maintainence at:</label>
+                      <input
+                        type="date"
+                        data-date-format="YYYY MM DD"
+                        placeholder="Enter date"
+                        name="last_maintenance_at"
+                        onChange={inputChange}
+                        value={data.last_maintenance_at}
+                      />
+                    </div>
+
+                    <div className={styles.table_content}>
+                      <label htmlFor="">Maintainence delay:</label>
+                      <input
+                        type="number"
+                        min="0"
+                        placeholder="E.g. 2"
+                        name="maintenance_delay"
+                        onChange={inputChange}
+                        value={data.maintenance_delay}
+                      />
+                    </div>
+                    <div className={styles.table_content}>
+                      <label htmlFor="">Standard job:</label>
+
+                      <input
+                        type="text"
+                        placeholder="Enter standard job"
+                        name="standard_job"
+                        onChange={inputChange}
+                        value={data.standard_job}
+                      />
+                    </div>
                   </div>
                 </div>
                 <button>Submit</button>
@@ -529,7 +521,10 @@ const Inventory = () => {
             </form>
           </div>
         ) : (
-          <div>You do not have the necessary permissions to do this!</div>
+          <div className="permission_tag">
+            <p>You do not have the necessary permissions to do this!</p>
+            <button onClick={permissionHandler}>Go back</button>
+          </div>
         )}
       </div>
       {/* ) : (

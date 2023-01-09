@@ -16,8 +16,6 @@ const Inventory = () => {
 
   const [drivers, setdrivers] = useState("");
 
-  const [modal, setModal] = useState(false); //For setting the modal state
-
   const [file, setFile] = useState({
     license_disclosure: null,
     driving_license: null,
@@ -45,6 +43,8 @@ const Inventory = () => {
     display,
     setDisplay,
     setDriverData,
+    setModalColor,
+    setModal,
   } = useContext(UserContext);
 
   const [url, setUrl] = useState(role ? "" : "currDrivers"); // Url is dynamic, checking state of role
@@ -63,9 +63,9 @@ const Inventory = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log(e.target[0].value);
-    setModal(false);
+    setModal(true);
+    setMsg("Fetching data...");
+    setModalColor("green");
 
     try {
       if (!(e.target[0].value == "")) {
@@ -75,20 +75,16 @@ const Inventory = () => {
         )
           .then((response) => {
             console.log(response);
-
             setAlldrivers([response.data.driver]);
             setModal(false);
           })
           .catch((err) => {
             console.log(err);
-            setModal(true);
-            // if (err.request.status === 404) {
-            //   setMsg("Enter correct detail");
-            // } else if (err.request.status === 400) {
-            //   setMsg("Enter correct detail");
-            // } else if (err.request.status === 403) {
-            //   setMsg("You are forbidden!");
-            // }
+            if (err.response.status === 404) {
+              setModal(true);
+              setMsg("No data found");
+              setModalColor("red");
+            }
           });
       }
     } catch (exc) {
@@ -101,7 +97,10 @@ const Inventory = () => {
   //For Getting all tractors
 
   const getAlldrivers = () => {
-    console.log(role);
+    setModal(true);
+    setMsg("Fetching data...");
+    setModalColor("green");
+
     try {
       Axios.get(
         `https://lc-backend-v2.herokuapp.com/api/v1/LC/drivers/${url}`,
@@ -114,9 +113,18 @@ const Inventory = () => {
         .then((response) => {
           console.log(response);
           setAlldrivers(response.data.drivers);
+          setModal(false);
         })
         .catch((err) => {
-          console.log(err);
+          if (err.response.status === 404) {
+            setModal(true);
+            setMsg("No data found");
+            setModalColor("red");
+          } else {
+            setModal(true);
+            setMsg("Please try again...");
+            setModalColor("red");
+          }
         });
     } catch (exc) {
       console.log(exc);
@@ -130,7 +138,9 @@ const Inventory = () => {
     console.log(e.target.value);
     e.preventDefault();
     const InputClick = e.target.value;
-
+    setModal(true);
+    setMsg("Fetching data...");
+    setModalColor("green");
     setDisplay((prevState) => !prevState);
 
     try {
@@ -167,17 +177,13 @@ const Inventory = () => {
             response.data.driver.certificate_of_road_test;
           setModalDrivers([response.data.driver]);
           setDriverData(response.data.driver);
+          setModal(false);
         })
         .catch((err) => {
           console.log(err);
-          // setModal(true);
-          // if (err.request.status === 404) {
-          //   setMsg("Enter correct detail");
-          // } else if (err.request.status === 400) {
-          //   setMsg("Enter correct detail");
-          // } else if (err.request.status === 403) {
-          //   setMsg("You are forbidden!");
-          // }
+          setModal(true);
+          setMsg("Please try again...");
+          setModalColor("red");
         });
     } catch (exc) {
       console.log(exc);
@@ -199,9 +205,6 @@ const Inventory = () => {
                   placeholder="Enter driver's name"
                   onChange={inputChange}
                   value={drivers}
-                  style={{
-                    border: modal ? "1.5px solid red" : "0",
-                  }}
                 />
                 <button className="button_get">Search</button>
               </div>

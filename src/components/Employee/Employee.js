@@ -206,12 +206,21 @@ const Inventory = () => {
           setMsg("Please provide valid email!");
           setModal(true);
           setModalColor("red");
+        } else if (
+          err.response.data.msg === "Unauthorized to access this route"
+        ) {
+          setMsg("You are Unauthorized!");
+          setModal(true);
+          setModalColor("red");
         } else {
           setMsg("Try again");
           setModal(true);
           setModalColor("red");
         }
       });
+  };
+  const handleUpdateUser = () => {
+    setModal(false);
   };
 
   return (
@@ -348,30 +357,7 @@ const Inventory = () => {
                       <option value="PM">PM</option>
                     </select>
                   </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">Contact:</label>
 
-                    <input
-                      type="text"
-                      placeholder="Email or contact number"
-                      name="contact"
-                      onChange={inputChange}
-                      value={data.contact}
-                      required
-                    />
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">Emergency contact:</label>
-
-                    <input
-                      type="text"
-                      placeholder="Email or contact number"
-                      name="emergency_contact"
-                      onChange={inputChange}
-                      value={data.emergency_contact}
-                      required
-                    />
-                  </div>
                   <div className={styles.table_content}>
                     <label htmlFor="">DOB:</label>
 
@@ -395,6 +381,30 @@ const Inventory = () => {
                       name="start_date"
                       onChange={inputChange}
                       value={data.start_date}
+                      required
+                    />
+                  </div>
+                  <div className={styles.table_content}>
+                    <label htmlFor="">Contact:</label>
+
+                    <input
+                      type="text"
+                      placeholder="Email or contact number"
+                      name="contact"
+                      onChange={inputChange}
+                      value={data.contact}
+                      required
+                    />
+                  </div>
+                  <div className={styles.table_content}>
+                    <label htmlFor="">Emergency contact:</label>
+
+                    <input
+                      type="text"
+                      placeholder="Email or contact number"
+                      name="emergency_contact"
+                      onChange={inputChange}
+                      value={data.emergency_contact}
                       required
                     />
                   </div>
@@ -437,14 +447,15 @@ const Inventory = () => {
                   <div className={styles.table_content}>
                     <label htmlFor="">Address:</label>
 
-                    <input
+                    <textarea
+                      rows="2"
+                      cols="25"
                       type="text"
                       placeholder="Must be above 50 letters"
                       name="address"
                       onChange={inputChange}
                       value={data.address}
-                      minlength="50"
-                      maxlength="500"
+                      minlength="10"
                       required
                     />
                   </div>
@@ -472,7 +483,7 @@ const Inventory = () => {
                       onChange={inputChange}
                       value={data.province}
                       required
-                      minlength="3"
+                      minlength="2"
                       maxlength="50"
                     />
                   </div>
@@ -486,7 +497,7 @@ const Inventory = () => {
                       onChange={inputChange}
                       value={data.postal_code}
                       required
-                      minlength="3"
+                      minlength="2"
                       maxlength="10"
                     />
                   </div>
@@ -532,7 +543,12 @@ const Inventory = () => {
 
                   <br />
                 </div>
-                <button>Submit</button>
+                <div className={styles.button_container}>
+                  <button>Submit</button>
+                  <Link to="">
+                    <button onClick={handleUpdateUser}>Update user</button>
+                  </Link>
+                </div>
               </div>
             </form>
           </div>

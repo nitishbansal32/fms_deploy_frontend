@@ -165,12 +165,17 @@ const Inventory = () => {
     navigate("/drivers", { replace: true });
   };
 
+  const permissionHandler = () => {
+    navigate("/drivers", { replace: true });
+    setModal(false);
+  };
+
   return (
     <>
       {/* {isLoggedIn ? ( */}
       <div className="wrapper_container">
         <Navbar />
-        {!(role === "employee") ? (
+        {!(localStorage.getItem("role") === "employee") ? (
           <div className={styles.main_container}>
             <button onClick={handleBack} className={styles.back_button}>
               Back
@@ -289,7 +294,7 @@ const Inventory = () => {
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">*Emergency_contact</label>
+                    <label htmlFor="">*Emergency contact:</label>
 
                     <input
                       type="text"
@@ -384,7 +389,7 @@ const Inventory = () => {
                   </div>
 
                   <div className={styles.table_content}>
-                    <label htmlFor="">Supervisor</label>
+                    <label htmlFor="">Supervisor:</label>
 
                     <input
                       type="text"
@@ -395,7 +400,7 @@ const Inventory = () => {
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">Supervisor notes</label>
+                    <label htmlFor="">Supervisor notes:</label>
 
                     <textarea
                       rows="2"
@@ -408,7 +413,7 @@ const Inventory = () => {
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">First_PR</label>
+                    <label htmlFor="">First PR:</label>
 
                     <input
                       type="text"
@@ -418,279 +423,290 @@ const Inventory = () => {
                       value={data.first_PR.substr(0, 10)}
                     />
                   </div>
+                  <div className={styles.table_file_container}>
+                    <h1>Files updation</h1>
 
-                  <div className={styles.file_container}>
-                    <button
-                      className={styles.sview_file}
-                      onClick={(event) =>
-                        window.open(`${file.profile_picture}`, "_blank")
-                      }
-                    >
-                      View
-                    </button>
-                    <label>Profile picture</label>
-                    <input
-                      type="file"
-                      name="profile_picture"
-                      onChange={fileInputChange}
-                      // value={file.license_disclosure}
-                    />
-                  </div>
+                    <div className={styles.file_container}>
+                      <button
+                        className={styles.sview_file}
+                        onClick={(event) =>
+                          window.open(`${file.profile_picture}`, "_blank")
+                        }
+                      >
+                        View
+                      </button>
+                      <label>Profile picture</label>
+                      <input
+                        type="file"
+                        name="profile_picture"
+                        onChange={fileInputChange}
+                        // value={file.license_disclosure}
+                      />
+                    </div>
 
-                  <div className={styles.file_container}>
-                    <button
-                      className={styles.sview_file}
-                      onClick={(event) =>
-                        window.open(`${file.license_disclosure}`, "_blank")
-                      }
-                    >
-                      View
-                    </button>
-                    <label>Single licence disclosure</label>
-                    <input
-                      type="file"
-                      name="license_disclosure"
-                      onChange={fileInputChange}
-                      // value={file.license_disclosure}
-                    />
-                  </div>
-                  <div className={styles.file_container}>
-                    <button
-                      className={styles.sview_file}
-                      onClick={(event) =>
-                        window.open(`${file.driving_license}`, "_blank")
-                      }
-                    >
-                      View
-                    </button>
-                    <label>Copy of valid driver's licence with photo</label>
-                    <input
-                      type="file"
-                      name="driving_license"
-                      onChange={fileInputChange}
-                      // value={file.driving_license}
-                    />
-                  </div>
-                  <div className={styles.file_container}>
-                    <button
-                      className={styles.sview_file}
-                      onClick={(event) =>
-                        window.open(`${file.abstract_request_form}`, "_blank")
-                      }
-                    >
-                      View
-                    </button>
-                    <label>Drivers Abstract Request form</label>
-                    <input
-                      type="file"
-                      name="abstract_request_form"
-                      onChange={fileInputChange}
-                      // value={file.abstract_request_form}
-                    />
-                  </div>
-                  <div className={styles.file_container}>
-                    <button
-                      className={styles.sview_file}
-                      onClick={(event) =>
-                        window.open(`${file.current_abstract}`, "_blank")
-                      }
-                    >
-                      View
-                    </button>
-                    <label>Current abstract(within 12 months)</label>
-                    <input
-                      type="file"
-                      name="current_abstract"
-                      onChange={fileInputChange}
-                      // value={file.current_abstract}
-                    />
-                  </div>
-                  <div className={styles.file_container}>
-                    <button
-                      className={styles.sview_file}
-                      onClick={(event) =>
-                        window.open(
-                          `${file.personal_investigation_consent}`,
-                          "_blank"
-                        )
-                      }
-                    >
-                      View
-                    </button>
-                    <label>Consent to personal investigation</label>
-                    <input
-                      type="file"
-                      name="personal_investigation_consent"
-                      onChange={fileInputChange}
-                      // value={file.personal_investigation_consent}
-                    />
-                  </div>
-                  <div className={styles.file_container}>
-                    <button
-                      className={styles.sview_file}
-                      onClick={(event) =>
-                        window.open(`${file.criminal_record_check}`, "_blank")
-                      }
-                    >
-                      View
-                    </button>
-                    <label>Criminal record check</label>
-                    <input
-                      type="file"
-                      name="criminal_record_check"
-                      onChange={fileInputChange}
-                      // value={file.criminal_record_check}
-                    />
-                  </div>
-                  <div className={styles.file_container}>
-                    <button
-                      className={styles.sview_file}
-                      onClick={(event) =>
-                        window.open(
-                          `${file.pre_employment_road_test}`,
-                          "_blank"
-                        )
-                      }
-                    >
-                      View
-                    </button>
-                    <label>Pre-employment Driver's road test</label>
-                    <input
-                      type="file"
-                      name="pre_employment_road_test"
-                      onChange={fileInputChange}
-                      // value={file.pre_employment_road_test}
-                    />
-                  </div>
-                  <div className={styles.file_container}>
-                    <button
-                      className={styles.sview_file}
-                      onClick={(event) =>
-                        window.open(`${file.employment_application}`, "_blank")
-                      }
-                    >
-                      View
-                    </button>
-                    <label>Employment application</label>
-                    <input
-                      type="file"
-                      name="employment_application"
-                      onChange={fileInputChange}
-                      // value={file.employment_application}
-                    />
-                  </div>
-                  <div className={styles.file_container}>
-                    <button
-                      className={styles.sview_file}
-                      onClick={(event) =>
-                        window.open(
-                          `${file.release_and_authorization}`,
-                          "_blank"
-                        )
-                      }
-                    >
-                      View
-                    </button>
-                    <label>
-                      Release and authorization to contact previous employer
-                    </label>
-                    <input
-                      type="file"
-                      name="release_and_authorization"
-                      onChange={fileInputChange}
-                      // value={file.release_and_authorization}
-                    />
-                  </div>
-                  <div className={styles.file_container}>
-                    <button
-                      className={styles.sview_file}
-                      onClick={(event) =>
-                        window.open(`${file.reference_checks}`, "_blank")
-                      }
-                    >
-                      View
-                    </button>
-                    <label>Reference checks</label>
-                    <input
-                      type="file"
-                      name="reference_checks"
-                      onChange={fileInputChange}
-                      // value={file.reference_checks}
-                    />
-                  </div>
-                  <div className={styles.file_container}>
-                    <button
-                      className={styles.sview_file}
-                      onClick={(event) =>
-                        window.open(`${file.on_duty_hours_statement}`, "_blank")
-                      }
-                    >
-                      View
-                    </button>
-                    <label>Driver statement of onduty hours</label>
-                    <input
-                      type="file"
-                      name="on_duty_hours_statement"
-                      onChange={fileInputChange}
-                      // value={file.on_duty_hours_statement}
-                    />
-                  </div>
-                  <div className={styles.file_container}>
-                    <button
-                      className={styles.sview_file}
-                      onClick={(event) =>
-                        window.open(
-                          `${file.certificate_of_violation}`,
-                          "_blank"
-                        )
-                      }
-                    >
-                      View
-                    </button>
-                    <label>Certificate of violations(once every 6months)</label>
-                    <input
-                      type="file"
-                      name="certificate_of_violation"
-                      onChange={fileInputChange}
-                      // value={file.certificate_of_violation}
-                    />
-                  </div>
-                  <div className={styles.file_container}>
-                    <button
-                      className={styles.sview_file}
-                      onClick={(event) =>
-                        window.open(
-                          `${file.certificate_of_road_test}`,
-                          "_blank"
-                        )
-                      }
-                    >
-                      View
-                    </button>
-                    <label>Annual Driver Performance Reviews</label>
-                    <input
-                      type="file"
-                      name="certificate_of_road_test"
-                      onChange={fileInputChange}
-                      // value={file.certificate_of_road_test}
-                    />
-                  </div>
-                  <div className={styles.file_container}>
-                    <button
-                      className={styles.sview_file}
-                      onClick={(event) =>
-                        window.open(`${file.training}`, "_blank")
-                      }
-                    >
-                      View
-                    </button>
-                    <label>Training</label>
-                    <input
-                      type="file"
-                      name="training"
-                      onChange={fileInputChange}
-                      // value={file.training}
-                    />
+                    <div className={styles.file_container}>
+                      <button
+                        className={styles.sview_file}
+                        onClick={(event) =>
+                          window.open(`${file.license_disclosure}`, "_blank")
+                        }
+                      >
+                        View
+                      </button>
+                      <label>Single licence disclosure</label>
+                      <input
+                        type="file"
+                        name="license_disclosure"
+                        onChange={fileInputChange}
+                        // value={file.license_disclosure}
+                      />
+                    </div>
+                    <div className={styles.file_container}>
+                      <button
+                        className={styles.sview_file}
+                        onClick={(event) =>
+                          window.open(`${file.driving_license}`, "_blank")
+                        }
+                      >
+                        View
+                      </button>
+                      <label>Copy of valid driver's licence with photo</label>
+                      <input
+                        type="file"
+                        name="driving_license"
+                        onChange={fileInputChange}
+                        // value={file.driving_license}
+                      />
+                    </div>
+                    <div className={styles.file_container}>
+                      <button
+                        className={styles.sview_file}
+                        onClick={(event) =>
+                          window.open(`${file.abstract_request_form}`, "_blank")
+                        }
+                      >
+                        View
+                      </button>
+                      <label>Drivers Abstract Request form</label>
+                      <input
+                        type="file"
+                        name="abstract_request_form"
+                        onChange={fileInputChange}
+                        // value={file.abstract_request_form}
+                      />
+                    </div>
+                    <div className={styles.file_container}>
+                      <button
+                        className={styles.sview_file}
+                        onClick={(event) =>
+                          window.open(`${file.current_abstract}`, "_blank")
+                        }
+                      >
+                        View
+                      </button>
+                      <label>Current abstract(within 12 months)</label>
+                      <input
+                        type="file"
+                        name="current_abstract"
+                        onChange={fileInputChange}
+                        // value={file.current_abstract}
+                      />
+                    </div>
+                    <div className={styles.file_container}>
+                      <button
+                        className={styles.sview_file}
+                        onClick={(event) =>
+                          window.open(
+                            `${file.personal_investigation_consent}`,
+                            "_blank"
+                          )
+                        }
+                      >
+                        View
+                      </button>
+                      <label>Consent to personal investigation</label>
+                      <input
+                        type="file"
+                        name="personal_investigation_consent"
+                        onChange={fileInputChange}
+                        // value={file.personal_investigation_consent}
+                      />
+                    </div>
+                    <div className={styles.file_container}>
+                      <button
+                        className={styles.sview_file}
+                        onClick={(event) =>
+                          window.open(`${file.criminal_record_check}`, "_blank")
+                        }
+                      >
+                        View
+                      </button>
+                      <label>Criminal record check</label>
+                      <input
+                        type="file"
+                        name="criminal_record_check"
+                        onChange={fileInputChange}
+                        // value={file.criminal_record_check}
+                      />
+                    </div>
+                    <div className={styles.file_container}>
+                      <button
+                        className={styles.sview_file}
+                        onClick={(event) =>
+                          window.open(
+                            `${file.pre_employment_road_test}`,
+                            "_blank"
+                          )
+                        }
+                      >
+                        View
+                      </button>
+                      <label>Pre-employment Driver's road test</label>
+                      <input
+                        type="file"
+                        name="pre_employment_road_test"
+                        onChange={fileInputChange}
+                        // value={file.pre_employment_road_test}
+                      />
+                    </div>
+                    <div className={styles.file_container}>
+                      <button
+                        className={styles.sview_file}
+                        onClick={(event) =>
+                          window.open(
+                            `${file.employment_application}`,
+                            "_blank"
+                          )
+                        }
+                      >
+                        View
+                      </button>
+                      <label>Employment application</label>
+                      <input
+                        type="file"
+                        name="employment_application"
+                        onChange={fileInputChange}
+                        // value={file.employment_application}
+                      />
+                    </div>
+                    <div className={styles.file_container}>
+                      <button
+                        className={styles.sview_file}
+                        onClick={(event) =>
+                          window.open(
+                            `${file.release_and_authorization}`,
+                            "_blank"
+                          )
+                        }
+                      >
+                        View
+                      </button>
+                      <label>
+                        Release and authorization to contact previous employer
+                      </label>
+                      <input
+                        type="file"
+                        name="release_and_authorization"
+                        onChange={fileInputChange}
+                        // value={file.release_and_authorization}
+                      />
+                    </div>
+                    <div className={styles.file_container}>
+                      <button
+                        className={styles.sview_file}
+                        onClick={(event) =>
+                          window.open(`${file.reference_checks}`, "_blank")
+                        }
+                      >
+                        View
+                      </button>
+                      <label>Reference checks</label>
+                      <input
+                        type="file"
+                        name="reference_checks"
+                        onChange={fileInputChange}
+                        // value={file.reference_checks}
+                      />
+                    </div>
+                    <div className={styles.file_container}>
+                      <button
+                        className={styles.sview_file}
+                        onClick={(event) =>
+                          window.open(
+                            `${file.on_duty_hours_statement}`,
+                            "_blank"
+                          )
+                        }
+                      >
+                        View
+                      </button>
+                      <label>Driver statement of onduty hours</label>
+                      <input
+                        type="file"
+                        name="on_duty_hours_statement"
+                        onChange={fileInputChange}
+                        // value={file.on_duty_hours_statement}
+                      />
+                    </div>
+                    <div className={styles.file_container}>
+                      <button
+                        className={styles.sview_file}
+                        onClick={(event) =>
+                          window.open(
+                            `${file.certificate_of_violation}`,
+                            "_blank"
+                          )
+                        }
+                      >
+                        View
+                      </button>
+                      <label>
+                        Certificate of violations(once every 6months)
+                      </label>
+                      <input
+                        type="file"
+                        name="certificate_of_violation"
+                        onChange={fileInputChange}
+                        // value={file.certificate_of_violation}
+                      />
+                    </div>
+                    <div className={styles.file_container}>
+                      <button
+                        className={styles.sview_file}
+                        onClick={(event) =>
+                          window.open(
+                            `${file.certificate_of_road_test}`,
+                            "_blank"
+                          )
+                        }
+                      >
+                        View
+                      </button>
+                      <label>Annual Driver Performance Reviews</label>
+                      <input
+                        type="file"
+                        name="certificate_of_road_test"
+                        onChange={fileInputChange}
+                        // value={file.certificate_of_road_test}
+                      />
+                    </div>
+                    <div className={styles.file_container}>
+                      <button
+                        className={styles.sview_file}
+                        onClick={(event) =>
+                          window.open(`${file.training}`, "_blank")
+                        }
+                      >
+                        View
+                      </button>
+                      <label>Training</label>
+                      <input
+                        type="file"
+                        name="training"
+                        onChange={fileInputChange}
+                        // value={file.training}
+                      />
+                    </div>
                   </div>
                 </div>
                 <button>Submit</button>
@@ -698,7 +714,10 @@ const Inventory = () => {
             </form>
           </div>
         ) : (
-          <div>You do not have the necessary permissions to do this!</div>
+          <div className="permission_tag">
+            <p>You do not have the necessary permissions to do this!</p>
+            <button onClick={permissionHandler}>Go back</button>
+          </div>
         )}
       </div>
       {/* ) : (
