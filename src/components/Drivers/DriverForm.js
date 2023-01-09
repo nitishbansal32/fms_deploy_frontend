@@ -340,7 +340,7 @@ const Inventory = () => {
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">*Emergency_contact</label>
+                    <label htmlFor="">*Emergency contact:</label>
 
                     <input
                       type="text"
@@ -424,7 +424,7 @@ const Inventory = () => {
                   </div>
 
                   <div className={styles.table_content}>
-                    <label htmlFor="">Supervisor</label>
+                    <label htmlFor="">Supervisor:</label>
 
                     <input
                       type="text"
@@ -435,7 +435,7 @@ const Inventory = () => {
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">Supervisor notes</label>
+                    <label htmlFor="">Supervisor notes:</label>
 
                     <textarea
                       type="text"
