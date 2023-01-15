@@ -29,6 +29,8 @@ const Inventory = () => {
 
   const navigate = useNavigate();
 
+  console.log(driverData.DOB);
+
   const [file, setFile] = useState({
     profile_picture: driverData.profile_picture,
     license_disclosure: driverData.license_disclosure,
@@ -45,6 +47,9 @@ const Inventory = () => {
     certificate_of_violation: driverData.certificate_of_violation,
     training: driverData.training,
     certificate_of_road_test: driverData.certificate_of_road_test,
+
+    disciplinary_actions: driverData.disciplinary_actions,
+    safety_records: driverData.safety_records,
   });
 
   const [data, setData] = useState({
@@ -132,6 +137,9 @@ const Inventory = () => {
   formData.append("training", file.training);
   formData.append("certificate_of_road_test", file.certificate_of_road_test);
 
+  formData.append("disciplinary_actions", file.disciplinary_actions);
+  formData.append("safety_records", file.safety_records);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setMsg("Updating driver info... Please wait!");
@@ -181,9 +189,6 @@ const Inventory = () => {
         <Navbar />
         {!(localStorage.getItem("role") === "employee") ? (
           <div className={styles.main_container}>
-            <button onClick={handleBack} className={styles.back_button}>
-              Back
-            </button>
             <form onSubmit={handleSubmit} action="">
               <div className={styles.table_wrapper_container}>
                 <h1>Update driver information</h1>
@@ -240,7 +245,7 @@ const Inventory = () => {
                       placeholder="E.g. David"
                       name="DOB"
                       onChange={inputChange}
-                      value={data.DOB}
+                      value={data.DOB ? data.DOB.substr(0, 10) : ""}
                       required
                     />
                   </div>
@@ -739,9 +744,50 @@ const Inventory = () => {
                         // value={file.training}
                       />
                     </div>
+
+                    <div className={styles.file_container}>
+                      <button
+                        className={styles.sview_file}
+                        onClick={(event) =>
+                          window.open(`${file.disciplinary_actions}`, "_blank")
+                        }
+                      >
+                        View
+                      </button>
+                      <label>Disciplinary actions</label>
+                      <input
+                        type="file"
+                        name="disciplinary_actions"
+                        onChange={fileInputChange}
+                        // value={file.training}
+                      />
+                    </div>
+
+                    <div className={styles.file_container}>
+                      <button
+                        className={styles.sview_file}
+                        onClick={(event) =>
+                          window.open(`${file.safety_records}`, "_blank")
+                        }
+                      >
+                        View
+                      </button>
+                      <label>Safety records</label>
+                      <input
+                        type="file"
+                        name="safety_records"
+                        onChange={fileInputChange}
+                        // value={file.training}
+                      />
+                    </div>
                   </div>
                 </div>
-                <button>Submit</button>
+                <div className={styles.button_alignment_container}>
+                  <button>Submit</button>
+                  <button onClick={handleBack} className={styles.back_button}>
+                    Back
+                  </button>
+                </div>
               </div>
             </form>
           </div>

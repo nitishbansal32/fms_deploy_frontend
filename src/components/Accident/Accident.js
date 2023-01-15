@@ -176,15 +176,17 @@ const Inventory = () => {
                 <button className="button_get">Search</button>
               </div>
             </form>
-            <button onClick={getAlldrivers} className="button_all">
-              Get all accidents
-            </button>
-            <Link to="/registerAccident">
-              <button className="button_add">
-                <img src={plus} alt="" />
-                Add new accident
+            <div className={styles.button_alignment_container}>
+              <button onClick={getAlldrivers} className="button_all">
+                Get all accidents
               </button>
-            </Link>
+              <Link to="/registerAccident">
+                <button className="button_add">
+                  <img src={plus} alt="" />
+                  Add new accident
+                </button>
+              </Link>
+            </div>
           </div>
 
           <div className={styles.table_wrapper_container}>

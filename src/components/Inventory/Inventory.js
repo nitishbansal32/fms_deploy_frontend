@@ -87,13 +87,52 @@ const Inventory = () => {
 
   //For Getting all tractors
 
-  const getAlldrivers = () => {
+  const getAllTractors = () => {
     setModal(true);
     setMsg("Fetching data...");
     setModalColor("green");
     try {
       Axios.get(
-        `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/${url}`,
+        `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/${url}?type=Tractor`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+        .then((response) => {
+          console.log(response);
+          setAlldrivers(response.data.tractors);
+          setModal(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.response.status === 404) {
+            setModal(true);
+            setMsg("No data found");
+            setModalColor("red");
+          } else {
+            setModal(true);
+            setMsg("Please try again...");
+            setModalColor("red");
+          }
+        });
+    } catch (exc) {
+      console.log(exc);
+    } finally {
+      setAlldrivers("");
+    }
+  };
+
+  //For Getting all trailers
+
+  const getAllTrailers = () => {
+    setModal(true);
+    setMsg("Fetching data...");
+    setModalColor("green");
+    try {
+      Axios.get(
+        `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/${url}?type=Trailer`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -184,15 +223,20 @@ const Inventory = () => {
                 <button className="button_get">Search</button>
               </div>
             </form>
-            <button onClick={getAlldrivers} className="button_all">
-              Get all equipment
-            </button>
-            <Link to="/registerInventory">
-              <button className="button_add">
-                <img src={plus} alt="" />
-                Add new equipement
+            <div className={styles.button_alignment_container}>
+              <button onClick={getAllTractors} className="button_all">
+                Get all tractors
               </button>
-            </Link>
+              <button onClick={getAllTrailers} className="button_all">
+                Get all trailers
+              </button>
+              <Link to="/registerInventory">
+                <button className="button_add">
+                  <img src={plus} alt="" />
+                  Add new equipement
+                </button>
+              </Link>
+            </div>
           </div>
 
           <div className={styles.table_wrapper_container}>

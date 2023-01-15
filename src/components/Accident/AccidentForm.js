@@ -156,9 +156,6 @@ const Inventory = () => {
         <Navbar />
         {!(role === "employee") ? (
           <div className={styles.main_container}>
-            <button onClick={handleBack} className={styles.back_button}>
-              Back
-            </button>
             <form onSubmit={handleSubmit} action="">
               <div className={styles.table_wrapper_container}>
                 <h1>Add new accident</h1>
@@ -436,7 +433,12 @@ const Inventory = () => {
                     />
                   </div>
                 </div>
-                <button>Submit</button>
+                <div className={styles.button_alignment_container}>
+                  <button>Submit</button>
+                  <button onClick={handleBack} className={styles.back_button}>
+                    Back
+                  </button>
+                </div>
               </div>
             </form>
           </div>

@@ -49,7 +49,7 @@ const ServiceDash = () => {
             <div className={styles.all_services}>
               <div className={styles.service}>
                 <div className={styles.service_desc}>
-                  <img src={FMS} alt="" style={{ height: "80px" }} />
+                  <img src={FMS} alt="" style={{ width: "60%" }} />
                   {open.fleetMs && (
                     <p>
                       Our fleet management system, capitalizes on over 25 years
@@ -82,7 +82,7 @@ const ServiceDash = () => {
               </div>
               <div className={styles.service}>
                 <div className={styles.service_desc}>
-                  <img src={LabourCentral} alt="" style={{ height: "80px" }} />
+                  <img src={LabourCentral} alt="" style={{ width: "60%" }} />
 
                   {open.labourC && (
                     <p>
@@ -112,7 +112,7 @@ const ServiceDash = () => {
               </div>
               <div className={styles.service}>
                 <div className={styles.service_desc}>
-                  <img src={LabourConnect} alt="" style={{ height: "80px" }} />
+                  <img src={LabourConnect} alt="" style={{ width: "60%" }} />
                   {open.loadConnect && (
                     <p>
                       Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -140,7 +140,7 @@ const ServiceDash = () => {
 
               <div className={styles.service}>
                 <div className={styles.service_desc}>
-                  <img src={LoadCentral} alt="" style={{ height: "80px" }} />
+                  <img src={LoadCentral} alt="" style={{ width: "60%" }} />
                   {open.loadCentral && (
                     <p>
                       Is a dispatch system designed to help automate routing and
@@ -166,7 +166,7 @@ const ServiceDash = () => {
               </div>
               <div className={styles.service}>
                 <div className={styles.service_desc}>
-                  <img src={ERS} alt="" style={{ height: "80px" }} />
+                  <img src={ERS} alt="" style={{ width: "60%" }} />
                   {open.erS && (
                     <p>
                       Enterprise reporting is the creation and distribution of
@@ -198,7 +198,7 @@ const ServiceDash = () => {
               </div>
               <div className={styles.service}>
                 <div className={styles.service_desc}>
-                  <img src={IT} alt="" style={{ height: "80px" }} />
+                  <img src={IT} alt="" style={{ width: "60%" }} />
                   {open.itS && (
                     <p>
                       Lorem ipsum dolor sit amet consectetur adipisicing elit.

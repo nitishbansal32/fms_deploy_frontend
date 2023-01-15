@@ -17,6 +17,8 @@ const ModalDrivers = (props) => {
     setDisplay(false);
   };
 
+  console.log(props.file);
+
   //For profile image
   const [file, setFile] = useState({
     profile_picture: "",
@@ -268,7 +270,7 @@ const ModalDrivers = (props) => {
                 </div>
               </div>
               <div className={styles.upload_container}>
-                <h2>Upload Status</h2>
+                <h2>DQF upload status</h2>
 
                 <div
                   onClick={(event) =>
@@ -639,6 +641,70 @@ const ModalDrivers = (props) => {
                     }}
                   ></div>
                 </div>
+
+                <h2>Additional documents status</h2>
+
+                <div
+                  onClick={(event) =>
+                    props.file.disciplinary_actions == "none"
+                      ? "none"
+                      : props.file.disciplinary_actions == null
+                      ? "none"
+                      : props.file.disciplinary_actions == undefined
+                      ? "none"
+                      : window.open(
+                          `${props.file.disciplinary_actions}`,
+                          "_blank"
+                        )
+                  }
+                >
+                  <label>Disciplinary actions</label>
+                  <div
+                    className={styles.checkBox}
+                    style={{
+                      width: "12px",
+                      height: "12px",
+                      backgroundColor:
+                        props.file.disciplinary_actions == "none"
+                          ? "red"
+                          : props.file.disciplinary_actions == null
+                          ? "red"
+                          : props.file.disciplinary_actions == undefined
+                          ? "red"
+                          : "green",
+                    }}
+                  ></div>
+                </div>
+
+                <div
+                  onClick={(event) =>
+                    props.file.training == "none"
+                      ? "none"
+                      : props.file.training == null
+                      ? "none"
+                      : props.file.training == undefined
+                      ? "none"
+                      : window.open(`${props.file.training}`, "_blank")
+                  }
+                >
+                  <label>Training</label>
+                  <div
+                    className={styles.checkBox}
+                    style={{
+                      width: "12px",
+                      height: "12px",
+                      backgroundColor:
+                        props.file.training == "none"
+                          ? "red"
+                          : props.file.training == null
+                          ? "red"
+                          : props.file.training == undefined
+                          ? "red"
+                          : "green",
+                    }}
+                  ></div>
+                </div>
+
                 <div
                   onClick={(event) =>
                     props.file.certificate_of_road_test == "none"
@@ -670,29 +736,30 @@ const ModalDrivers = (props) => {
                     }}
                   ></div>
                 </div>
+
                 <div
                   onClick={(event) =>
-                    props.file.training == "none"
+                    props.file.safety_records == "none"
                       ? "none"
-                      : props.file.training == null
+                      : props.file.safety_records == null
                       ? "none"
-                      : props.file.training == undefined
+                      : props.file.safety_records == undefined
                       ? "none"
-                      : window.open(`${props.file.training}`, "_blank")
+                      : window.open(`${props.file.safety_records}`, "_blank")
                   }
                 >
-                  <label>Training</label>
+                  <label>Safety record</label>
                   <div
                     className={styles.checkBox}
                     style={{
                       width: "12px",
                       height: "12px",
                       backgroundColor:
-                        props.file.training == "none"
+                        props.file.safety_records == "none"
                           ? "red"
-                          : props.file.training == null
+                          : props.file.safety_records == null
                           ? "red"
-                          : props.file.training == undefined
+                          : props.file.safety_records == undefined
                           ? "red"
                           : "green",
                     }}

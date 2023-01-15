@@ -78,6 +78,8 @@ const Inventory = () => {
     // days_remaining_for_next_inspection: "",
     mechanical_notes: "",
     maintenance_duration: "",
+    type: "",
+    maintenance_documents: "",
   });
 
   const inputChange = (e) => {
@@ -104,16 +106,15 @@ const Inventory = () => {
     tyre_size: data.tyre_size,
     standard_job: data.standard_job,
     annual_inspection: data.annual_inspection,
-    // next_annual_inspection: data.next_annual_inspection,
+
     safety_expiry_date: data.safety_expiry_date,
     status: `${!data.status ? "active" : data.status}`,
     plate_expiry_date: data.plate_expiry_date,
-    // PM1: data.PM1,
-    // PM2: data.PM2,
-    // PM3: data.PM3,
-    // days_remaining_for_next_inspection: data.days_remaining_for_next_inspection,
+
     mechanical_notes: data.mechanical_notes,
     maintenance_duration: data.maintenance_duration,
+    type: `${!data.type ? "Tractor" : data.type}`,
+    maintenance_documents: data.maintenance_documents,
   };
 
   const config = {
@@ -151,7 +152,7 @@ const Inventory = () => {
           setMsg("Unit number already exists!");
           setModal(true);
           setModalColor("red");
-        } else if (!(data.VIN === 17)) {
+        } else if (!(data.VIN.length === 17)) {
           setModal(true);
           setModalColor("red");
           setMsg("VIN should be 17 digits!");
@@ -175,9 +176,6 @@ const Inventory = () => {
         <Navbar />
         {!(role === "employee") ? (
           <div className={styles.main_container}>
-            <button onClick={handleBack} className={styles.back_button}>
-              Back
-            </button>
             <form onSubmit={handleSubmit} action="">
               <div className={styles.table_wrapper_container}>
                 <h1>Add new equipment</h1>
@@ -228,6 +226,23 @@ const Inventory = () => {
                       <option value="International">International</option>
                       <option value="Freightliner">Freightliner</option>
                       <option value="Toyota">Toyota</option>
+                    </select>
+                  </div>
+
+                  <div className={styles.table_content}>
+                    <label htmlFor="">*Type:</label>
+
+                    <select
+                      name="type"
+                      id=""
+                      onChange={inputChange}
+                      value={data.type}
+                      required
+                    >
+                      <option value="Tractor" selected="selected">
+                        Tractor
+                      </option>
+                      <option value="Trailer">Trailer</option>
                     </select>
                   </div>
                   <div className={styles.table_content}>
@@ -363,7 +378,7 @@ const Inventory = () => {
                     <input
                       type="text"
                       placeholder="E.g. "
-                      name="tyre_size"
+                      name="standard_job"
                       onChange={inputChange}
                       value={data.standard_job}
                     />
@@ -448,8 +463,22 @@ const Inventory = () => {
                       value={data.mechanical_notes}
                     />
                   </div>
+                  <div className={styles.table_content}>
+                    <label htmlFor="">Maintenance documents</label>
+                    <input
+                      type="file"
+                      name="maintenance_documents"
+                      onChange={inputChange}
+                      value={data.maintenance_documents}
+                    />
+                  </div>
                 </div>
-                <button>Submit</button>
+                <div className={styles.button_alignment_container}>
+                  <button>Submit</button>
+                  <button onClick={handleBack} className={styles.back_button}>
+                    Back
+                  </button>
+                </div>
               </div>
             </form>
           </div>

@@ -33,7 +33,6 @@ code {
   width: 100%;
   height: 100%;
   position: relative;
-  /* border: 2px solid blue; */
 }
 
 /* Not Logged In  */
@@ -113,8 +112,6 @@ code {
   transition: all 300ms ease;
 }
 
-/* Media Queries  */
-
 .permission_tag {
   display: flex;
   align-items: center;
@@ -141,4 +138,40 @@ code {
   border-radius: 6px;
   color: white;
   transition: all 300ms ease;
+}
+
+/* Media Queries  */
+
+@media screen and (max-width: 1210px) {
+  .not_logged_in button,
+  .button_get,
+  .button_add,
+  .button_all,
+  .button_general {
+    width: fit-content;
+    height: 40px;
+    padding: 0 0.5rem;
+    font-size: 0.75em;
+  }
+  .button_get > img,
+  .button_add > img,
+  .button_all > img,
+  .button_general > img {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .wrapper_container {
+    flex-direction: column;
+    gap: 2rem;
+    height: 100vh;
+  }
+}
+
+.button_get > img,
+.button_add > img,
+.button_all > img,
+.button_general > img {
+  display: none;
 }

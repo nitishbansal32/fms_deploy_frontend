@@ -38,3 +38,16 @@
   background-color: var(--secondary-color);
   color: rgb(0, 0, 0);
 }
+
+/* Media queries  */
+
+@media screen and (max-width: 800px) {
+  .modal {
+    width: 50%;
+  }
+}
+@media screen and (max-width: 600px) {
+  .modal {
+    width: 70%;
+  }
+}

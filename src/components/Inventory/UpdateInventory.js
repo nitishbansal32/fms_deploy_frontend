@@ -77,6 +77,7 @@ const Inventory = () => {
     maintenance_delay: inventoryData.maintenance_delay,
     days_remaining_for_next_inspection:
       inventoryData.days_remaining_for_next_inspection,
+    type: inventoryData.type,
     // maintenance_documents: inventoryData.maintenance_documents,
   });
 
@@ -113,7 +114,8 @@ const Inventory = () => {
     last_maintenance_at: data.last_maintenance_at,
     maintenance_delay: data.maintenance_delay,
     days_remaining_for_next_inspection: data.days_remaining_for_next_inspection,
-    // maintenance_documents: data.maintenance_documents,
+    type: data.type,
+    maintenance_documents: data.maintenance_documents,
   };
 
   const config = {
@@ -183,9 +185,6 @@ const Inventory = () => {
         <Navbar />
         {!(localStorage.getItem("role") === "employee") ? (
           <div className={styles.main_container}>
-            <button onClick={handleBack} className={styles.back_button}>
-              Back
-            </button>
             <form onSubmit={handleSubmit} action="">
               <div className={styles.table_wrapper_container}>
                 <h1>Update equipment information</h1>
@@ -239,6 +238,23 @@ const Inventory = () => {
                         <option value="International">International</option>
                         <option value="Freightliner">Freightliner</option>
                         <option value="Toyota">Toyota</option>
+                      </select>
+                    </div>
+                    <div className={styles.table_content}>
+                      <label htmlFor="">*Type:</label>
+
+                      <select
+                        name="type"
+                        id=""
+                        onChange={inputChange}
+                        value={data.type}
+                        required
+                        disabled
+                      >
+                        <option value="Tractor" selected="selected">
+                          Tractor
+                        </option>
+                        <option value="Trailer">Trailer</option>
                       </select>
                     </div>
                     <div className={styles.table_content}>
@@ -525,9 +541,25 @@ const Inventory = () => {
                         value={data.standard_job}
                       />
                     </div>
+                    <div className={styles.table_content}>
+                      <label htmlFor="">Maintainence documents</label>
+
+                      <input
+                        type="file"
+                        placeholder="Enter standard job"
+                        name="maintenance_documents"
+                        onChange={inputChange}
+                        value={data.maintenance_documents}
+                      />
+                    </div>
                   </div>
                 </div>
-                <button>Submit</button>
+                <div className={styles.button_alignment_container}>
+                  <button>Submit</button>
+                  <button onClick={handleBack} className={styles.back_button}>
+                    Back
+                  </button>
+                </div>
               </div>
             </form>
           </div>

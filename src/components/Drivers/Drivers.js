@@ -149,9 +149,6 @@ const Inventory = () => {
         config
       )
         .then((response) => {
-          console.log(response);
-          console.log(response.data.driver);
-
           file.license_disclosure = response.data.driver.license_disclosure;
           file.driving_license = response.data.driver.driving_license;
           file.abstract_request_form =
@@ -209,15 +206,17 @@ const Inventory = () => {
                 <button className="button_get">Search</button>
               </div>
             </form>
-            <button onClick={getAlldrivers} className="button_all">
-              Get all drivers
-            </button>
-            <Link to="/registerDriver">
-              <button className="button_add">
-                <img src={plus} alt="" />
-                Add new driver
+            <div className={styles.button_alignment_container}>
+              <button onClick={getAlldrivers} className="button_all">
+                Get all drivers
               </button>
-            </Link>
+              <Link to="/registerDriver">
+                <button className="button_add">
+                  <img src={plus} alt="" />
+                  Add new driver
+                </button>
+              </Link>
+            </div>
           </div>
 
           <div className={styles.table_wrapper_container}>

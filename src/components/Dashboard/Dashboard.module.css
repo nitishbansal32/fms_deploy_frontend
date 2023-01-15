@@ -57,6 +57,7 @@
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
+
   /* gap: 1.25rem; */
 }
 
@@ -158,3 +159,108 @@
 }
 
 /* Media queries  */
+
+@media screen and (max-width: 1210px) {
+  .date {
+    font-size: 0.75rem;
+  }
+
+  .heading {
+    font-size: 0.75rem;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .main_container {
+    flex-direction: column;
+    overflow-y: scroll;
+    align-items: center;
+    height: 100vh;
+    gap: 0rem;
+    gap: 4rem;
+  }
+
+  .left_top_container {
+    height: 80%;
+  }
+
+  .expiry_container {
+    width: 80%;
+    height: 100%;
+  }
+
+  .left_container {
+    height: 80%;
+    padding: 3rem 0 0 0rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0rem;
+  }
+
+  .expiry_main_container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .right_container {
+    padding: 0rem 0 0 0;
+    height: 100%;
+    width: 50%;
+  }
+  .add_container {
+    align-items: center;
+  }
+
+  .date {
+    font-size: 1rem;
+  }
+
+  .heading {
+    font-size: 1rem;
+  }
+  .right_container {
+    width: 70%;
+  }
+  .activity_heading {
+    width: 100%;
+  }
+  .activity_desc {
+    align-items: center;
+  }
+  .activity {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .expiry_container {
+    width: 100%;
+    height: 100%;
+  }
+  .left_container {
+    height: 100%;
+  }
+}
+
+@media screen and (max-width: 475px) {
+  .add_container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: flex-start;
+  }
+
+  .add_container > h2 {
+    text-align: center;
+  }
+
+  .main_add_container {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-end;
+  }
+}

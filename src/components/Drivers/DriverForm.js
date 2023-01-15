@@ -71,6 +71,9 @@ const Inventory = () => {
     certificate_of_violation: "none",
     training: "none",
     certificate_of_road_test: "none",
+
+    disciplinary_actions: "none",
+    safety_records: "none",
   });
 
   const [data, setData] = useState({
@@ -168,6 +171,12 @@ const Inventory = () => {
   formData.append("training", file.training);
   formData.append("certificate_of_road_test", file.certificate_of_road_test);
 
+  formData.append("disciplinary_actions", file.disciplinary_actions);
+  formData.append("safety_records", file.safety_records);
+
+  console.log(file.disciplinary_actions);
+  console.log(file.safety_records);
+
   //Duplicate value entered for employee_id field, please choose another value
 
   const handleSubmit = (e) => {
@@ -223,9 +232,6 @@ const Inventory = () => {
         <Navbar />
         {!(role === "employee") ? (
           <div className={styles.main_container}>
-            <button onClick={handleBack} className={styles.back_button}>
-              Back
-            </button>
             <form onSubmit={handleSubmit} action="">
               <div className={styles.table_wrapper_container}>
                 <h1>Add new driver</h1>
@@ -599,13 +605,16 @@ const Inventory = () => {
                         // value={file.certificate_of_violation}
                       />
                     </div>
+
+                    <h1>Addn. Files to be uploaded</h1>
+
                     <div>
-                      <label>Annual Driver Performance Reviews</label>
+                      <label>Disciplinary actions</label>
                       <input
                         type="file"
-                        name="certificate_of_road_test"
+                        name="disciplinary_actions"
                         onChange={fileInputChange}
-                        // value={file.certificate_of_road_test}
+                        // value={file.training}
                       />
                     </div>
                     <div>
@@ -617,9 +626,32 @@ const Inventory = () => {
                         // value={file.training}
                       />
                     </div>
+                    <div>
+                      <label>Annual Driver Performance Reviews</label>
+                      <input
+                        type="file"
+                        name="certificate_of_road_test"
+                        onChange={fileInputChange}
+                        // value={file.certificate_of_road_test}
+                      />
+                    </div>
+                    <div>
+                      <label>Safety records</label>
+                      <input
+                        type="file"
+                        name="safety_records"
+                        onChange={fileInputChange}
+                        // value={file.training}
+                      />
+                    </div>
                   </div>
                 </div>
-                <button>Submit</button>
+                <div className={styles.button_alignment_container}>
+                  <button>Submit</button>
+                  <button onClick={handleBack} className={styles.back_button}>
+                    Back
+                  </button>
+                </div>
               </div>
             </form>
           </div>
