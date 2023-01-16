@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../UserContext";
 import { useEffect, useState, useContext } from "react";
 import Logo from "../../../src/Images/EquipmentsLogo.png";
+import Axios from "axios";
 
 const ModalInventory = (props) => {
   const { display, setDisplay } = useContext(UserContext);
@@ -20,6 +21,7 @@ const ModalInventory = (props) => {
     setDisplay(false);
   };
 
+  console.log(props.modalInventory[0].unit);
   return (
     <div className={styles.main_modal_container}>
       <div className={styles.modal_container}>
@@ -272,6 +274,26 @@ const ModalInventory = (props) => {
                     <div>
                       <label>Mechanical notes:</label>
                       <p>{item.mechanical_notes}</p>
+                    </div>
+                    <div>
+                      <label>Maintainence documents:</label>
+                      <button
+                        className={styles.view_button}
+                        onClick={(event) =>
+                          item.maintenance_documents == "none"
+                            ? "none"
+                            : item.maintenance_documents == null
+                            ? "none"
+                            : item.maintenance_documents == undefined
+                            ? "none"
+                            : window.open(
+                                `${item.maintenance_documents}`,
+                                "_blank"
+                              )
+                        }
+                      >
+                        View
+                      </button>
                     </div>
                   </div>
                 </div>

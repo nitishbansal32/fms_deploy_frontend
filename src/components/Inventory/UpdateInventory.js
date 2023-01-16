@@ -78,13 +78,23 @@ const Inventory = () => {
     days_remaining_for_next_inspection:
       inventoryData.days_remaining_for_next_inspection,
     type: inventoryData.type,
-    // maintenance_documents: inventoryData.maintenance_documents,
+  });
+
+  const [file, setFile] = useState({
+    maintenance_documents: inventoryData.maintenance_documents,
   });
 
   const inputChange = (e) => {
     setData({
       ...data,
       [e.target.name]: e.target.value,
+    });
+  };
+
+  const fileInputChange = (e) => {
+    setFile({
+      ...file,
+      [e.target.name]: e.target.files[0],
     });
   };
 
@@ -115,8 +125,34 @@ const Inventory = () => {
     maintenance_delay: data.maintenance_delay,
     days_remaining_for_next_inspection: data.days_remaining_for_next_inspection,
     type: data.type,
-    maintenance_documents: data.maintenance_documents,
   };
+
+  const formData = new FormData();
+
+  // formData.append("unit", data.unit);
+  // formData.append("year", data.year);
+  // formData.append("made_by", `${!data.made_by ? "Volvo" : data.made_by}`);
+  // formData.append("color", data.color);
+  // formData.append("description", data.description);
+  // formData.append("VIN", data.VIN);
+  // formData.append("ELD", data.ELD);
+  // formData.append("terminal", data.terminal);
+  // formData.append("ownership", data.ownership);
+  // formData.append("licence_plate", data.licence_plate);
+  // formData.append("number_of_axles", data.number_of_axles);
+  // formData.append("weight", data.weight);
+  // formData.append("tyre_size", data.tyre_size);
+  // formData.append("standard_job", data.standard_job);
+  // formData.append("annual_inspection", data.annual_inspection);
+  // formData.append("safety_expiry_date", data.safety_expiry_date);
+  // formData.append("status", `${!data.status ? "active" : data.status}`);
+  // formData.append("plate_expiry_date", data.plate_expiry_date);
+  // formData.append("mechanical_notes", data.mechanical_notes);
+  // formData.append("maintenance_duration", data.maintenance_duration);
+  // formData.append("type", `${!data.type ? "Tractor" : data.type}`);
+
+  //File
+  formData.append("maintenance_documents", file.maintenance_documents);
 
   const config = {
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -127,6 +163,38 @@ const Inventory = () => {
     setMsg("Updating equipment information...");
     setModal(true);
     setModalColor("green");
+
+    Axios.patch(
+      `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/maintenance/${inventoryData.unit}`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    )
+      .then((response) => {
+        console.log("main", response);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response.data.msg == "File size must be less than 1MB") {
+          setMsg("File size must be less than 1MB!");
+          setModal(true);
+          setModalColor("red");
+        } else if (
+          err.response.data.msg ==
+          `Safety expired for vehicle with unit numer ${inventoryData.unit}`
+        ) {
+          setMsg("Safety expired for vehicle!");
+          setModal(true);
+          setModalColor("red");
+        } else {
+          setMsg("Internal error!");
+          setModal(true);
+          setModalColor("red");
+        }
+      });
 
     Axios.patch(
       `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/${inventoryData.unit}`,
@@ -541,15 +609,33 @@ const Inventory = () => {
                         value={data.standard_job}
                       />
                     </div>
-                    <div className={styles.table_content}>
-                      <label htmlFor="">Maintainence documents</label>
+                    <div className={styles.file_container}>
+                      <button
+                        className={styles.sview_file}
+                        onClick={(event) =>
+                          file.maintenance_documents == "none"
+                            ? "none"
+                            : file.maintenance_documents == null
+                            ? "none"
+                            : file.maintenance_documents == undefined
+                            ? "none"
+                            : window.open(
+                                `${file.maintenance_documents}`,
+                                "_blank"
+                              )
+                        }
+                      >
+                        View
+                      </button>
+                      <label htmlFor="">
+                        Maintainence documents(Less than 1MB)
+                      </label>
 
                       <input
                         type="file"
-                        placeholder="Enter standard job"
+                        placeholder=""
                         name="maintenance_documents"
-                        onChange={inputChange}
-                        value={data.maintenance_documents}
+                        onChange={fileInputChange}
                       />
                     </div>
                   </div>

@@ -79,7 +79,6 @@ const Inventory = () => {
     mechanical_notes: "",
     maintenance_duration: "",
     type: "",
-    maintenance_documents: "",
   });
 
   const inputChange = (e) => {
@@ -114,7 +113,6 @@ const Inventory = () => {
     mechanical_notes: data.mechanical_notes,
     maintenance_duration: data.maintenance_duration,
     type: `${!data.type ? "Tractor" : data.type}`,
-    maintenance_documents: data.maintenance_documents,
   };
 
   const config = {
@@ -398,7 +396,6 @@ const Inventory = () => {
                   </div>
                   {/* <div className={styles.table_content}>
                     <label htmlFor="">Next annual inspection:</label>
-
                     <input
                       type="text"
                       placeholder="Enter next annual inspection"
@@ -461,15 +458,6 @@ const Inventory = () => {
                       name="mechanical_notes"
                       onChange={inputChange}
                       value={data.mechanical_notes}
-                    />
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">Maintenance documents</label>
-                    <input
-                      type="file"
-                      name="maintenance_documents"
-                      onChange={inputChange}
-                      value={data.maintenance_documents}
                     />
                   </div>
                 </div>
