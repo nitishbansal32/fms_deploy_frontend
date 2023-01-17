@@ -154,6 +154,12 @@ const Inventory = () => {
           setModal(true);
           setModalColor("red");
           setMsg("VIN should be 17 digits!");
+        } else if (
+          err.response.data.msg == "CustomError is not a constructor"
+        ) {
+          setModal(true);
+          setModalColor("red");
+          setMsg("Set appropriate safety expiry date!");
         } else {
           setMsg("Try again after sometime!");
           setModal(true);

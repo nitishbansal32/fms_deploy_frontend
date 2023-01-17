@@ -28,6 +28,8 @@ const ModalDrivers = (props) => {
 
   const [checkField, setCheckField] = useState("");
 
+  const [size, setSize] = useState(false);
+
   const fileInputChange = (e) => {
     setFile({
       ...file,

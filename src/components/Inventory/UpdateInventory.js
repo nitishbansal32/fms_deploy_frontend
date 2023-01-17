@@ -39,6 +39,8 @@ const Inventory = () => {
     VinValidate: false,
   });
 
+  const [size, setSize] = useState(false);
+
   const ValidateFunc = () => {
     if (!(data.VIN === 17)) {
       setValidator((prev) => ({
@@ -174,6 +176,7 @@ const Inventory = () => {
     )
       .then((response) => {
         console.log("main", response);
+        setSize(true);
       })
       .catch((err) => {
         console.log(err);
@@ -195,44 +198,47 @@ const Inventory = () => {
         }
       });
 
-    Axios.patch(
-      `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/${inventoryData.unit}`,
-      body,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    )
-      .then((response) => {
-        setStatus(response.status);
-        setMsg("Equipment updated!");
-        setModal(true);
-        setModalColor("green");
-      })
-      .catch((err) => {
-        console.log(err.response);
-        if (err.response.data.msg == "Path `unit` is required.") {
-          setMsg("Unit number is required!");
-          setModal(true);
-          setModalColor("red");
-        } else if (
-          err.response.data.msg ==
-          "Duplicate value entered for unit field, please choose another value"
-        ) {
-          setMsg("Unit number already exists!");
-          setModal(true);
-          setModalColor("red");
-        } else if (!(data.VIN === 17)) {
-          setModal(true);
-          setModalColor("red");
-          setMsg("VIN should be min. 17 digits!");
-        } else {
-          setMsg("Internal error!");
-          setModal(true);
-          setModalColor("red");
+    {
+      size && console.log("hello");
+      Axios.patch(
+        `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/${inventoryData.unit}`,
+        body,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
-      });
+      )
+        .then((response) => {
+          setStatus(response.status);
+          setMsg("Equipment updated!");
+          setModal(true);
+          setModalColor("green");
+        })
+        .catch((err) => {
+          console.log(err.response);
+          if (err.response.data.msg == "Path `unit` is required.") {
+            setMsg("Unit number is required!");
+            setModal(true);
+            setModalColor("red");
+          } else if (
+            err.response.data.msg ==
+            "Duplicate value entered for unit field, please choose another value"
+          ) {
+            setMsg("Unit number already exists!");
+            setModal(true);
+            setModalColor("red");
+          } else if (!(data.VIN === 17)) {
+            setModal(true);
+            setModalColor("red");
+            setMsg("VIN should be min. 17 digits!");
+          } else {
+            setMsg("Internal error!");
+            setModal(true);
+            setModalColor("red");
+          }
+        });
+    }
   };
 
   const handleBack = () => {
@@ -244,8 +250,6 @@ const Inventory = () => {
     navigate("/inventory", { replace: true });
     setModal(false);
   };
-
-  console.log(file.maintenance_documents.maintenance_documents);
 
   return (
     <>
