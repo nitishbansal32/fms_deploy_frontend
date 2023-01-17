@@ -366,13 +366,26 @@ const ModalDrivers = (props) => {
                 </div>
                 <div
                   onClick={(event) =>
-                    props.file.current_abstract == "none"
+                    props.file.current_abstract[
+                      props.file.current_abstract.length - 1
+                    ] == "none"
                       ? "none"
-                      : props.file.current_abstract == null
+                      : props.file.current_abstract[
+                          props.file.current_abstract.length - 1
+                        ] == null
                       ? "none"
-                      : props.file.current_abstract == undefined
+                      : props.file.current_abstract[
+                          props.file.current_abstract.length - 1
+                        ] == undefined
                       ? "none"
-                      : window.open(`${props.file.current_abstract}`, "_blank")
+                      : window.open(
+                          `${
+                            props.file.current_abstract[
+                              props.file.current_abstract.length - 1
+                            ]
+                          }`,
+                          "_blank"
+                        )
                   }
                 >
                   <label>Current abstract(within 12 months)</label>
@@ -382,11 +395,17 @@ const ModalDrivers = (props) => {
                       width: "12px",
                       height: "12px",
                       backgroundColor:
-                        props.file.current_abstract == "none"
+                        props.file.current_abstract[
+                          props.file.current_abstract.length - 1
+                        ] == "none"
                           ? "red"
-                          : props.file.current_abstract == null
+                          : props.file.current_abstract[
+                              props.file.current_abstract.length - 1
+                            ] == null
                           ? "red"
-                          : props.file.current_abstract == undefined
+                          : props.file.current_abstract[
+                              props.file.current_abstract.length - 1
+                            ] == undefined
                           ? "red"
                           : "green",
                     }}
@@ -612,14 +631,24 @@ const ModalDrivers = (props) => {
                 </div>
                 <div
                   onClick={(event) =>
-                    props.file.certificate_of_violation == "none"
+                    props.file.certificate_of_violation[
+                      props.file.certificate_of_violation.length - 1
+                    ] == "none"
                       ? "none"
-                      : props.file.certificate_of_violation == null
+                      : props.file.certificate_of_violation[
+                          props.file.certificate_of_violation.length - 1
+                        ] == null
                       ? "none"
-                      : props.file.certificate_of_violation == undefined
+                      : props.file.certificate_of_violation[
+                          props.file.certificate_of_violation.length - 1
+                        ] == undefined
                       ? "none"
                       : window.open(
-                          `${props.file.certificate_of_violation}`,
+                          `${
+                            props.file.certificate_of_violation[
+                              props.file.certificate_of_violation.length - 1
+                            ]
+                          }`,
                           "_blank"
                         )
                   }
@@ -631,11 +660,17 @@ const ModalDrivers = (props) => {
                       width: "12px",
                       height: "12px",
                       backgroundColor:
-                        props.file.certificate_of_violation == "none"
+                        props.file.certificate_of_violation[
+                          props.file.certificate_of_violation.length - 1
+                        ] == "none"
                           ? "red"
-                          : props.file.certificate_of_violation == null
+                          : props.file.certificate_of_violation[
+                              props.file.certificate_of_violation.length - 1
+                            ] == null
                           ? "red"
-                          : props.file.certificate_of_violation == undefined
+                          : props.file.certificate_of_violation[
+                              props.file.certificate_of_violation.length - 1
+                            ] == undefined
                           ? "red"
                           : "green",
                     }}
@@ -678,13 +713,21 @@ const ModalDrivers = (props) => {
 
                 <div
                   onClick={(event) =>
-                    props.file.training == "none"
+                    props.file.training[props.file.training.length - 1] ==
+                    "none"
                       ? "none"
-                      : props.file.training == null
+                      : props.file.training[props.file.training.length - 1] ==
+                        null
                       ? "none"
-                      : props.file.training == undefined
+                      : props.file.training[props.file.training.length - 1] ==
+                        undefined
                       ? "none"
-                      : window.open(`${props.file.training}`, "_blank")
+                      : window.open(
+                          `${
+                            props.file.training[props.file.training.length - 1]
+                          }`,
+                          "_blank"
+                        )
                   }
                 >
                   <label>Training</label>
@@ -694,11 +737,16 @@ const ModalDrivers = (props) => {
                       width: "12px",
                       height: "12px",
                       backgroundColor:
-                        props.file.training == "none"
+                        props.file.training[props.file.training.length - 1] ==
+                        "none"
                           ? "red"
-                          : props.file.training == null
+                          : props.file.training[
+                              props.file.training.length - 1
+                            ] == null
                           ? "red"
-                          : props.file.training == undefined
+                          : props.file.training[
+                              props.file.training.length - 1
+                            ] == undefined
                           ? "red"
                           : "green",
                     }}
@@ -707,14 +755,24 @@ const ModalDrivers = (props) => {
 
                 <div
                   onClick={(event) =>
-                    props.file.certificate_of_road_test == "none"
+                    props.file.certificate_of_road_test[
+                      props.file.certificate_of_road_test.length - 1
+                    ] == "none"
                       ? "none"
-                      : props.file.certificate_of_road_test == null
+                      : props.file.certificate_of_road_test[
+                          props.file.certificate_of_road_test.length - 1
+                        ] == null
                       ? "none"
-                      : props.file.certificate_of_road_test == undefined
+                      : props.file.certificate_of_road_test[
+                          props.file.certificate_of_road_test.length - 1
+                        ] == undefined
                       ? "none"
                       : window.open(
-                          `${props.file.certificate_of_road_test}`,
+                          `${
+                            props.file.certificate_of_road_test[
+                              props.file.certificate_of_road_test.length - 1
+                            ]
+                          }`,
                           "_blank"
                         )
                   }
@@ -726,11 +784,17 @@ const ModalDrivers = (props) => {
                       width: "12px",
                       height: "12px",
                       backgroundColor:
-                        props.file.certificate_of_road_test == "none"
+                        props.file.certificate_of_road_test[
+                          props.file.certificate_of_road_test.length - 1
+                        ] == "none"
                           ? "red"
-                          : props.file.certificate_of_road_test == null
+                          : props.file.certificate_of_road_test[
+                              props.file.certificate_of_road_test.length - 1
+                            ] == null
                           ? "red"
-                          : props.file.certificate_of_road_test == undefined
+                          : props.file.certificate_of_road_test[
+                              props.file.certificate_of_road_test.length - 1
+                            ] == undefined
                           ? "red"
                           : "green",
                     }}

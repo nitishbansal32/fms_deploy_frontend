@@ -211,7 +211,7 @@ const Inventory = () => {
         <Navbar />
         <div className={styles.main_container}>
           <div className={styles.button_heading}>
-            <form onSubmit={handleSubmit} action="">
+            <form onSubmit={handleSubmit}>
               <div className={styles.form_input_label}>
                 {/* <h2>Get details of a single driver: </h2> */}
                 <input

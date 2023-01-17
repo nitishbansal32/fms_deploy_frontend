@@ -21,13 +21,18 @@ const ModalInventory = (props) => {
     setDisplay(false);
   };
 
-  console.log(props.modalInventory[0].unit);
+  // console.log(
+  //   props.modalInventory[0].maintenance_documents[
+  //     props.modalInventory[0].maintenance_documents.length - 1
+  //   ]
+  // );
+
   return (
     <div className={styles.main_modal_container}>
       <div className={styles.modal_container}>
         {props.modalInventory &&
           props.modalInventory.map((item) => (
-            <div className={styles.wrap_container}>
+            <div className={styles.wrap_container} key={item.unit}>
               <div className={styles.licence_container}>
                 <div className={styles.main_top_container}>
                   <div className={styles.top_container}>
@@ -277,17 +282,37 @@ const ModalInventory = (props) => {
                     </div>
                     <div>
                       <label>Maintainence documents:</label>
+
                       <button
                         className={styles.view_button}
                         onClick={(event) =>
-                          item.maintenance_documents == "none"
+                          props.modalInventory[0].maintenance_documents[
+                            props.modalInventory[0].maintenance_documents
+                              .length - 1
+                          ] == "none"
                             ? "none"
-                            : item.maintenance_documents == null
+                            : props.modalInventory[0].maintenance_documents[
+                                props.modalInventory[0].maintenance_documents
+                                  .length - 1
+                              ] == null
                             ? "none"
-                            : item.maintenance_documents == undefined
+                            : props.modalInventory[0].maintenance_documents[
+                                props.modalInventory[0].maintenance_documents
+                                  .length - 1
+                              ] == undefined
+                            ? "none"
+                            : props.modalInventory[0].maintenance_documents[
+                                props.modalInventory[0].maintenance_documents
+                                  .length - 1
+                              ] === [""]
                             ? "none"
                             : window.open(
-                                `${item.maintenance_documents}`,
+                                `${
+                                  props.modalInventory[0].maintenance_documents[
+                                    props.modalInventory[0]
+                                      .maintenance_documents.length - 1
+                                  ]
+                                }`,
                                 "_blank"
                               )
                         }

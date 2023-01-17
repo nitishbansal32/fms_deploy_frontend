@@ -256,6 +256,28 @@
 
 /* Media queries  */
 
+@media screen and (min-width: 1900px) {
+  .modal_container {
+    background-color: white;
+  }
+
+  .wrap_container {
+    padding-left: 1rem;
+    margin-top: 2rem;
+    padding-right: 0rem;
+  }
+  .modal_container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    width: 600px;
+    height: 90%;
+    position: relative;
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
+  }
+}
+
 @media screen and (max-width: 1350px) {
   .grid_headings,
   .grid_inputs {

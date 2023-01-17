@@ -40,7 +40,6 @@ const Inventory = () => {
   });
 
   const ValidateFunc = () => {
-    //VIN Validator
     if (!(data.VIN === 17)) {
       setValidator((prev) => ({
         ...prev,
@@ -245,6 +244,8 @@ const Inventory = () => {
     navigate("/inventory", { replace: true });
     setModal(false);
   };
+
+  console.log(file.maintenance_documents.maintenance_documents);
 
   return (
     <>
@@ -610,23 +611,38 @@ const Inventory = () => {
                       />
                     </div>
                     <div className={styles.file_container}>
-                      <button
+                      {/* <button
                         className={styles.sview_file}
                         onClick={(event) =>
-                          file.maintenance_documents == "none"
+                          file.maintenance_documents.maintenance_documents[
+                            file.maintenance_documents.maintenance_documents
+                              .length - 1
+                          ] == "none"
                             ? "none"
-                            : file.maintenance_documents == null
+                            : file.maintenance_documents.maintenance_documents[
+                                file.maintenance_documents.maintenance_documents
+                                  .length - 1
+                              ] == null
                             ? "none"
-                            : file.maintenance_documents == undefined
+                            : file.maintenance_documents.maintenance_documents[
+                                file.maintenance_documents.maintenance_documents
+                                  .length - 1
+                              ] == undefined
                             ? "none"
                             : window.open(
-                                `${file.maintenance_documents}`,
+                                `${
+                                  file.maintenance_documents
+                                    .maintenance_documents[
+                                    file.maintenance_documents
+                                      .maintenance_documents.length - 1
+                                  ]
+                                }`,
                                 "_blank"
                               )
                         }
                       >
                         View
-                      </button>
+                      </button> */}
                       <label htmlFor="">
                         Maintainence documents(Less than 1MB)
                       </label>

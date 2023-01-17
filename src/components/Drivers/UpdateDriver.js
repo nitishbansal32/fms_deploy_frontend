@@ -464,14 +464,6 @@ const Inventory = () => {
                     <h1>Files updation</h1>
 
                     <div className={styles.file_container}>
-                      <button
-                        className={styles.sview_file}
-                        onClick={(event) =>
-                          window.open(`${file.profile_picture}`, "_blank")
-                        }
-                      >
-                        View
-                      </button>
                       <label>Profile picture</label>
                       <input
                         type="file"
@@ -482,14 +474,6 @@ const Inventory = () => {
                     </div>
 
                     <div className={styles.file_container}>
-                      <button
-                        className={styles.sview_file}
-                        onClick={(event) =>
-                          window.open(`${file.license_disclosure}`, "_blank")
-                        }
-                      >
-                        View
-                      </button>
                       <label>Single licence disclosure</label>
                       <input
                         type="file"
@@ -499,14 +483,6 @@ const Inventory = () => {
                       />
                     </div>
                     <div className={styles.file_container}>
-                      <button
-                        className={styles.sview_file}
-                        onClick={(event) =>
-                          window.open(`${file.driving_license}`, "_blank")
-                        }
-                      >
-                        View
-                      </button>
                       <label>Copy of valid driver's licence with photo</label>
                       <input
                         type="file"
@@ -516,14 +492,6 @@ const Inventory = () => {
                       />
                     </div>
                     <div className={styles.file_container}>
-                      <button
-                        className={styles.sview_file}
-                        onClick={(event) =>
-                          window.open(`${file.abstract_request_form}`, "_blank")
-                        }
-                      >
-                        View
-                      </button>
                       <label>Drivers Abstract Request form</label>
                       <input
                         type="file"
@@ -533,14 +501,6 @@ const Inventory = () => {
                       />
                     </div>
                     <div className={styles.file_container}>
-                      <button
-                        className={styles.sview_file}
-                        onClick={(event) =>
-                          window.open(`${file.current_abstract}`, "_blank")
-                        }
-                      >
-                        View
-                      </button>
                       <label>Current abstract(within 12 months)</label>
                       <input
                         type="file"
@@ -550,17 +510,6 @@ const Inventory = () => {
                       />
                     </div>
                     <div className={styles.file_container}>
-                      <button
-                        className={styles.sview_file}
-                        onClick={(event) =>
-                          window.open(
-                            `${file.personal_investigation_consent}`,
-                            "_blank"
-                          )
-                        }
-                      >
-                        View
-                      </button>
                       <label>Consent to personal investigation</label>
                       <input
                         type="file"
@@ -570,14 +519,6 @@ const Inventory = () => {
                       />
                     </div>
                     <div className={styles.file_container}>
-                      <button
-                        className={styles.sview_file}
-                        onClick={(event) =>
-                          window.open(`${file.criminal_record_check}`, "_blank")
-                        }
-                      >
-                        View
-                      </button>
                       <label>Criminal record check</label>
                       <input
                         type="file"
@@ -587,17 +528,6 @@ const Inventory = () => {
                       />
                     </div>
                     <div className={styles.file_container}>
-                      <button
-                        className={styles.sview_file}
-                        onClick={(event) =>
-                          window.open(
-                            `${file.pre_employment_road_test}`,
-                            "_blank"
-                          )
-                        }
-                      >
-                        View
-                      </button>
                       <label>Pre-employment Driver's road test</label>
                       <input
                         type="file"
@@ -607,17 +537,6 @@ const Inventory = () => {
                       />
                     </div>
                     <div className={styles.file_container}>
-                      <button
-                        className={styles.sview_file}
-                        onClick={(event) =>
-                          window.open(
-                            `${file.employment_application}`,
-                            "_blank"
-                          )
-                        }
-                      >
-                        View
-                      </button>
                       <label>Employment application</label>
                       <input
                         type="file"
@@ -627,17 +546,6 @@ const Inventory = () => {
                       />
                     </div>
                     <div className={styles.file_container}>
-                      <button
-                        className={styles.sview_file}
-                        onClick={(event) =>
-                          window.open(
-                            `${file.release_and_authorization}`,
-                            "_blank"
-                          )
-                        }
-                      >
-                        View
-                      </button>
                       <label>
                         Release and authorization to contact previous employer
                       </label>
@@ -649,14 +557,6 @@ const Inventory = () => {
                       />
                     </div>
                     <div className={styles.file_container}>
-                      <button
-                        className={styles.sview_file}
-                        onClick={(event) =>
-                          window.open(`${file.reference_checks}`, "_blank")
-                        }
-                      >
-                        View
-                      </button>
                       <label>Reference checks</label>
                       <input
                         type="file"
@@ -666,17 +566,6 @@ const Inventory = () => {
                       />
                     </div>
                     <div className={styles.file_container}>
-                      <button
-                        className={styles.sview_file}
-                        onClick={(event) =>
-                          window.open(
-                            `${file.on_duty_hours_statement}`,
-                            "_blank"
-                          )
-                        }
-                      >
-                        View
-                      </button>
                       <label>Driver statement of onduty hours</label>
                       <input
                         type="file"
@@ -686,17 +575,6 @@ const Inventory = () => {
                       />
                     </div>
                     <div className={styles.file_container}>
-                      <button
-                        className={styles.sview_file}
-                        onClick={(event) =>
-                          window.open(
-                            `${file.certificate_of_violation}`,
-                            "_blank"
-                          )
-                        }
-                      >
-                        View
-                      </button>
                       <label>
                         Certificate of violations(once every 6months)
                       </label>
@@ -708,17 +586,6 @@ const Inventory = () => {
                       />
                     </div>
                     <div className={styles.file_container}>
-                      <button
-                        className={styles.sview_file}
-                        onClick={(event) =>
-                          window.open(
-                            `${file.certificate_of_road_test}`,
-                            "_blank"
-                          )
-                        }
-                      >
-                        View
-                      </button>
                       <label>Annual Driver Performance Reviews</label>
                       <input
                         type="file"
@@ -728,14 +595,6 @@ const Inventory = () => {
                       />
                     </div>
                     <div className={styles.file_container}>
-                      <button
-                        className={styles.sview_file}
-                        onClick={(event) =>
-                          window.open(`${file.training}`, "_blank")
-                        }
-                      >
-                        View
-                      </button>
                       <label>Training</label>
                       <input
                         type="file"
@@ -746,14 +605,6 @@ const Inventory = () => {
                     </div>
 
                     <div className={styles.file_container}>
-                      <button
-                        className={styles.sview_file}
-                        onClick={(event) =>
-                          window.open(`${file.disciplinary_actions}`, "_blank")
-                        }
-                      >
-                        View
-                      </button>
                       <label>Disciplinary actions</label>
                       <input
                         type="file"
@@ -764,14 +615,6 @@ const Inventory = () => {
                     </div>
 
                     <div className={styles.file_container}>
-                      <button
-                        className={styles.sview_file}
-                        onClick={(event) =>
-                          window.open(`${file.safety_records}`, "_blank")
-                        }
-                      >
-                        View
-                      </button>
                       <label>Safety records</label>
                       <input
                         type="file"
