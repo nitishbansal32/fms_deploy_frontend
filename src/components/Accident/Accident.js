@@ -56,7 +56,7 @@ const Inventory = () => {
     try {
       if (!(e.target[0].value == "")) {
         Axios.get(
-          `http://localhost:8000/api/v1/LC/accidents/${drivers}`,
+          `https://lc-backend-v2.herokuapp.com/api/v1/LC/accidents/${drivers}`,
           config
         )
           .then((response) => {
