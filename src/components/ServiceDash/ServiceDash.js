@@ -1,12 +1,12 @@
 import styles from "./ServiceDash.module.css";
 import Navbar from "../../components/Navbar/Navbar";
 
-import FMS from "../../../src/Images/Logo(signIn).jpeg";
-import LabourCentral from "../../../src/Images/LabourCentral.jpeg";
-import LabourConnect from "../../../src/Images/LabourConnect.jpeg";
+import FMS from "../../../src/Images/Logo(signIn).png";
+import LabourCentral from "../../../src/Images/LabourCentral.png";
+import LabourConnect from "../../../src/Images/LabourConnect.png";
 import LoadCentral from "../../../src/Images/LoadCentral.jpeg";
-import ERS from "../../../src/Images/ERS.svg";
-import IT from "../../../src/Images/IT.svg";
+import ERS from "../../../src/Images/ERS.png";
+import IT from "../../../src/Images/IT.png";
 
 import { UserContext } from "../../UserContext";
 import { useNavigate, Link } from "react-router-dom";
@@ -49,7 +49,7 @@ const ServiceDash = () => {
             <div className={styles.all_services}>
               <div className={styles.service}>
                 <div className={styles.service_desc}>
-                  <img src={FMS} alt="" style={{ width: "60%" }} />
+                  <img src={FMS} alt="" style={{ height: "64px" }} />
                   {open.fleetMs && (
                     <p>
                       Our fleet management system, capitalizes on over 25 years
@@ -82,7 +82,7 @@ const ServiceDash = () => {
               </div>
               <div className={styles.service}>
                 <div className={styles.service_desc}>
-                  <img src={LabourCentral} alt="" style={{ width: "60%" }} />
+                  <img src={LabourCentral} alt="" style={{ height: "64px" }} />
 
                   {open.labourC && (
                     <p>
@@ -112,7 +112,7 @@ const ServiceDash = () => {
               </div>
               <div className={styles.service}>
                 <div className={styles.service_desc}>
-                  <img src={LabourConnect} alt="" style={{ width: "60%" }} />
+                  <img src={LabourConnect} alt="" style={{ height: "64px" }} />
                   {open.loadConnect && (
                     <p>
                       Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -140,7 +140,7 @@ const ServiceDash = () => {
 
               <div className={styles.service}>
                 <div className={styles.service_desc}>
-                  <img src={LoadCentral} alt="" style={{ width: "60%" }} />
+                  <img src={LoadCentral} alt="" style={{ height: "64px" }} />
                   {open.loadCentral && (
                     <p>
                       Is a dispatch system designed to help automate routing and
@@ -166,7 +166,7 @@ const ServiceDash = () => {
               </div>
               <div className={styles.service}>
                 <div className={styles.service_desc}>
-                  <img src={ERS} alt="" style={{ width: "60%" }} />
+                  <img src={ERS} alt="" style={{ height: "64px" }} />
                   {open.erS && (
                     <p>
                       Enterprise reporting is the creation and distribution of
@@ -198,7 +198,7 @@ const ServiceDash = () => {
               </div>
               <div className={styles.service}>
                 <div className={styles.service_desc}>
-                  <img src={IT} alt="" style={{ width: "60%" }} />
+                  <img src={IT} alt="" style={{ height: "64px" }} />
                   {open.itS && (
                     <p>
                       Lorem ipsum dolor sit amet consectetur adipisicing elit.

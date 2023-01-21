@@ -2,7 +2,7 @@ import styles from "./Navbar.module.css";
 import { UserContext } from "../../UserContext";
 import { useNavigate, Link } from "react-router-dom";
 import { useContext, useState } from "react";
-import Logo from "../../../src/Images/Logo(signIn).jpeg";
+import Logo from "../../../src/Images/Logo(signIn).png";
 import hamClose from "../../../src/Images/hamClose.svg";
 import HamMenu from "../../../src/Images/hamMenu.svg";
 import dashboard from "../../../src/Images/dashboard.svg";

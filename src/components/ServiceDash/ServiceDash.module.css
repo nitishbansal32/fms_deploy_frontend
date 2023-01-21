@@ -243,7 +243,7 @@
     border-radius: 8px;
   }
   .service_desc > img {
-    width: 100px !important;
+    height: 56px !important;
   }
   .button_container button {
     padding: 0.45rem 0.55rem;
