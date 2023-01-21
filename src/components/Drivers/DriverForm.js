@@ -521,7 +521,7 @@ const Inventory = () => {
                       />
                     </div>
                     <div>
-                      <label>Current abstract(within 12 months)</label>
+                      <label>Driver MDVR/CDVR</label>
                       <input
                         type="file"
                         name="current_abstract"

@@ -235,6 +235,25 @@ const Inventory = () => {
 
                 <div className={styles.table_container}>
                   <div className={styles.table_content}>
+                    <label htmlFor="shift">Employee position:</label>
+                    <select
+                      name="role"
+                      id=""
+                      onChange={inputChange}
+                      value={data.role}
+                    >
+                      <option selected="selected" value="employee">
+                        employee
+                      </option>
+                      <option value="admin">admin</option>
+                      <option value="insurance-company">
+                        insurance-company
+                      </option>
+                      <option value="super-admin">super-admin</option>
+                      <option value="sub-super-admin">sub-super-admin</option>
+                    </select>
+                  </div>
+                  <div className={styles.table_content}>
                     <label htmlFor="">Name:</label>
                     <input
                       type="text"
@@ -513,32 +532,6 @@ const Inventory = () => {
                       minlength="3"
                       maxlength="10"
                     />
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="shift">Select employee position</label>
-                    <select
-                      name="role"
-                      id=""
-                      onChange={inputChange}
-                      value={data.role}
-                    >
-                      <option selected="selected" value="employee">
-                        employee
-                      </option>
-                      <option value="admin">admin</option>
-                      <option value="insurance-company">
-                        insurance-company
-                      </option>
-                      <option value="super-admin">super-admin</option>
-                      <option value="sub-super-admin">sub-super-admin</option>
-                    </select>
-                    {/* <input
-                      type="text"
-                      placeholder="Enter role"
-                      name="role"
-                      onChange={inputChange}
-                      value={data.role}
-                    /> */}
                   </div>
 
                   <br />

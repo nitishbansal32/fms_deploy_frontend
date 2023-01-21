@@ -4,9 +4,12 @@
   align-items: flex-start;
   padding: 2rem 0 0 3rem;
   width: 100%;
+  gap: 2rem;
 }
 
-.personal_container {
+.personal_container,
+.company_update_container,
+.company_update_container form {
   display: flex;
   flex-direction: column;
   align-items: flex-start;

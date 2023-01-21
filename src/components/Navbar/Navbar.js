@@ -48,6 +48,11 @@ const Navbar = () => {
           ) : (
             <img onClick={MenuContainerDisplay} src={HamMenu} alt="" />
           )}
+          <img
+            src={localStorage.getItem("logo")}
+            alt=""
+            className={styles.company_logo}
+          />
         </div>
         {displayMobile && (
           <div className={styles.menu_open_container}>
@@ -100,7 +105,12 @@ const Navbar = () => {
         )}
       </div>
       <div className={styles.container}>
-        <img src={Logo} />
+        <div className={styles.nav_logo_container}>
+          <img src={Logo} />
+          <hr style={{ opacity: "0.1" }} />
+          <img src={localStorage.getItem("logo")} alt="" />
+        </div>
+
         <ul>
           <Link to="/dashboard" onClick={handleDisplay}>
             <div className={styles.nav_container}>

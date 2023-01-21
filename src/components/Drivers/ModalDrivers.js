@@ -28,8 +28,6 @@ const ModalDrivers = (props) => {
 
   const [checkField, setCheckField] = useState("");
 
-  const [size, setSize] = useState(false);
-
   const fileInputChange = (e) => {
     setFile({
       ...file,
@@ -390,7 +388,7 @@ const ModalDrivers = (props) => {
                         )
                   }
                 >
-                  <label>Current abstract(within 12 months)</label>
+                  <label>Driver MDVR/CDVR</label>
                   <div
                     className={styles.checkBox}
                     style={{
