@@ -9,10 +9,12 @@ import { UserContext } from "../../UserContext";
 const Settings = () => {
   const { display, setDisplay } = useContext(UserContext);
 
+  const { modal, setModal, setModalColor, msg, setMsg } =
+    useContext(UserContext);
+
   console.log(display);
 
   const email = localStorage.getItem("email");
-  console.log(email);
 
   const oldLogo = localStorage.getItem("logo");
 
@@ -42,17 +44,23 @@ const Settings = () => {
     });
   };
 
-  console.log(file.logo);
-  console.log(data.address);
-
   const formData = new FormData();
   formData.append("logo", file.logo);
   formData.append("address", data.address);
   formData.append("is_email_reminder_active", data.is_email_reminder_active);
   formData.append("is_sms_reminder_active", data.is_sms_reminder_active);
 
+  for (var pair of formData.entries()) {
+    console.log(pair[0] + ", " + pair[1]);
+  }
+
   const handleCompanyUpdate = (e) => {
     e.preventDefault();
+
+    setMsg("Updating company info....");
+    setModal(true);
+    setModalColor("green");
+
     Axios.patch(
       `https://lc-backend-v2.herokuapp.com/api/v1/LC/updateCompany`,
       formData,
@@ -65,9 +73,15 @@ const Settings = () => {
     )
       .then((res) => {
         console.log(res);
+        setMsg("Company info updated!");
+        setModal(true);
+        setModalColor("green");
       })
       .catch((err) => {
         console.log(err);
+        setMsg("Internal error!");
+        setModal(true);
+        setModalColor("red");
       });
   };
 
@@ -96,11 +110,19 @@ const Settings = () => {
           <form action="" onSubmit={handleCompanyUpdate}>
             <div className={styles.content_container}>
               <label htmlFor="">Change logo:</label>
-              <input type="file" onChange={fileInputChange} />
+              <input type="file" name="logo" onChange={fileInputChange} />
             </div>
             <div className={styles.content_container}>
-              <label htmlFor="">Change address:</label>
-              <textarea cols="20" rows="2" type="text" onChange={inputChange} />
+              <label htmlFor="">Change address(>10):</label>
+              <textarea
+                cols="20"
+                rows="2"
+                type="text"
+                minlength="10"
+                onChange={inputChange}
+                name="address"
+                value={data.address}
+              />
             </div>
             <div className={styles.content_container}>
               <label htmlFor="">Email active:</label>
