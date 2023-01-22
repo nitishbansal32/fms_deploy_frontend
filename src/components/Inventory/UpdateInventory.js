@@ -449,21 +449,23 @@ const Inventory = () => {
 
                   <div className={styles.special_container}>
                     <div className={styles.table_content}>
-                      <label htmlFor="">*Annual safety expiry:</label>
+                      <label htmlFor="">*Annual inspection:</label>
+
                       <input
                         type="date"
-                        placeholder="Enter safety expiry date"
                         data-date-format="YYYY MM DD"
-                        name="safety_expiry_date"
+                        placeholder="Enter annual inspection"
+                        name="annual_inspection"
                         onChange={inputChange}
                         value={
-                          data.safety_expiry_date
-                            ? data.safety_expiry_date.substr(0, 10)
+                          data.annual_inspection
+                            ? data.annual_inspection.substr(0, 10)
                             : ""
                         }
                         required
                       />
                     </div>
+
                     <div className={styles.table_content}>
                       <label htmlFor="">*Maintainence duration(days):</label>
 
@@ -494,23 +496,21 @@ const Inventory = () => {
                       />
                     </div>
                     <div className={styles.table_content}>
-                      <label htmlFor="">*Annual inspection:</label>
-
+                      <label htmlFor="">*Annual safety expiry:</label>
                       <input
                         type="date"
+                        placeholder="Enter safety expiry date"
                         data-date-format="YYYY MM DD"
-                        placeholder="Enter annual inspection"
-                        name="annual_inspection"
+                        name="safety_expiry_date"
                         onChange={inputChange}
                         value={
-                          data.annual_inspection
-                            ? data.annual_inspection.substr(0, 10)
+                          data.safety_expiry_date
+                            ? data.safety_expiry_date.substr(0, 10)
                             : ""
                         }
                         required
                       />
                     </div>
-
                     <div className={styles.table_content}>
                       <label htmlFor="">*Plate expiry:</label>
 
