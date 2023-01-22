@@ -6,7 +6,7 @@ import { useEffect, useState, useContext } from "react";
 import Logo from "../../../src/Images/DriversLogo.svg";
 
 const ModalDrivers = (props) => {
-  const { display, setDisplay, setStatus, setMsg, setModal } =
+  const { display, setDisplay, setStatus, setMsg, setModal, driverData } =
     useContext(UserContext);
   const url = "";
   // const [file, setFile] = useState("");
@@ -82,8 +82,8 @@ const ModalDrivers = (props) => {
   return (
     <div className={styles.main_modal_container}>
       <div className={styles.modal_container}>
-        {props.modalDrivers &&
-          props.modalDrivers.map((item) => (
+        {driverData &&
+          [driverData].map((item) => (
             <div className={styles.wrap_container}>
               <div className={styles.licence_container}>
                 <div className={styles.driver_licence_container}>
@@ -161,7 +161,11 @@ const ModalDrivers = (props) => {
                       <div className={styles.row_container}>
                         <div>
                           <label>START DATE</label>
-                          <p>{item.start_date.substr(0, 10)}</p>
+                          <p>
+                            {item.start_date
+                              ? item.start_date.substr(0, 10)
+                              : ""}
+                          </p>
                         </div>
                         <div>
                           <label>4b EXP/EXP</label>
@@ -395,7 +399,8 @@ const ModalDrivers = (props) => {
                       width: "12px",
                       height: "12px",
                       backgroundColor:
-                        props.file.current_abstract[
+                        props.file.current_abstract &&
+                        (props.file.current_abstract[
                           props.file.current_abstract.length - 1
                         ] == "none"
                           ? "red"
@@ -407,7 +412,7 @@ const ModalDrivers = (props) => {
                               props.file.current_abstract.length - 1
                             ] == undefined
                           ? "red"
-                          : "green",
+                          : "green"),
                     }}
                   ></div>{" "}
                 </div>
@@ -660,7 +665,8 @@ const ModalDrivers = (props) => {
                       width: "12px",
                       height: "12px",
                       backgroundColor:
-                        props.file.certificate_of_violation[
+                        props.file.certificate_of_violation &&
+                        (props.file.certificate_of_violation[
                           props.file.certificate_of_violation.length - 1
                         ] == "none"
                           ? "red"
@@ -672,7 +678,7 @@ const ModalDrivers = (props) => {
                               props.file.certificate_of_violation.length - 1
                             ] == undefined
                           ? "red"
-                          : "green",
+                          : "green"),
                     }}
                   ></div>
                 </div>
@@ -737,7 +743,8 @@ const ModalDrivers = (props) => {
                       width: "12px",
                       height: "12px",
                       backgroundColor:
-                        props.file.training[props.file.training.length - 1] ==
+                        props.file.training &&
+                        (props.file.training[props.file.training.length - 1] ==
                         "none"
                           ? "red"
                           : props.file.training[
@@ -748,7 +755,7 @@ const ModalDrivers = (props) => {
                               props.file.training.length - 1
                             ] == undefined
                           ? "red"
-                          : "green",
+                          : "green"),
                     }}
                   ></div>
                 </div>
@@ -784,7 +791,8 @@ const ModalDrivers = (props) => {
                       width: "12px",
                       height: "12px",
                       backgroundColor:
-                        props.file.certificate_of_road_test[
+                        props.file.certificate_of_road_test &&
+                        (props.file.certificate_of_road_test[
                           props.file.certificate_of_road_test.length - 1
                         ] == "none"
                           ? "red"
@@ -796,7 +804,7 @@ const ModalDrivers = (props) => {
                               props.file.certificate_of_road_test.length - 1
                             ] == undefined
                           ? "red"
-                          : "green",
+                          : "green"),
                     }}
                   ></div>
                 </div>

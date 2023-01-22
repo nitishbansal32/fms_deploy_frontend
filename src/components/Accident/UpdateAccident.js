@@ -25,6 +25,8 @@ const Inventory = () => {
     setAccidentData,
     modalColor,
     setModalColor,
+    display,
+    setDisplay,
   } = useContext(UserContext);
 
   const navigate = useNavigate();
@@ -112,6 +114,7 @@ const Inventory = () => {
       }
     )
       .then((response) => {
+        setAccidentData(response.data.accident);
         setStatus(response.status);
         setMsg("Accident info updated!");
         setModalColor("green");
@@ -128,6 +131,7 @@ const Inventory = () => {
 
   const handleBack = () => {
     navigate("/accident", { replace: true });
+    setDisplay(true);
     setModal(false);
   };
 

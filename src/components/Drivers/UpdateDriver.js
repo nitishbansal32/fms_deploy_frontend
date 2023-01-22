@@ -22,7 +22,10 @@ const Inventory = () => {
     msg,
     setMsg,
     driverData,
+    setDriverData,
     setModalColor,
+    display,
+    setDisplay,
   } = useContext(UserContext);
 
   const [status, setStatus] = useState("");
@@ -140,6 +143,8 @@ const Inventory = () => {
   formData.append("disciplinary_actions", file.disciplinary_actions);
   formData.append("safety_records", file.safety_records);
 
+  const EmployeeName = driverData.employee_name;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setMsg("Updating driver info... Please wait!");
@@ -147,7 +152,7 @@ const Inventory = () => {
     setModalColor("green");
 
     Axios.patch(
-      `https://lc-backend-v2.herokuapp.com/api/v1/LC/drivers/${driverData.employee_name}`,
+      `https://lc-backend-v2.herokuapp.com/api/v1/LC/drivers/${EmployeeName}`,
       formData,
       {
         headers: {
@@ -162,6 +167,7 @@ const Inventory = () => {
         setMsg("Driver information updated!");
         setModal(true);
         setModalColor("green");
+        setDriverData(response.data.driver);
       })
       .catch((err) => {
         console.log(err);
@@ -173,7 +179,7 @@ const Inventory = () => {
 
   const handleBack = () => {
     setModal(false);
-
+    setDisplay(true);
     navigate("/drivers", { replace: true });
   };
 

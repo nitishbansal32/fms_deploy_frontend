@@ -19,6 +19,8 @@ const Inventory = () => {
     role,
     modal,
     setModal,
+    display,
+    setDisplay,
     msg,
     setMsg,
     inventoryData,
@@ -130,34 +132,14 @@ const Inventory = () => {
 
   const formData = new FormData();
 
-  // formData.append("unit", data.unit);
-  // formData.append("year", data.year);
-  // formData.append("made_by", `${!data.made_by ? "Volvo" : data.made_by}`);
-  // formData.append("color", data.color);
-  // formData.append("description", data.description);
-  // formData.append("VIN", data.VIN);
-  // formData.append("ELD", data.ELD);
-  // formData.append("terminal", data.terminal);
-  // formData.append("ownership", data.ownership);
-  // formData.append("licence_plate", data.licence_plate);
-  // formData.append("number_of_axles", data.number_of_axles);
-  // formData.append("weight", data.weight);
-  // formData.append("tyre_size", data.tyre_size);
-  // formData.append("standard_job", data.standard_job);
-  // formData.append("annual_inspection", data.annual_inspection);
-  // formData.append("safety_expiry_date", data.safety_expiry_date);
-  // formData.append("status", `${!data.status ? "active" : data.status}`);
-  // formData.append("plate_expiry_date", data.plate_expiry_date);
-  // formData.append("mechanical_notes", data.mechanical_notes);
-  // formData.append("maintenance_duration", data.maintenance_duration);
-  // formData.append("type", `${!data.type ? "Tractor" : data.type}`);
-
   //File
   formData.append("maintenance_documents", file.maintenance_documents);
 
   const config = {
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
   };
+
+  const UnitNumber = inventoryData.unit;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -166,7 +148,7 @@ const Inventory = () => {
     setModalColor("green");
 
     Axios.patch(
-      `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/maintenance/${inventoryData.unit}`,
+      `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/maintenance/${UnitNumber}`,
       formData,
       {
         headers: {
@@ -214,6 +196,8 @@ const Inventory = () => {
           setMsg("Equipment updated!");
           setModal(true);
           setModalColor("green");
+          setInventoryData(response.data.tractor);
+          console.log(response.data.tractor);
         })
         .catch((err) => {
           console.log(err.response);
@@ -244,6 +228,7 @@ const Inventory = () => {
   const handleBack = () => {
     navigate("/inventory", { replace: true });
     setModal(false);
+    setDisplay(true);
   };
 
   const permissionHandler = () => {

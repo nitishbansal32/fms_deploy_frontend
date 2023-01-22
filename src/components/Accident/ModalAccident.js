@@ -6,7 +6,7 @@ import { useEffect, useState, useContext } from "react";
 import modalbg from "../../../src/Images/modalAccidentBg.svg";
 
 const ModalAccident = (props) => {
-  const { display, setDisplay } = useContext(UserContext);
+  const { display, setDisplay, accidentData } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -24,8 +24,8 @@ const ModalAccident = (props) => {
   return (
     <div className={styles.main_modal_container}>
       <div className={styles.modal_container}>
-        {props.modalAccident &&
-          props.modalAccident.map((item) => (
+        {accidentData &&
+          [accidentData].map((item) => (
             <div className={styles.wrap_container}>
               <div className={styles.content}>
                 <h3>Accident number</h3>
