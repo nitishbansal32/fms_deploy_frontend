@@ -94,12 +94,12 @@ const ModalDrivers = (props) => {
     setDisplay(false);
   };
 
-  console.log(
-    "props.file.certificate_of_road_test",
-    props.file.certificate_of_road_test[
-      props.file.certificate_of_road_test.length - 1
-    ]
-  );
+  // console.log(
+  //   "props.file.certificate_of_road_test",
+  //   props.file.certificate_of_road_test[
+  //     props.file.certificate_of_road_test.length - 1
+  //   ]
+  // );
   console.log("props.file.license_disclosure", props.file.license_disclosure);
 
   return (
