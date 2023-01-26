@@ -69,17 +69,19 @@ const Inventory = () => {
     standard_job: inventoryData.standard_job,
     annual_inspection: inventoryData.annual_inspection,
     safety_expiry_date: inventoryData.safety_expiry_date,
+    safety_expiry_type: inventoryData.safety_expiry_type,
     status: inventoryData.status,
     plate_expiry_date: inventoryData.plate_expiry_date,
-    days_remaining_for_next_inspection:
-      inventoryData.days_remaining_for_next_inspection,
+
     mechanical_notes: inventoryData.mechanical_notes,
     maintenance_duration: inventoryData.maintenance_duration,
     next_maintenance_at: inventoryData.next_maintenance_at,
     last_maintenance_at: inventoryData.last_maintenance_at,
+    PM1: inventoryData.PM1,
+    PM2: inventoryData.PM2,
+    PM3: inventoryData.PM3,
     maintenance_delay: inventoryData.maintenance_delay,
-    days_remaining_for_next_inspection:
-      inventoryData.days_remaining_for_next_inspection,
+
     type: inventoryData.type,
   });
 
@@ -118,15 +120,16 @@ const Inventory = () => {
     standard_job: data.standard_job,
     annual_inspection: data.annual_inspection,
     safety_expiry_date: data.safety_expiry_date,
+    safety_expiry_type: inventoryData.safety_expiry_type,
     status: data.status,
     plate_expiry_date: data.plate_expiry_date,
-    days_remaining_for_next_inspection: data.days_remaining_for_next_inspection,
+
     mechanical_notes: data.mechanical_notes,
     maintenance_duration: data.maintenance_duration,
     next_maintenance_at: data.next_maintenance_at,
     last_maintenance_at: data.last_maintenance_at,
     maintenance_delay: data.maintenance_delay,
-    days_remaining_for_next_inspection: data.days_remaining_for_next_inspection,
+
     type: data.type,
   };
 
@@ -410,6 +413,7 @@ const Inventory = () => {
                         value={data.licence_plate}
                       />
                     </div>
+
                     <div className={styles.table_content}>
                       <label htmlFor="">Number of axles:</label>
 
@@ -446,7 +450,6 @@ const Inventory = () => {
                       />
                     </div>
                   </div>
-
                   <div className={styles.special_container}>
                     <div className={styles.table_content}>
                       <label htmlFor="">*Annual inspection:</label>
@@ -496,7 +499,21 @@ const Inventory = () => {
                       />
                     </div>
                     <div className={styles.table_content}>
-                      <label htmlFor="">*Annual safety expiry:</label>
+                      <label htmlFor="">*Safety expiry type:</label>
+                      <select
+                        name="safety_expiry_type"
+                        id=""
+                        onChange={inputChange}
+                        value={data.safety_expiry_type}
+                      >
+                        <option value="Semi-Annual" selected>
+                          Semi annual
+                        </option>
+                        <option value="Annual">Annual</option>
+                      </select>
+                    </div>
+                    <div className={styles.table_content}>
+                      <label htmlFor="">*Safety expiry:</label>
                       <input
                         type="date"
                         placeholder="Enter safety expiry date"
@@ -529,22 +546,51 @@ const Inventory = () => {
                       />
                     </div>
                   </div>
-
-                  <div className={styles.below_container}>
+                  {data.PM1 && (
                     <div className={styles.table_content}>
-                      <label htmlFor="">
-                        Days remaining for next inspection:
-                      </label>
-
+                      <label htmlFor="">PM1:</label>
                       <input
-                        type="text"
-                        placeholder=""
-                        name="days_remaining_for_next_inspection"
+                        type="date"
+                        data-date-format="YYYY MM DD"
+                        placeholder="Enter date"
+                        name="PM1"
                         onChange={inputChange}
-                        value={data.days_remaining_for_next_inspection}
+                        value={data.PM1 ? data.PM1.substr(0, 10) : ""}
                         disabled
                       />
                     </div>
+                  )}
+                  {data.PM2 && (
+                    <div className={styles.table_content}>
+                      <label htmlFor="">PM2:</label>
+                      <input
+                        type="date"
+                        data-date-format="YYYY MM DD"
+                        placeholder="Enter date"
+                        name="PM2"
+                        onChange={inputChange}
+                        value={data.PM2 ? data.PM2.substr(0, 10) : ""}
+                        disabled
+                      />
+                    </div>
+                  )}
+
+                  {data.PM3 && (
+                    <div className={styles.table_content}>
+                      <label htmlFor="">PM3:</label>
+                      <input
+                        type="date"
+                        data-date-format="YYYY MM DD"
+                        placeholder="Enter date"
+                        name="PM3"
+                        onChange={inputChange}
+                        value={data.PM3 ? data.PM3.substr(0, 10) : ""}
+                        disabled
+                      />
+                    </div>
+                  )}
+
+                  <div className={styles.below_container}>
                     <div className={styles.table_content}>
                       <label htmlFor="">Mechanical notes:</label>
 

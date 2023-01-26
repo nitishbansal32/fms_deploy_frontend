@@ -26,10 +26,13 @@
   gap: 0.5rem;
 }
 
-.nav_logo_container > img {
+.nav_main_logo {
   width: 50%;
 }
 
+.nav_comp_logo {
+  height: 60px;
+}
 .container ul,
 .lower_container {
   gap: 1.5rem;

@@ -15,7 +15,16 @@ const Loading = () => {
   };
 
   return (
-    <div className="container">
+    <div
+      className="container"
+      styles={{
+        display: "flex",
+        width: "100%",
+        height: "100%",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <video
         autoPlay
         playsInline

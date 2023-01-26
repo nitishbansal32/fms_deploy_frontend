@@ -140,6 +140,15 @@ code {
   transition: all 300ms ease;
 }
 
+input[type="file"]::file-selector-button {
+  border: 2px solid var(--primary-color);
+  padding: 0.2em 0.4em;
+  border-radius: 0.2em;
+  background-color: var(--primary-color);
+  transition: 1s;
+  color: white;
+}
+
 /* Media Queries  */
 
 @media screen and (max-width: 1210px) {

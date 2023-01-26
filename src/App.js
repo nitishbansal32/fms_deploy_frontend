@@ -5,6 +5,7 @@ import Accident from "./components/Accident/Accident";
 import Drivers from "./components/Drivers/Drivers";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Login from "./components/Login/Login";
+import Cvor from "./components/Cvor/Cvor";
 import Employee from "./components/Employee/Employee";
 import Settings from "./components/Settings/Settings";
 import Modal from "./components/Modal/Modal";
@@ -17,6 +18,7 @@ import DashInventoryForm from "./components/Dashboard/InventoryForm";
 import DriverForm from "./components/Drivers/DriverForm";
 import AccidentForm from "./components/Accident/AccidentForm";
 import InventoryForm from "./components/Inventory/InventoryForm";
+import CvorForm from "./components/Cvor/CvorForm";
 
 import Loading from "./components/Loading";
 
@@ -116,6 +118,7 @@ function App() {
             <Route exact path="/drivers" element={<Drivers />}></Route>
             <Route exact path="/accident" element={<Accident />}></Route>
             <Route exact path="/register" element={<Employee />}></Route>
+            <Route exact path="/cvor" element={<Cvor />}></Route>
             <Route exact path="/settings" element={<Settings />}></Route>
             <Route
               exact
@@ -147,6 +150,8 @@ function App() {
               path="/updateAccident"
               element={<UpdateAccident />}
             ></Route>
+
+            <Route exact path="/registerCvor" element={<CvorForm />}></Route>
             {/* <Route
               exact
               path="/updateUser"

@@ -32,7 +32,7 @@ const Inventory = () => {
 
   const navigate = useNavigate();
 
-  console.log(driverData.DOB);
+  console.log(driverData);
 
   const [file, setFile] = useState({
     profile_picture: driverData.profile_picture,
@@ -54,6 +54,8 @@ const Inventory = () => {
     disciplinary_actions: driverData.disciplinary_actions,
     safety_records: driverData.safety_records,
   });
+
+  console.log("training", driverData.training);
 
   const [data, setData] = useState({
     employee_name: driverData.employee_name,
@@ -171,9 +173,22 @@ const Inventory = () => {
       })
       .catch((err) => {
         console.log(err);
-        setMsg("Try again!");
-        setModal(true);
-        setModalColor("red");
+        if (
+          err.response.data.msg ==
+          "Duplicate value entered for employee_id field, please choose another value"
+        ) {
+          setMsg("Employee ID already exists!");
+          setModal(true);
+          setModalColor("red");
+        } else if (err.response.data.msg == "File size must be less than 1MB") {
+          setMsg("File size must be less than 1MB!");
+          setModal(true);
+          setModalColor("red");
+        } else {
+          setMsg("Try again after sometime!");
+          setModal(true);
+          setModalColor("red");
+        }
       });
   };
 

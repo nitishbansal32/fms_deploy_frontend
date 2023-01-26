@@ -229,9 +229,6 @@ const ModalInventory = (props) => {
                       <label>Standard job:</label>
                       <p>{item.standard_job}</p>
                     </div>
-                  </div>
-
-                  <div className={styles.right_container}>
                     <div>
                       <label>Annual Inspection:</label>
                       <p>
@@ -240,7 +237,9 @@ const ModalInventory = (props) => {
                           : ""}
                       </p>
                     </div>
+                  </div>
 
+                  <div className={styles.right_container}>
                     <div>
                       <label>Status:</label>
                       <p>{item.status}</p>
@@ -275,13 +274,29 @@ const ModalInventory = (props) => {
                           : ""}
                       </p>
                     </div>
+
+                    {item.PM1 && (
+                      <div>
+                        <label>PM1:</label>
+                        <p>{item.PM1 ? item.PM1.substr(0, 10) : ""}</p>
+                      </div>
+                    )}
+                    {item.PM2 && (
+                      <div>
+                        <label>PM2:</label>
+                        <p>{item.PM2 ? item.PM2.substr(0, 10) : ""}</p>
+                      </div>
+                    )}
+                    {item.PM3 && (
+                      <div>
+                        <label>PM3:</label>
+                        <p>{item.PM3 ? item.PM3.substr(0, 10) : ""}</p>
+                      </div>
+                    )}
+
                     <div>
                       <label>Maintainence delay:</label>
                       <p>{item.maintenance_delay}</p>
-                    </div>
-                    <div>
-                      <label>Days for next inpection:</label>
-                      <p>{item.days_remaining_for_next_inspection}</p>
                     </div>
                     <div>
                       <label>Mechanical notes:</label>

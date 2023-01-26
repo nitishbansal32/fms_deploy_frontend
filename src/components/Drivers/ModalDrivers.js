@@ -6,8 +6,15 @@ import { useEffect, useState, useContext } from "react";
 import Logo from "../../../src/Images/DriversLogo.svg";
 
 const ModalDrivers = (props) => {
-  const { display, setDisplay, setStatus, setMsg, setModal, driverData } =
-    useContext(UserContext);
+  const {
+    display,
+    setDisplay,
+    setStatus,
+    setMsg,
+    setModal,
+    driverData,
+    setModalColor,
+  } = useContext(UserContext);
   const url = "";
   // const [file, setFile] = useState("");
 
@@ -17,7 +24,7 @@ const ModalDrivers = (props) => {
     setDisplay(false);
   };
 
-  console.log(props.file);
+  console.log("employee_name", driverData.employee_name);
 
   //For profile image
   const [file, setFile] = useState({
@@ -43,11 +50,13 @@ const ModalDrivers = (props) => {
   const profilePicUpload = (e) => {
     e.preventDefault();
 
+    setMsg("Profile pic updating...");
+    setModal(true);
+    setModalColor("green");
+
     Axios.patch(
       `https://lc-backend-v2.herokuapp.com/api/v1/LC/drivers/${
-        props.modalDrivers[0].employee_name
-          ? props.modalDrivers[0].employee_name
-          : ""
+        driverData.employee_name ? driverData.employee_name : ""
       }`,
       formData,
       {
@@ -60,13 +69,21 @@ const ModalDrivers = (props) => {
       .then((response) => {
         // setStatus(response.status);
         setProfileUrl(response.data.driver.profile_picture);
-        setMsg("Profile pic uploaded!");
+        setMsg("Profile pic updated!");
         setModal(true);
+        setModalColor("green");
       })
       .catch((err) => {
         console.log(err);
-        // setMsg("Check fields!!");
-        // setModal(true);
+        if (err.response.data.msg == "File size must be less than 1MB") {
+          setMsg("File size must be less than 1MB!");
+          setModal(true);
+          setModalColor("red");
+        } else {
+          setMsg("Try again after sometime!");
+          setModal(true);
+          setModalColor("red");
+        }
       });
   };
 
@@ -77,7 +94,13 @@ const ModalDrivers = (props) => {
     setDisplay(false);
   };
 
-  // console.log(props.file);
+  console.log(
+    "props.file.certificate_of_road_test",
+    props.file.certificate_of_road_test[
+      props.file.certificate_of_road_test.length - 1
+    ]
+  );
+  console.log("props.file.license_disclosure", props.file.license_disclosure);
 
   return (
     <div className={styles.main_modal_container}>
@@ -278,11 +301,13 @@ const ModalDrivers = (props) => {
 
                 <div
                   onClick={(event) =>
-                    props.file.license_disclosure == "none"
+                    props.file.license_disclosure === "none"
                       ? "none"
-                      : props.file.license_disclosure == null
+                      : props.file.license_disclosure === null
                       ? "none"
-                      : props.file.license_disclosure == undefined
+                      : props.file.license_disclosure === undefined
+                      ? "none"
+                      : props.file.license_disclosure === "undefined"
                       ? "none"
                       : window.open(
                           `${props.file.license_disclosure}`,
@@ -302,6 +327,8 @@ const ModalDrivers = (props) => {
                           : props.file.license_disclosure == null
                           ? "red"
                           : props.file.license_disclosure == undefined
+                          ? "red"
+                          : props.file.license_disclosure == "undefined"
                           ? "red"
                           : "green",
                     }}

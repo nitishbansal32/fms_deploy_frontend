@@ -9,6 +9,7 @@ import dashboard from "../../../src/Images/dashboard.svg";
 import equipment from "../../../src/Images/equipment.svg";
 import driver from "../../../src/Images/driver.svg";
 import accident from "../../../src/Images/accident.svg";
+import cvor from "../../../src/Images/cvor.svg";
 import register from "../../../src/Images/register.svg";
 import settings from "../../../src/Images/settings.svg";
 import logout from "../../../src/Images/logout.svg";
@@ -84,6 +85,13 @@ const Navbar = () => {
                 </div>
               </div>
             </Link>
+            <Link to="/cvor" onClick={handleDisplay}>
+              <div className={styles.nav_container}>
+                <div className={styles.nav_child}>
+                  <button>Cvor</button>
+                </div>
+              </div>
+            </Link>
             <Link to="/register" onClick={handleDisplay}>
               <div className={styles.nav_container}>
                 <div className={styles.nav_child}>
@@ -106,9 +114,13 @@ const Navbar = () => {
       </div>
       <div className={styles.container}>
         <div className={styles.nav_logo_container}>
-          <img src={Logo} />
+          <img src={Logo} className={styles.nav_main_logo} />
           <hr style={{ opacity: "0.1" }} />
-          <img src={localStorage.getItem("logo")} alt="" />
+          <img
+            className={styles.nav_comp_logo}
+            src={localStorage.getItem("logo")}
+            alt=""
+          />
         </div>
 
         <ul>
@@ -157,6 +169,18 @@ const Navbar = () => {
                   style={{ height: "24px", width: "22px" }}
                 />
                 <button>Accident</button>
+              </div>
+            </div>
+          </Link>
+          <Link to="/cvor" onClick={handleDisplay}>
+            <div className={styles.nav_container}>
+              <div className={styles.nav_child}>
+                <img
+                  src={cvor}
+                  alt=""
+                  style={{ height: "24px", width: "22px" }}
+                />
+                <button>CVOR</button>
               </div>
             </div>
           </Link>

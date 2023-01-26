@@ -1,0 +1,486 @@
+.main_container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  gap: 2rem;
+  padding: 2rem 0;
+  flex: 1;
+  padding: 2rem 1rem;
+  overflow-y: hidden;
+  z-index: 1;
+  position: relative;
+  background-color: white;
+}
+
+/* .main_container::before {
+  content: "";
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: url(../../Images/Accident.jpeg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  opacity: 0.5;
+  z-index: -1;
+} */
+
+.button_heading {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.button_heading h2,
+.form_input_label h2 {
+  font-size: 1.4em;
+  font-weight: 600;
+  color: white;
+}
+
+.form_input_label {
+  display: flex;
+  /* flex-direction: column; */
+  gap: 0rem;
+  align-items: center;
+}
+
+.form_input_label input {
+  outline: 0;
+  border: 0;
+  height: 40px;
+  padding: 0 1rem;
+  background-color: white;
+  width: 400px;
+  border-radius: 16px 0px 0px 16px;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+}
+
+.table_wrapper_container {
+  display: flex;
+  align-items: center;
+  height: 80%;
+  border-radius: 8px;
+  gap: 3rem;
+  width: 100%;
+  flex-direction: column;
+  justify-content: space-around;
+  position: relative;
+  background-color: white;
+  padding: 1rem;
+
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
+}
+
+.table_wrapper_container > h1 {
+  /* color: rgb(255, 255, 255); */
+  position: absolute;
+  font-size: 1.5em;
+  /* color: var(--primary-color); */
+  color: black;
+  top: 24px;
+}
+
+.table_wrapper_container hr {
+  height: 1px;
+  border-width: 0;
+  width: 90%;
+  background-color: #efefef;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.table_container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  height: 80%;
+  width: 100%;
+  overflow-y: scroll;
+  background-color: white;
+  padding: 1rem;
+  gap: 1rem;
+  position: relative;
+  border-radius: 8px;
+  min-width: 0;
+  margin-top: 16px;
+
+  /* padding: 1rem 2rem; */
+}
+
+.table_main_container {
+  align-self: center;
+  /* 
+  min-height: 400px;
+  max-height: 400px; */
+}
+
+.table_main_container button,
+.excel_container button {
+  position: absolute;
+  left: 0;
+  bottom: 16px;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 0;
+  outline: 0;
+  font-size: 1em;
+  font-weight: 400;
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* For table fields  */
+
+.grid_headings,
+.grid_inputs {
+  gap: 0rem;
+  display: inline-grid;
+  grid-template-columns: 400px 400px 400px;
+}
+
+.grid_inputs {
+  padding: 0.75rem 0;
+}
+
+.grid_headings span {
+  font-size: 1.25em;
+  font-weight: 200;
+  text-align: center;
+  padding: 0.5rem 0;
+  color: #606060;
+  /* text-align: left; */
+}
+
+.heading {
+  margin-bottom: 16px;
+}
+
+.grid_inputs input {
+  width: 100%;
+  /* padding: 0.4rem; */
+  font-size: 1em;
+  font-weight: 400;
+  outline: 0;
+  border-width: 0;
+  text-align: center;
+}
+
+/* Modal container  */
+
+.main_modal_container {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background-color: transparent;
+  height: 100vh;
+
+  /* background-color: rgba(0, 0, 0, 0.2); */
+}
+
+/* .main_modal_container p {
+  border: 0;
+  font-weight: 700;
+} */
+
+.modal_container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+  width: 50%;
+  height: 90%;
+  position: relative;
+  background-color: white;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+}
+
+.modal_container::before {
+  display: none;
+}
+
+.wrap_container {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  margin-top: 2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.button_container {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+  height: 100px;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.content > h3 {
+  font-weight: 200;
+}
+
+.button_alignment_container {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Media queries  */
+
+@media screen and (min-width: 1900px) {
+  .modal_container {
+    background-color: white;
+  }
+
+  .wrap_container {
+    padding-left: 1rem;
+    margin-top: 2rem;
+    padding-right: 0rem;
+  }
+  .modal_container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    width: 600px;
+    height: 90%;
+    position: relative;
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@media screen and (max-width: 1350px) {
+  .grid_headings,
+  .grid_inputs {
+    grid-template-columns: 300px 300px 300px;
+  }
+
+  .table_container {
+    width: 900px;
+  }
+}
+
+@media screen and (max-width: 1150px) {
+  .modal_container {
+    background-color: white;
+  }
+
+  .wrap_container {
+    padding-left: 1rem;
+    margin-top: 2rem;
+    padding-right: 0rem;
+  }
+  .modal_container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    width: 600px;
+    height: 90%;
+    position: relative;
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
+  }
+  .table_container {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+  }
+
+  .grid_headings,
+  .grid_inputs {
+    grid-template-columns: 200px 200px 200px;
+  }
+
+  .grid_headings span {
+    font-size: 0.75em;
+  }
+  .grid_inputs input {
+    width: 100%;
+
+    font-size: 0.75em;
+  }
+}
+
+@media screen and (max-width: 910px) {
+}
+
+@media screen and (max-width: 896px) {
+  .button_heading {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .button_alignment_container {
+    display: flex;
+    gap: 1rem;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .table_container {
+    display: flex;
+    flex-direction: column;
+    width: 450px;
+  }
+
+  .grid_headings,
+  .grid_inputs {
+    grid-template-columns: 150px 150px 150px;
+    align-items: center;
+  }
+
+  .grid_headings span {
+    font-size: 0.5em;
+  }
+  .grid_inputs input {
+    width: 100%;
+
+    font-size: 0.75em;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .wrap_container {
+    padding-left: 1rem;
+    margin-top: 2rem;
+  }
+
+  .extra_container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: space-between;
+  }
+  .right_container label,
+  .left_container label,
+  .left_container p {
+    font-size: 0.75rem;
+  }
+  .container_3 {
+    padding: 0 1rem;
+  }
+  .right_container p {
+    font-size: 0.75rem;
+  }
+  .row_container {
+    display: flex;
+    width: 100%;
+    gap: 2rem;
+  }
+  .driving_licence_logo {
+    width: 10%;
+  }
+  .extra_main_container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem 0rem 0.25rem 1rem;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .bottom_container {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .container_3_main {
+    flex-direction: column;
+  }
+  .desc_container label {
+    font-size: 0.65rem;
+    font-weight: 400;
+  }
+
+  .desc_container p {
+    font-size: 0.5rem;
+    background-color: #edf4ed;
+    letter-spacing: 0.25em;
+    margin-left: 8px;
+    font-weight: 600;
+  }
+  .main_modal_container {
+    width: 100vw;
+  }
+  .table_container {
+    display: flex;
+    flex-direction: column;
+    width: 370px;
+  }
+  .grid_headings,
+  .grid_inputs {
+    grid-template-columns: 80px 80px 80px;
+    align-items: center;
+  }
+
+  .form_input_label input {
+    outline: 0;
+    border: 0;
+    height: 40px;
+    padding: 0 1rem;
+    background-color: white;
+    width: 300px;
+    border-radius: 16px 0px 0px 16px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+  }
+  .driver_image,
+  .profile_picture_container {
+    width: 105px;
+    height: 120px;
+  }
+}
+@media screen and (max-width: 410px) {
+  .table_container {
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+  }
+  .grid_headings,
+  .grid_inputs {
+    grid-template-columns: 90px 90px 90px;
+    align-items: center;
+  }
+
+  .form_input_label input {
+    outline: 0;
+    border: 0;
+    height: 40px;
+    padding: 0 1rem;
+    background-color: white;
+    width: 250px;
+    border-radius: 16px 0px 0px 16px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+  }
+}

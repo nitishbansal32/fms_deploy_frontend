@@ -204,12 +204,16 @@ const Inventory = () => {
         setModalColor("green");
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response.data.msg);
         if (
           err.response.data.msg ==
           "Duplicate value entered for employee_id field, please choose another value"
         ) {
           setMsg("Employee ID already exists!");
+          setModal(true);
+          setModalColor("red");
+        } else if (err.response.data.msg == "File size must be less than 1MB") {
+          setMsg("File size must be less than 1MB!");
           setModal(true);
           setModalColor("red");
         } else {
