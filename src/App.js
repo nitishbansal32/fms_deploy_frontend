@@ -15,6 +15,8 @@ import DashDriverForm from "./components/Dashboard/DriverForm";
 import DashAccidentForm from "./components/Dashboard/AccidentForm";
 import DashInventoryForm from "./components/Dashboard/InventoryForm";
 
+import InventoryMaintenance from "./components/Inventory/InventoryMaintenance";
+
 import DriverForm from "./components/Drivers/DriverForm";
 import AccidentForm from "./components/Accident/AccidentForm";
 import InventoryForm from "./components/Inventory/InventoryForm";
@@ -140,6 +142,13 @@ function App() {
               path="/updateInventory"
               element={<UpdateInventory />}
             ></Route>
+
+            <Route
+              exact
+              path="/maintenance"
+              element={<InventoryMaintenance />}
+            ></Route>
+
             <Route
               exact
               path="/registerAccident"

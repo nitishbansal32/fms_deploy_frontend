@@ -85,9 +85,9 @@ const Inventory = () => {
     type: inventoryData.type,
   });
 
-  const [file, setFile] = useState({
-    maintenance_documents: inventoryData.maintenance_documents,
-  });
+  // const [file, setFile] = useState({
+  //   maintenance_documents: inventoryData.maintenance_documents,
+  // });
 
   const inputChange = (e) => {
     setData({
@@ -96,12 +96,12 @@ const Inventory = () => {
     });
   };
 
-  const fileInputChange = (e) => {
-    setFile({
-      ...file,
-      [e.target.name]: e.target.files[0],
-    });
-  };
+  // const fileInputChange = (e) => {
+  //   setFile({
+  //     ...file,
+  //     [e.target.name]: e.target.files[0],
+  //   });
+  // };
 
   const body = {
     unit: data.unit,
@@ -135,8 +135,8 @@ const Inventory = () => {
 
   const formData = new FormData();
 
-  //File
-  formData.append("maintenance_documents", file.maintenance_documents);
+  // //File
+  // formData.append("maintenance_documents", file.maintenance_documents);
 
   const config = {
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -150,9 +150,42 @@ const Inventory = () => {
     setModal(true);
     setModalColor("green");
 
+    // Axios.patch(
+    //   `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/maintenance/${UnitNumber}`,
+    //   formData,
+    //   {
+    //     headers: {
+    //       Authorization: `Bearer ${localStorage.getItem("token")}`,
+    //     },
+    //   }
+    // )
+    //   .then((response) => {
+    //     console.log("main", response);
+    //     setSize(true);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     if (err.response.data.msg == "File size must be less than 1MB") {
+    //       setMsg("File size must be less than 1MB!");
+    //       setModal(true);
+    //       setModalColor("red");
+    //     } else if (
+    //       err.response.data.msg ==
+    //       `Safety expired for vehicle with unit numer ${inventoryData.unit}`
+    //     ) {
+    //       setMsg("Safety expired for vehicle!");
+    //       setModal(true);
+    //       setModalColor("red");
+    //     } else {
+    //       setMsg("Internal error!");
+    //       setModal(true);
+    //       setModalColor("red");
+    //     }
+    //   });
+
     Axios.patch(
-      `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/maintenance/${UnitNumber}`,
-      formData,
+      `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/${inventoryData.unit}`,
+      body,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -160,72 +193,36 @@ const Inventory = () => {
       }
     )
       .then((response) => {
-        console.log("main", response);
-        setSize(true);
+        setStatus(response.status);
+        setMsg("Equipment updated!");
+        setModal(true);
+        setModalColor("green");
+        setInventoryData(response.data.tractor);
+        console.log(response.data.tractor);
       })
       .catch((err) => {
-        console.log(err);
-        if (err.response.data.msg == "File size must be less than 1MB") {
-          setMsg("File size must be less than 1MB!");
+        console.log(err.response);
+        if (err.response.data.msg == "Path `unit` is required.") {
+          setMsg("Unit number is required!");
           setModal(true);
           setModalColor("red");
         } else if (
           err.response.data.msg ==
-          `Safety expired for vehicle with unit numer ${inventoryData.unit}`
+          "Duplicate value entered for unit field, please choose another value"
         ) {
-          setMsg("Safety expired for vehicle!");
+          setMsg("Unit number already exists!");
           setModal(true);
           setModalColor("red");
+        } else if (!(data.VIN === 17)) {
+          setModal(true);
+          setModalColor("red");
+          setMsg("VIN should be min. 17 digits!");
         } else {
           setMsg("Internal error!");
           setModal(true);
           setModalColor("red");
         }
       });
-
-    {
-      size && console.log("hello");
-      Axios.patch(
-        `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/${inventoryData.unit}`,
-        body,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      )
-        .then((response) => {
-          setStatus(response.status);
-          setMsg("Equipment updated!");
-          setModal(true);
-          setModalColor("green");
-          setInventoryData(response.data.tractor);
-          console.log(response.data.tractor);
-        })
-        .catch((err) => {
-          console.log(err.response);
-          if (err.response.data.msg == "Path `unit` is required.") {
-            setMsg("Unit number is required!");
-            setModal(true);
-            setModalColor("red");
-          } else if (
-            err.response.data.msg ==
-            "Duplicate value entered for unit field, please choose another value"
-          ) {
-            setMsg("Unit number already exists!");
-            setModal(true);
-            setModalColor("red");
-          } else if (!(data.VIN === 17)) {
-            setModal(true);
-            setModalColor("red");
-            setMsg("VIN should be min. 17 digits!");
-          } else {
-            setMsg("Internal error!");
-            setModal(true);
-            setModalColor("red");
-          }
-        });
-    }
   };
 
   const handleBack = () => {
@@ -645,39 +642,7 @@ const Inventory = () => {
                         value={data.standard_job}
                       />
                     </div>
-                    <div className={styles.file_container}>
-                      {/* <button
-                        className={styles.sview_file}
-                        onClick={(event) =>
-                          file.maintenance_documents.maintenance_documents[
-                            file.maintenance_documents.maintenance_documents
-                              .length - 1
-                          ] == "none"
-                            ? "none"
-                            : file.maintenance_documents.maintenance_documents[
-                                file.maintenance_documents.maintenance_documents
-                                  .length - 1
-                              ] == null
-                            ? "none"
-                            : file.maintenance_documents.maintenance_documents[
-                                file.maintenance_documents.maintenance_documents
-                                  .length - 1
-                              ] == undefined
-                            ? "none"
-                            : window.open(
-                                `${
-                                  file.maintenance_documents
-                                    .maintenance_documents[
-                                    file.maintenance_documents
-                                      .maintenance_documents.length - 1
-                                  ]
-                                }`,
-                                "_blank"
-                              )
-                        }
-                      >
-                        View
-                      </button> */}
+                    {/* <div className={styles.file_container}>
                       <label htmlFor="">
                         Maintainence documents(Less than 1MB)
                       </label>
@@ -688,7 +653,7 @@ const Inventory = () => {
                         name="maintenance_documents"
                         onChange={fileInputChange}
                       />
-                    </div>
+                    </div> */}
                   </div>
                 </div>
                 <div className={styles.button_alignment_container}>

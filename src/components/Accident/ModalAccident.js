@@ -99,12 +99,6 @@ const ModalAccident = (props) => {
               <hr style={{ width: "100%" }} />
 
               <div className={styles.content}>
-                <h3>Company accident report</h3>
-                <p>{item.company_accident_report}</p>
-              </div>
-              <hr style={{ width: "100%" }} />
-
-              <div className={styles.content}>
                 <h3>Claim number</h3>
                 <p>{item.claim_number}</p>
               </div>
@@ -157,6 +151,10 @@ const ModalAccident = (props) => {
                 <p>{item.driver_statement}</p>
               </div>
               <hr style={{ width: "100%" }} />
+              <div className={styles.content}>
+                <h3>Company incident report</h3>
+                <p>{item.company_accident_report}</p>
+              </div>
             </div>
           ))}
         <div className={styles.button_container}>

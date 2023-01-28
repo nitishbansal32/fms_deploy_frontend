@@ -33,24 +33,24 @@ const Inventory = () => {
     date: false,
   });
 
-  const ValidatorFunc = () => {
-    //Accident Date validator
-    if (
-      !/\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])*/.test(
-        data.accident_date
-      )
-    ) {
-      setValidator((prev) => ({
-        ...prev,
-        [`date`]: true,
-      }));
-    } else {
-      setValidator((prev) => ({
-        ...prev,
-        [`date`]: false,
-      }));
-    }
-  };
+  // const ValidatorFunc = () => {
+  //   //Accident Date validator
+  //   if (
+  //     !/\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])*/.test(
+  //       data.accident_date
+  //     )
+  //   ) {
+  //     setValidator((prev) => ({
+  //       ...prev,
+  //       [`date`]: true,
+  //     }));
+  //   } else {
+  //     setValidator((prev) => ({
+  //       ...prev,
+  //       [`date`]: false,
+  //     }));
+  //   }
+  // };
 
   const navigate = useNavigate();
   const [data, setData] = useState({
@@ -66,7 +66,6 @@ const Inventory = () => {
     towing: "",
     police_report_number: "",
     police_officer: "",
-    company_accident_report: "",
     claim_number: "",
     adjuster: "",
     driver_charged: "",
@@ -78,6 +77,10 @@ const Inventory = () => {
     driver_statement: "",
   });
 
+  const [file, setFile] = useState({
+    company_accident_report: "",
+  });
+
   const inputChange = (e) => {
     setData({
       ...data,
@@ -86,34 +89,77 @@ const Inventory = () => {
     console.log(e.target.name);
   };
 
-  const body = {
-    accident_number: data.accident_number,
-    accident_date: data.accident_date,
-    accident_time: data.accident_time,
-    driver_name: data.driver_name,
-    driver_licene_number: data.driver_licene_number,
-    tractor_number: data.tractor_number,
-    location: data.location,
-    accident_type: data.accident_type,
-    damage: `${!data.damage ? "Y" : data.damage}`,
-    towing: `${!data.towing ? "Y" : data.towing}`,
-    police_report_number: data.police_report_number,
-    police_officer: data.police_officer,
-    company_accident_report: data.company_accident_report,
-    claim_number: data.claim_number,
-    adjuster: data.adjuster,
-    driver_charged: `${!data.driver_charged ? "No" : data.driver_charged}`,
-    action_taken: `${!data.action_taken ? "No" : data.action_taken}`,
-    cause_of_accident: data.cause_of_accident,
-    preventable: `${!data.preventable ? "No" : data.preventable}`,
-    cost: data.cost,
-    comments: data.comments,
-    driver_statement: data.driver_statement,
+  const fileInputChange = (e) => {
+    setFile({
+      ...file,
+      [e.target.name]: e.target.files[0],
+    });
   };
+
+  // const body = {
+  //   accident_number: data.accident_number,
+  //   accident_date: data.accident_date,
+  //   accident_time: data.accident_time,
+  //   driver_name: data.driver_name,
+  //   driver_licene_number: data.driver_licene_number,
+  //   tractor_number: data.tractor_number,
+  //   location: data.location,
+  //   accident_type: data.accident_type,
+  //   damage: `${!data.damage ? "Y" : data.damage}`,
+  //   towing: `${!data.towing ? "Y" : data.towing}`,
+  //   police_report_number: data.police_report_number,
+  //   police_officer: data.police_officer,
+  //   company_accident_report: data.company_accident_report,
+  //   claim_number: data.claim_number,
+  //   adjuster: data.adjuster,
+  //   driver_charged: `${!data.driver_charged ? "No" : data.driver_charged}`,
+  //   action_taken: `${!data.action_taken ? "No" : data.action_taken}`,
+  //   cause_of_accident: data.cause_of_accident,
+  //   preventable: `${!data.preventable ? "No" : data.preventable}`,
+  //   cost: data.cost,
+  //   comments: data.comments,
+  //   driver_statement: data.driver_statement,
+  // };
 
   const config = {
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
   };
+
+  const formData = new FormData();
+
+  formData.append("accident_number", data.accident_number);
+  formData.append("accident_date", data.accident_date);
+  formData.append("accident_time", data.accident_time);
+  formData.append("driver_name", data.driver_name);
+  formData.append("driver_licene_number", data.driver_licene_number);
+  formData.append("tractor_number", data.tractor_number);
+  formData.append("location", data.location);
+  formData.append("accident_type", data.accident_type);
+  formData.append("damage", `${!data.damage ? "Y" : data.damage}`);
+  formData.append("towing", `${!data.towing ? "Y" : data.towing}`);
+  formData.append("police_report_number", data.police_report_number);
+  formData.append("police_officer", data.police_officer);
+  formData.append("claim_number", data.claim_number);
+  formData.append("adjuster", data.adjuster);
+  formData.append(
+    "driver_charged",
+    `${!data.driver_charged ? "No" : data.driver_charged}`
+  );
+  formData.append(
+    "action_taken",
+    `${!data.action_taken ? "No" : data.action_taken}`
+  );
+  formData.append("cause_of_accident", data.cause_of_accident);
+  formData.append(
+    "preventable",
+    `${!data.preventable ? "No" : data.preventable}`
+  );
+  formData.append("cost", data.cost);
+  formData.append("comments", data.comments);
+  formData.append("driver_statement", data.driver_statement);
+
+  //File
+  formData.append("company_accident_report", data.company_accident_report);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -123,7 +169,7 @@ const Inventory = () => {
     setModalColor("green");
     Axios.post(
       `https://lc-backend-v2.herokuapp.com/api/v1/LC/accidents/createAccident`,
-      body,
+      formData,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -138,9 +184,15 @@ const Inventory = () => {
       })
       .catch((err) => {
         console.log(err.response);
-        setMsg("Try again after sometime!");
-        setModal(true);
-        setModalColor("red");
+        if (err.response.data.msg == "File size must be less than 1MB") {
+          setMsg("File size must be less than 1MB!");
+          setModal(true);
+          setModalColor("red");
+        } else {
+          setMsg("Try again after sometime!");
+          setModal(true);
+          setModalColor("red");
+        }
       });
   };
 
@@ -151,7 +203,6 @@ const Inventory = () => {
 
   return (
     <>
-      {/* {isLoggedIn ? ( */}
       <div className="wrapper_container">
         <Navbar />
         {!(role === "employee") ? (
@@ -309,19 +360,6 @@ const Inventory = () => {
                     />
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">Company incident report:</label>
-
-                    <textarea
-                      cols="25"
-                      rows="2"
-                      type="text"
-                      placeholder="Incident info"
-                      name="company_accident_report"
-                      onChange={inputChange}
-                      value={data.company_accident_report}
-                    />
-                  </div>
-                  <div className={styles.table_content}>
                     <label htmlFor="">Claim number:</label>
 
                     <input
@@ -431,6 +469,17 @@ const Inventory = () => {
                       onChange={inputChange}
                       value={data.driver_statement}
                     />
+                  </div>
+                  <div className={styles.table_file_container}>
+                    <div>
+                      <label>Company incident report</label>
+                      <input
+                        type="file"
+                        name="company_accident_report"
+                        onChange={fileInputChange}
+                        // value={file.training}
+                      />
+                    </div>
                   </div>
                 </div>
                 <div className={styles.button_alignment_container}>

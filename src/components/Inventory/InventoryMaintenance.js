@@ -22,6 +22,7 @@ const Inventory = () => {
     msg,
     setMsg,
     setModalColor,
+    inventoryData,
   } = useContext(UserContext);
 
   const [status, setStatus] = useState("");
@@ -29,10 +30,21 @@ const Inventory = () => {
   const navigate = useNavigate();
 
   const [file, setFile] = useState({
-    CVIR: "",
-    CVOR: "",
-    citations: "",
+    maintenance_documents: "none",
   });
+
+  const [data, setData] = useState({
+    type: "",
+  });
+
+  // console.log(data.emloyee_name);
+
+  const inputChange = (e) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const fileInputChange = (e) => {
     setFile({
@@ -43,21 +55,23 @@ const Inventory = () => {
 
   const formData = new FormData();
 
-  //Files
-  formData.append("CVOR", file.CVOR);
-  formData.append("CVIR", file.CVIR);
+  //Form Data
+  formData.append("employee_name", `${!data.type ? "general" : data.type}`);
+  formData.append("start_date", data.maintenance_documents);
 
-  formData.append("citations", file.citations);
+  const InventoryNumber = inventoryData.unit;
+
+  //Duplicate value entered for employee_id field, please choose another value
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     setModal(true);
-    setMsg("Adding new files.... Please wait");
+    setMsg("Adding new maintainance.... Please wait");
     setModalColor("green");
 
-    Axios.post(
-      `https://lc-backend-v2.herokuapp.com/api/v1/LC/addCVOR`,
+    Axios.patch(
+      `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/maintenance/${inventoryData.unit}`,
       formData,
       {
         headers: {
@@ -69,12 +83,12 @@ const Inventory = () => {
       .then((response) => {
         setStatus(response.status);
         console.log(response);
-        setMsg("Files added!");
+        setMsg("Maintenance Added!");
         setModal(true);
         setModalColor("green");
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response.data.msg);
         if (err.response.data.msg == "File size must be less than 1MB") {
           setMsg("File size must be less than 1MB!");
           setModal(true);
@@ -88,45 +102,47 @@ const Inventory = () => {
   };
 
   const handleBack = () => {
-    navigate("/cvor", { replace: true });
+    navigate("/inventory", { replace: true });
     setModal(false);
   };
 
   return (
     <>
+      {/* {isLoggedIn ? ( */}
       <div className="wrapper_container">
         <Navbar />
         {!(role === "employee") ? (
           <div className={styles.main_container}>
             <form onSubmit={handleSubmit} action="">
               <div className={styles.table_wrapper_container}>
-                <h1>Add new files</h1>
+                <h1>Add new maintainence</h1>
+
                 <div className={styles.table_container}>
+                  <div className={styles.table_content}>
+                    <label htmlFor="">Shift:</label>
+                    <select
+                      name="type"
+                      id=""
+                      onChange={inputChange}
+                      value={data.shift}
+                      // default={}
+                      required
+                    >
+                      <option selected="selected" value="general">
+                        general
+                      </option>
+                      <option value="PM">PM</option>
+                    </select>
+                  </div>
+
                   <div className={styles.table_file_container}>
                     <div>
-                      <label>CVIR</label>
+                      <label>Safety records</label>
                       <input
                         type="file"
-                        name="CVIR"
+                        name="safety_records"
                         onChange={fileInputChange}
-                      />
-                    </div>
-                    <div>
-                      <label>CVOR</label>
-                      <input
-                        type="file"
-                        name="CVOR"
-                        onChange={fileInputChange}
-                        // value={file.license_disclosure}
-                      />
-                    </div>
-                    <div>
-                      <label>Citations</label>
-                      <input
-                        type="file"
-                        name="citations"
-                        onChange={fileInputChange}
-                        // value={file.license_disclosure}
+                        // value={file.training}
                       />
                     </div>
                   </div>
@@ -144,6 +160,9 @@ const Inventory = () => {
           <div>You do not have the necessary permissions to do this!</div>
         )}
       </div>
+      {/* ) : (
+                <Permission />
+            )} */}
     </>
   );
 };

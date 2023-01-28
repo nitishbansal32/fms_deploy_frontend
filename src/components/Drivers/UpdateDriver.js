@@ -278,7 +278,9 @@ const Inventory = () => {
                       placeholder="Enter start date"
                       name="start_date"
                       onChange={inputChange}
-                      value={data.start_date.substr(0, 10)}
+                      value={
+                        data.start_date ? data.start_date.substr(0, 10) : ""
+                      }
                       required
                     />
                   </div>

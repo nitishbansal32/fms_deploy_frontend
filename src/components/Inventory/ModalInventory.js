@@ -26,6 +26,11 @@ const ModalInventory = (props) => {
     setDisplay(false);
   };
 
+  const handleMaintenance = () => {
+    navigate("/maintenance");
+    setDisplay(false);
+  };
+
   console.log("Props", props.modalInventory);
   console.log("global", inventoryData);
 
@@ -302,7 +307,7 @@ const ModalInventory = (props) => {
                       <label>Mechanical notes:</label>
                       <p>{item.mechanical_notes}</p>
                     </div>
-                    <div>
+                    {/* <div>
                       <label>Maintainence documents:</label>
 
                       <button
@@ -341,7 +346,7 @@ const ModalInventory = (props) => {
                       >
                         View
                       </button>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
@@ -358,6 +363,9 @@ const ModalInventory = (props) => {
 
           <button className="button_general" onClick={handleUpdate}>
             Update
+          </button>
+          <button className="button_general" onClick={handleMaintenance}>
+            Maintainence
           </button>
         </div>
       </div>

@@ -432,7 +432,7 @@ const Inventory = () => {
                     </select>
                   </div>
                   <div className={styles.table_content}>
-                    <label htmlFor="">*Annual safety expiry:</label>
+                    <label htmlFor="">*Safety expiry:</label>
 
                     <input
                       type="date"

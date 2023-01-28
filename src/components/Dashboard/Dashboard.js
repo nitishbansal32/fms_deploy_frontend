@@ -20,10 +20,10 @@ const Dashboard = () => {
   const [expPlate, setExpPlate] = useState([]);
   const [expSafety, setExpSafety] = useState([]);
 
-  // const [dlState, setDlState] = useState(false);
-  // const [mlState, setMlState] = useState(false);
-  // const [plateState, setPlateState] = useState(false);
-  // const [safetyState, setSafetyState] = useState(false);
+  const [dlState, setDlState] = useState(false);
+  const [mlState, setMlState] = useState(false);
+  const [plateState, setPlateState] = useState(false);
+  const [safetyState, setSafetyState] = useState(false);
 
   const config = {
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -31,7 +31,6 @@ const Dashboard = () => {
 
   useEffect(() => {
     Axios.get("https://lc-backend-v2.herokuapp.com/api/v1/LC/expired", config)
-      // Axios.get("http://localhost:8000/api/v1/LC/expired", config)
       .then((res) => {
         console.log(res.data);
         setExpDrivingLicense(res.data.expired_driving_licenses);
@@ -44,21 +43,30 @@ const Dashboard = () => {
       });
 
     Axios.get("https://lc-backend-v2.herokuapp.com/api/v1/LC/activity", config)
-      // Axios.get("http://localhost:8000/api/v1/LC/activity", config)
       .then((res) => {
         setActivity(res.data.activities);
-        // console.log(res.data.activities);
+        console.log(res.data.activities);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
-  console.log(expDrivingLicense.length);
+  const handleActivity = (e) => {
+    e.preventDefault();
+    setActivity([]);
+    Axios.get("https://lc-backend-v2.herokuapp.com/api/v1/LC/activity", config)
+      .then((res) => {
+        setActivity(res.data.activities);
+        console.log(res.data.activities);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
-      {/* {!(isLoggedIn===null) ? ( */}
       <div className="wrapper_container">
         <Navbar />
         <div className={styles.main_container}>
@@ -66,10 +74,13 @@ const Dashboard = () => {
             <div className={styles.left_top_container}>
               <div className={styles.expiry_main_container}>
                 <h2>Expiry</h2>
-                {/* <div className={styles.expiry_button}>
+                <div className={styles.expiry_button}>
                   <button
                     onClick={() => {
                       setDlState((prevState) => !prevState);
+                      setMlState(false);
+                      setPlateState(false);
+                      setSafetyState(false);
                     }}
                     style={{
                       backgroundColor: dlState ? "#e84b01" : "white",
@@ -80,7 +91,10 @@ const Dashboard = () => {
                   </button>
                   <button
                     onClick={() => {
+                      setDlState(false);
                       setMlState((prevState) => !prevState);
+                      setPlateState(false);
+                      setSafetyState(false);
                     }}
                     style={{
                       backgroundColor: mlState ? "#e84b01" : "white",
@@ -91,7 +105,10 @@ const Dashboard = () => {
                   </button>
                   <button
                     onClick={() => {
+                      setDlState(false);
+                      setMlState(false);
                       setPlateState((prevState) => !prevState);
+                      setSafetyState(false);
                     }}
                     style={{
                       backgroundColor: plateState ? "#e84b01" : "white",
@@ -102,6 +119,9 @@ const Dashboard = () => {
                   </button>
                   <button
                     onClick={() => {
+                      setDlState(false);
+                      setMlState(false);
+                      setPlateState(false);
                       setSafetyState((prevState) => !prevState);
                     }}
                     style={{
@@ -111,14 +131,14 @@ const Dashboard = () => {
                   >
                     Expired safety
                   </button>
-                </div> */}
-
+                </div>
                 <div className={styles.expiry_container}>
                   <div className={styles.expiry_content_container}>
-                    {!(expDrivingLicense.length === 0) && (
+                    {dlState && !(expDrivingLicense.length === 0) && (
                       <h3>Expired driving licenses</h3>
                     )}
-                    {expDrivingLicense &&
+                    {dlState &&
+                      expDrivingLicense &&
                       expDrivingLicense.map((item) => (
                         <>
                           <div className={styles.expiry_content}>
@@ -130,10 +150,11 @@ const Dashboard = () => {
                       ))}
                   </div>
                   <div className={styles.expiry_content_container}>
-                    {!(expMedicalLicense.length === 0) && (
+                    {mlState && !(expMedicalLicense.length === 0) && (
                       <h3>Expired medical licenses</h3>
                     )}
-                    {expMedicalLicense &&
+                    {mlState &&
+                      expMedicalLicense &&
                       expMedicalLicense.map((item) => (
                         <>
                           <div className={styles.expiry_content}>
@@ -145,8 +166,11 @@ const Dashboard = () => {
                       ))}
                   </div>
                   <div className={styles.expiry_content_container}>
-                    {!(expPlate.length === 0) && <h3>Expired plates</h3>}
-                    {expPlate &&
+                    {plateState && !(expPlate.length === 0) && (
+                      <h3>Expired plates</h3>
+                    )}
+                    {plateState &&
+                      expPlate &&
                       expPlate.map((item) => (
                         <>
                           <div className={styles.expiry_content}>
@@ -158,8 +182,11 @@ const Dashboard = () => {
                       ))}
                   </div>
                   <div className={styles.expiry_content_container}>
-                    {!(expSafety.length === 0) && <h3>Expired safety</h3>}
-                    {expSafety &&
+                    {safetyState && !(expSafety.length === 0) && (
+                      <h3>Expired safety</h3>
+                    )}
+                    {safetyState &&
+                      expSafety &&
                       expSafety.map((item) => (
                         <>
                           <div className={styles.expiry_content}>
@@ -208,15 +235,50 @@ const Dashboard = () => {
               <div className={styles.activity_heading}>
                 <h1>Activity</h1>
 
-                <span>View All</span>
+                <button onClick={handleActivity}>Refresh</button>
               </div>
               <img src alt="" />
               <div className={styles.activity_desc}>
                 {activity &&
                   activity.map((item) => (
-                    <div className={styles.activity}>
-                      <p className={styles.heading}>{item.heading}</p>
-                      <p className={styles.date}>
+                    <div
+                      className={styles.activity}
+                      style={{
+                        backgroundColor: `${
+                          item.type === "UPDATION"
+                            ? "#e84b01"
+                            : item.type === "CREATION"
+                            ? "green"
+                            : "#f5f5f5"
+                        }`,
+                      }}
+                    >
+                      <p
+                        className={styles.heading}
+                        style={{
+                          color: `${
+                            item.type === "UPDATION"
+                              ? "white"
+                              : item.type === "CREATION"
+                              ? "white"
+                              : "black"
+                          }`,
+                        }}
+                      >
+                        {item.heading}
+                      </p>
+                      <p
+                        className={styles.date}
+                        style={{
+                          color: `${
+                            item.type === "UPDATION"
+                              ? "white"
+                              : item.type === "CREATION"
+                              ? "white"
+                              : "black"
+                          }`,
+                        }}
+                      >
                         {item.updatedAt.substr(0, 10)}
                       </p>
                     </div>

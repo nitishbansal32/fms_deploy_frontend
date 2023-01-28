@@ -100,7 +100,7 @@ const ModalDrivers = (props) => {
   //     props.file.certificate_of_road_test.length - 1
   //   ]
   // );
-  console.log("props.file.license_disclosure", props.file.license_disclosure);
+  // console.log("props.file.license_disclosure", props.file.license_disclosure);
 
   return (
     <div className={styles.main_modal_container}>

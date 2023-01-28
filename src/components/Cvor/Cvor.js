@@ -9,7 +9,9 @@ import plus from "../../../src/Images/plus.svg";
 import { UserContext } from "../../UserContext";
 
 const Inventory = () => {
-  const [alldrivers, setAlldrivers] = useState([]);
+  const [allCvir, setAllCvir] = useState([]);
+  const [allCvor, setAllCvor] = useState([]);
+  const [allCitations, setAllCitations] = useState([]);
 
   const [drivers, setdrivers] = useState("");
 
@@ -52,7 +54,13 @@ const Inventory = () => {
         },
       })
         .then((response) => {
-          console.log(response);
+          // console.log(response.data.entry[0].CVIR);
+          setAllCvir(response.data.entry[0].CVIR);
+          setAllCvor(response.data.entry[0].CVOR);
+          setAllCitations(response.data.entry[0].citations);
+          setModal(false);
+          setMsg("Files fetched...");
+          setModalColor("green");
         })
         .catch((err) => {
           console.log(err);
@@ -60,7 +68,7 @@ const Inventory = () => {
     } catch (exc) {
       console.log(exc);
     } finally {
-      setAlldrivers("");
+      // setAlldrivers("");
     }
   };
 
@@ -93,34 +101,56 @@ const Inventory = () => {
               //   background: viewState ? "transparent" : "white",
               // }}
             >
-              {/* <div className={styles.table_main_container}>
+              <div className={styles.table_main_container}>
                 <div className={styles.grid_headings}>
-                  <span>Accident number</span>
-                  <span>Accident date</span>
-                  <span>Driver name</span>
+                  <span>CVIR</span>
+                  <span>CVOR</span>
+                  <span>Citations</span>
                 </div>
                 <hr />
-                {alldrivers &&
-                  alldrivers.map((item) => (
-                    <div key={item.accident_number}>
-                      <div className={styles.input_container}>
-                        <div className={styles.grid_inputs}>
-                          <input
-                            type="text"
-                            value={item.accident_number}
-                            onClick={handleInput}
-                          />{" "}
-                          <input
-                            type="text"
-                            value={item.accident_date.substr(0, 10)}
-                          />
-                          <input type="text" value={item.driver_name} />
-                        </div>
-                        <hr />
+
+                <div>
+                  <div className={styles.input_container}>
+                    <div className={styles.grid_inputs}>
+                      <div className={styles.grid_inputs_column_container}>
+                        {allCvir.map((item, index) => (
+                          <a
+                            onClick={(event) =>
+                              window.open(`${item}`, "_blank")
+                            }
+                          >
+                            File{index + 1}
+                          </a>
+                        ))}
+                      </div>
+
+                      <div className={styles.grid_inputs_column_container}>
+                        {allCvor.map((item, index) => (
+                          <a
+                            onClick={(event) =>
+                              window.open(`${item}`, "_blank")
+                            }
+                          >
+                            File{index + 1}
+                          </a>
+                        ))}
+                      </div>
+
+                      <div className={styles.grid_inputs_column_container}>
+                        {allCitations.map((item, index) => (
+                          <a
+                            onClick={(event) =>
+                              window.open(`${item}`, "_blank")
+                            }
+                          >
+                            File{index + 1}
+                          </a>
+                        ))}
                       </div>
                     </div>
-                  ))}
-              </div> */}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           {/* {display && (
