@@ -106,7 +106,7 @@ const Settings = () => {
       <Navbar />
       <div className={styles.main_container}>
         <div className={styles.personal_container}>
-          <h3>Personal Information</h3>
+          <h3>Company information</h3>
           <form action="" onSubmit={handleSubmit}>
             <div className={styles.content_container}>
               <label htmlFor="">Email:</label>
@@ -117,7 +117,6 @@ const Settings = () => {
         </div>
 
         <div className={styles.company_update_container}>
-          <h3>Company information</h3>
           <form action="" onSubmit={handleCompanyUpdate}>
             <div className={styles.content_container}>
               <label htmlFor="">Change logo:</label>

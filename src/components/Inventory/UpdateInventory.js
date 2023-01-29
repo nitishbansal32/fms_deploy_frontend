@@ -307,7 +307,7 @@ const Inventory = () => {
                         onChange={inputChange}
                         value={data.type}
                         required
-                        disabled
+                        // disabled
                       >
                         <option value="Tractor" selected="selected">
                           Tractor

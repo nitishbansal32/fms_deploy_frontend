@@ -831,6 +831,10 @@ const ModalDrivers = (props) => {
                               props.file.certificate_of_road_test.length - 1
                             ] == undefined
                           ? "red"
+                          : props.file.certificate_of_road_test[
+                              props.file.certificate_of_road_test.length - 1
+                            ] == "e"
+                          ? "red"
                           : "green"),
                     }}
                   ></div>
