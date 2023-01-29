@@ -21,6 +21,11 @@ const Settings = () => {
   const _id = localStorage.getItem("_id");
 
   const [data, setData] = useState({
+    city: "",
+    street: "",
+    province: "",
+    postal_code: "",
+    country: "",
     address: "",
     is_email_reminder_active: true,
     is_sms_reminder_active: true,
@@ -46,7 +51,13 @@ const Settings = () => {
 
   const formData = new FormData();
   formData.append("logo", file.logo);
+
   formData.append("address", data.address);
+  formData.append("country", data.country);
+  formData.append("city", data.city);
+  formData.append("street", data.street);
+  formData.append("province", data.province);
+  formData.append("postal_code", data.postal_code);
   formData.append("is_email_reminder_active", data.is_email_reminder_active);
   formData.append("is_sms_reminder_active", data.is_sms_reminder_active);
 
@@ -113,15 +124,59 @@ const Settings = () => {
               <input type="file" name="logo" onChange={fileInputChange} />
             </div>
             <div className={styles.content_container}>
-              <label htmlFor="">Change address(>10):</label>
+              <label htmlFor="">Address:</label>
               <textarea
-                cols="20"
-                rows="2"
+                row="5"
+                col="20"
                 type="text"
-                minlength="10"
                 onChange={inputChange}
                 name="address"
-                value={data.address}
+                value={data.addresss}
+              />
+            </div>
+            <div className={styles.content_container}>
+              <label htmlFor="">City:</label>
+              <input
+                type="text"
+                onChange={inputChange}
+                name="city"
+                value={data.city}
+              />
+            </div>
+            <div className={styles.content_container}>
+              <label htmlFor="">Street:</label>
+              <input
+                type="text"
+                onChange={inputChange}
+                name="street"
+                value={data.street}
+              />
+            </div>
+            <div className={styles.content_container}>
+              <label htmlFor="">Province:</label>
+              <input
+                type="text"
+                onChange={inputChange}
+                name="province"
+                value={data.province}
+              />
+            </div>
+            <div className={styles.content_container}>
+              <label htmlFor="">Postal code:</label>
+              <input
+                type="text"
+                onChange={inputChange}
+                name="postal_code"
+                value={data.postal_code}
+              />
+            </div>
+            <div className={styles.content_container}>
+              <label htmlFor="">Country:</label>
+              <input
+                type="text"
+                onChange={inputChange}
+                name="country"
+                value={data.country}
               />
             </div>
             <div className={styles.content_container}>

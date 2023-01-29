@@ -115,7 +115,10 @@ const Inventory = () => {
   formData.append("supervisor_notes", data.supervisor_notes);
   formData.append("first_PR", data.first_PR);
   formData.append("semi_annual_PR", data.semi_annual_PR);
-  formData.append("CVOR_points", data.CVOR_points);
+  formData.append(
+    "CVOR_points",
+    `${!data.CVOR_points ? "" : data.CVOR_points}`
+  );
   formData.append("employee_notes", data.employee_notes);
   formData.append("other", data.other);
   formData.append("accidents_and_citations", data.accidents_and_citations);

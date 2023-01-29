@@ -20,7 +20,7 @@ const Dashboard = () => {
   const [expPlate, setExpPlate] = useState([]);
   const [expSafety, setExpSafety] = useState([]);
 
-  const [dlState, setDlState] = useState(false);
+  const [dlState, setDlState] = useState(true);
   const [mlState, setMlState] = useState(false);
   const [plateState, setPlateState] = useState(false);
   const [safetyState, setSafetyState] = useState(false);
@@ -45,7 +45,7 @@ const Dashboard = () => {
     Axios.get("https://lc-backend-v2.herokuapp.com/api/v1/LC/activity", config)
       .then((res) => {
         setActivity(res.data.activities);
-        console.log(res.data.activities);
+        // console.log(res.data.activities);
       })
       .catch((err) => {
         console.log(err);
@@ -58,7 +58,6 @@ const Dashboard = () => {
     Axios.get("https://lc-backend-v2.herokuapp.com/api/v1/LC/activity", config)
       .then((res) => {
         setActivity(res.data.activities);
-        console.log(res.data.activities);
       })
       .catch((err) => {
         console.log(err);
@@ -153,6 +152,7 @@ const Dashboard = () => {
                     {mlState && !(expMedicalLicense.length === 0) && (
                       <h3>Expired medical licenses</h3>
                     )}
+
                     {mlState &&
                       expMedicalLicense &&
                       expMedicalLicense.map((item) => (

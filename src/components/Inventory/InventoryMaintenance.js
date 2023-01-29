@@ -129,7 +129,7 @@ const Inventory = () => {
                       required
                     >
                       <option selected="selected" value="general">
-                        general
+                        General
                       </option>
                       <option value="PM">PM</option>
                     </select>

@@ -153,7 +153,20 @@ const ModalAccident = (props) => {
               <hr style={{ width: "100%" }} />
               <div className={styles.content}>
                 <h3>Company incident report</h3>
-                <p>{item.company_accident_report}</p>
+                <button
+                  className={styles.view_incident}
+                  onClick={(event) =>
+                    item.company_accident_report == "none"
+                      ? "none"
+                      : item.company_accident_report == null
+                      ? "none"
+                      : item.company_accident_report == undefined
+                      ? "none"
+                      : window.open(`${item.company_accident_report}`, "_blank")
+                  }
+                >
+                  View
+                </button>
               </div>
             </div>
           ))}

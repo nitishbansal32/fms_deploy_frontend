@@ -190,6 +190,10 @@ const ModalInventory = (props) => {
                       <p>{item.unit}</p>
                     </div>
                     <div>
+                      <label>Type:</label>
+                      <p>{item.type}</p>
+                    </div>
+                    <div>
                       <label>Plate expiry date:</label>
                       <p>
                         {" "}
@@ -309,7 +313,9 @@ const ModalInventory = (props) => {
                     </div>
                     {/* <div>
                       <label>Maintainence documents:</label>
-
+                      {console.log(
+                        props.modalInventory[0].maintenance_documents
+                      )}
                       <button
                         className={styles.view_button}
                         onClick={(event) =>

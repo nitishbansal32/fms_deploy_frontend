@@ -78,68 +78,72 @@ const Inventory = () => {
       ...file,
       [e.target.name]: e.target.files[0],
     });
+    console.log(e.target.name);
   };
 
-  const body = {
-    accident_number: data.accident_number,
-    accident_date: data.accident_date,
-    accident_time: data.accident_time,
-    driver_name: data.driver_name,
-    driver_licene_number: data.driver_licene_number,
-    tractor_number: data.tractor_number,
-    location: data.location,
-    accident_type: data.accident_type,
-    damage: data.damage,
-    towing: data.towing,
-    police_report_number: data.police_report_number,
-    police_officer: data.police_officer,
-    company_accident_report: data.company_accident_report,
-    claim_number: data.claim_number,
-    adjuster: data.adjuster,
-    driver_charged: data.driver_charged,
-    action_taken: data.action_taken,
-    cause_of_accident: data.cause_of_accident,
-    preventable: data.preventable,
-    cost: data.cost,
-    comments: data.comments,
-    driver_statement: data.driver_statement,
-  };
+  // const body = {
+  //   accident_number: data.accident_number,
+  //   accident_date: data.accident_date,
+  //   accident_time: data.accident_time,
+  //   driver_name: data.driver_name,
+  //   driver_licene_number: data.driver_licene_number,
+  //   tractor_number: data.tractor_number,
+  //   location: data.location,
+  //   accident_type: data.accident_type,
+  //   damage: data.damage,
+  //   towing: data.towing,
+  //   police_report_number: data.police_report_number,
+  //   police_officer: data.police_officer,
+  //   company_accident_report: data.company_accident_report,
+  //   claim_number: data.claim_number,
+  //   adjuster: data.adjuster,
+  //   driver_charged: data.driver_charged,
+  //   action_taken: data.action_taken,
+  //   cause_of_accident: data.cause_of_accident,
+  //   preventable: data.preventable,
+  //   cost: data.cost,
+  //   comments: data.comments,
+  //   driver_statement: data.driver_statement,
+  // };
 
-  // const formData = new FormData();
+  const formData = new FormData();
 
-  // formData.append("accident_number", data.accident_number);
-  // formData.append("accident_date", data.accident_date);
-  // formData.append("accident_time", data.accident_time);
-  // formData.append("driver_name", data.driver_name);
-  // formData.append("driver_licene_number", data.driver_licene_number);
-  // formData.append("tractor_number", data.tractor_number);
-  // formData.append("location", data.location);
-  // formData.append("accident_type", data.accident_type);
-  // formData.append("damage", `${!data.damage ? "Y" : data.damage}`);
-  // formData.append("towing", `${!data.towing ? "Y" : data.towing}`);
-  // formData.append("police_report_number", data.police_report_number);
-  // formData.append("police_officer", data.police_officer);
-  // formData.append("claim_number", data.claim_number);
-  // formData.append("adjuster", data.adjuster);
-  // formData.append(
-  //   "driver_charged",
-  //   `${!data.driver_charged ? "No" : data.driver_charged}`
-  // );
-  // formData.append(
-  //   "action_taken",
-  //   `${!data.action_taken ? "No" : data.action_taken}`
-  // );
-  // formData.append("cause_of_accident", data.cause_of_accident);
-  // formData.append(
-  //   "preventable",
-  //   `${!data.preventable ? "No" : data.preventable}`
-  // );
-  // formData.append("cost", data.cost);
-  // formData.append("comments", data.comments);
-  // formData.append("driver_statement", data.driver_statement);
+  formData.append("accident_number", data.accident_number);
+  formData.append("accident_date", data.accident_date);
+  formData.append("accident_time", data.accident_time);
+  formData.append("driver_name", data.driver_name);
+  formData.append("driver_licene_number", data.driver_licene_number);
+  formData.append("tractor_number", data.tractor_number);
+  formData.append("location", data.location);
+  formData.append("accident_type", data.accident_type);
+  formData.append("damage", `${!data.damage ? "Y" : data.damage}`);
+  formData.append("towing", `${!data.towing ? "Y" : data.towing}`);
+  formData.append("police_report_number", data.police_report_number);
+  formData.append("police_officer", data.police_officer);
+  formData.append(
+    "claim_number",
+    `${!data.claim_number ? 0 : data.claim_number}`
+  );
+  formData.append("adjuster", data.adjuster);
+  formData.append(
+    "driver_charged",
+    `${!data.driver_charged ? "No" : data.driver_charged}`
+  );
+  formData.append(
+    "action_taken",
+    `${!data.action_taken ? "No" : data.action_taken}`
+  );
+  formData.append("cause_of_accident", data.cause_of_accident);
+  formData.append(
+    "preventable",
+    `${!data.preventable ? "No" : data.preventable}`
+  );
+  formData.append("cost", `${!data.cost ? 0 : data.cost}`);
+  formData.append("comments", data.comments);
+  formData.append("driver_statement", data.driver_statement);
 
-  // //File
-  // formData.append("company_accident_report", file.company_accident_report);
+  //File
+  formData.append("company_accident_report", file.company_accident_report);
 
   const config = {
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -152,7 +156,7 @@ const Inventory = () => {
     setModalColor("green");
     Axios.patch(
       `https://lc-backend-v2.herokuapp.com/api/v1/LC/accidents/${accidentData.accident_number}`,
-      body,
+      formData,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -164,7 +168,6 @@ const Inventory = () => {
         setStatus(response.status);
         setMsg("Accident info updated!");
         setModalColor("green");
-
         setModal(true);
       })
       .catch((err) => {
@@ -345,19 +348,6 @@ const Inventory = () => {
                       onChange={inputChange}
                       value={data.police_officer}
                       required
-                    />
-                  </div>
-                  <div className={styles.table_content}>
-                    <label htmlFor="">Company incident report:</label>
-
-                    <textarea
-                      rows="2"
-                      cols="25"
-                      type="text"
-                      placeholder="Incident info"
-                      name="company_accident_report"
-                      onChange={inputChange}
-                      value={data.company_accident_report}
                     />
                   </div>
                   <div className={styles.table_content}>

@@ -53,6 +53,7 @@ const Inventory = () => {
   // };
 
   const navigate = useNavigate();
+
   const [data, setData] = useState({
     accident_number: "",
     accident_date: "",
@@ -80,6 +81,8 @@ const Inventory = () => {
   const [file, setFile] = useState({
     company_accident_report: "",
   });
+
+  console.log("data", data);
 
   const inputChange = (e) => {
     setData({

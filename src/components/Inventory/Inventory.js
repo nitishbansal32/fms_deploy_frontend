@@ -163,6 +163,45 @@ const Inventory = () => {
     }
   };
 
+  //To get all straight trucks
+
+  const getAllStraightTrucks = () => {
+    setModal(true);
+    setMsg("Fetching data...");
+    setModalColor("green");
+    try {
+      Axios.get(
+        `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/${url}?type=Straight Truck`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+        .then((response) => {
+          console.log(response);
+          setAlldrivers(response.data.tractors);
+          setModal(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.response.status === 404) {
+            setModal(true);
+            setMsg("No data found");
+            setModalColor("red");
+          } else {
+            setModal(true);
+            setMsg("Please try again...");
+            setModalColor("red");
+          }
+        });
+    } catch (exc) {
+      console.log(exc);
+    } finally {
+      setAlldrivers("");
+    }
+  };
+
   // To switch between normal and table format
   const viewHandler = () => {
     setViewState((prevState) => !prevState);
@@ -229,6 +268,9 @@ const Inventory = () => {
               </button>
               <button onClick={getAllTrailers} className="button_all">
                 Get all trailers
+              </button>
+              <button onClick={getAllStraightTrucks} className="button_all">
+                Get all straight trucks
               </button>
               <Link to="/registerInventory">
                 <button className="button_add">

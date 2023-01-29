@@ -313,6 +313,7 @@ const Inventory = () => {
                           Tractor
                         </option>
                         <option value="Trailer">Trailer</option>
+                        <option value="Straight Truck">Straight truck</option>
                       </select>
                     </div>
                     <div className={styles.table_content}>

@@ -118,12 +118,6 @@ const Inventory = () => {
     }
   };
 
-  // To switch between normal and table format
-  const viewHandler = () => {
-    setViewState((prevState) => !prevState);
-    console.log(viewState);
-  };
-
   const handleInput = (e) => {
     setModal(true);
     setMsg("Fetching data...");
