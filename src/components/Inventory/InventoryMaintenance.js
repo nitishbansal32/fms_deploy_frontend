@@ -119,7 +119,7 @@ const Inventory = () => {
 
                 <div className={styles.table_container}>
                   <div className={styles.table_content}>
-                    <label htmlFor="">Shift:</label>
+                    <label htmlFor="">Type:</label>
                     <select
                       name="type"
                       id=""
@@ -137,10 +137,10 @@ const Inventory = () => {
 
                   <div className={styles.table_file_container}>
                     <div>
-                      <label>Safety records</label>
+                      <label>Maintainence documents</label>
                       <input
                         type="file"
-                        name="safety_records"
+                        name="maintenance_documents"
                         onChange={fileInputChange}
                         // value={file.training}
                       />

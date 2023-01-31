@@ -9,7 +9,6 @@ const Modal = (props) => {
   const modalButtonHandler = () => {
     setModal(false);
   };
-  console.log(modal);
   return (
     <div className={styles.modal} style={{ backgroundColor: modalColor }}>
       {modal && (

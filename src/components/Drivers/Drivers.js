@@ -135,7 +135,6 @@ const Inventory = () => {
 
   //Field Click Modal
   const handleInput = (e) => {
-    console.log(e.target.value);
     e.preventDefault();
     const InputClick = e.target.value;
     setModal(true);

@@ -24,8 +24,6 @@ const ModalDrivers = (props) => {
     setDisplay(false);
   };
 
-  console.log("employee_name", driverData.employee_name);
-
   //For profile image
   const [file, setFile] = useState({
     profile_picture: "",
@@ -101,6 +99,10 @@ const ModalDrivers = (props) => {
   //   ]
   // );
   // console.log("props.file.license_disclosure", props.file.license_disclosure);
+
+  const handleAppendedFiles = (item) => {
+    console.log(item);
+  };
 
   return (
     <div className={styles.main_modal_container}>

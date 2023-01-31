@@ -31,8 +31,8 @@ const ModalInventory = (props) => {
     setDisplay(false);
   };
 
-  console.log("Props", props.modalInventory);
-  console.log("global", inventoryData);
+  // console.log("Props", props.modalInventory);
+  // console.log("global", inventoryData);
 
   return (
     <div className={styles.main_modal_container}>

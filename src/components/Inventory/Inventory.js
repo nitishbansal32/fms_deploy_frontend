@@ -20,6 +20,8 @@ const Inventory = () => {
 
   const [modalInventory, setModalInventory] = useState("");
 
+  const [equipStatus, setEquipStatus] = useState("active");
+
   const {
     isLoggedIn,
     setIsLoggedIn,
@@ -64,7 +66,6 @@ const Inventory = () => {
           config
         )
           .then((response) => {
-            console.log(response);
             setAlldrivers([response.data.tractor]);
             setModal(false);
           })
@@ -93,7 +94,8 @@ const Inventory = () => {
     setModalColor("green");
     try {
       Axios.get(
-        `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/${url}?type=Tractor&status=active`,
+        // `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/${url}?type=Tractor&status=DNU`,
+        `http://localhost:8000/api/v1/LC/tractors/${url}?type=Tractor&status=${equipStatus}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -101,7 +103,6 @@ const Inventory = () => {
         }
       )
         .then((response) => {
-          console.log(response);
           setAlldrivers(response.data.tractors);
           setModal(false);
         })
@@ -132,7 +133,8 @@ const Inventory = () => {
     setModalColor("green");
     try {
       Axios.get(
-        `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/${url}?type=Trailer&status=active`,
+        // `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/${url}?type=Trailer&status=DNU`,
+        `http://localhost:8000/api/v1/LC/tractors/${url}?type=Trailer&status=${equipStatus}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -140,7 +142,6 @@ const Inventory = () => {
         }
       )
         .then((response) => {
-          console.log(response);
           setAlldrivers(response.data.tractors);
           setModal(false);
         })
@@ -171,7 +172,8 @@ const Inventory = () => {
     setModalColor("green");
     try {
       Axios.get(
-        `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/${url}?type=Straight Truck&status=active`,
+        // `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/${url}?type=Straight Truck&status=DNU`,
+        `http://localhost:8000/api/v1/LC/tractors/${url}?type=Straight Truck&status=${equipStatus}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -179,7 +181,6 @@ const Inventory = () => {
         }
       )
         .then((response) => {
-          console.log(response);
           setAlldrivers(response.data.tractors);
           setModal(false);
         })
@@ -222,25 +223,22 @@ const Inventory = () => {
         config
       )
         .then((response) => {
-          console.log(response);
           setModalInventory([response.data.tractor]);
           setInventoryData(response.data.tractor);
         })
         .catch((err) => {
           console.log(err);
-          // if (err.request.status === 404) {
-          //   setMsg("Enter correct detail");
-          // } else if (err.request.status === 400) {
-          //   setMsg("Enter correct detail");
-          // } else if (err.request.status === 403) {
-          //   setMsg("You are forbidden!");
-          // }
         });
     } catch (exc) {
       console.log(exc);
     } finally {
       setModalInventory("");
     }
+  };
+
+  const equipStatusHandler = (e) => {
+    e.preventDefault();
+    setEquipStatus(e.target.value);
   };
 
   return (
@@ -295,6 +293,19 @@ const Inventory = () => {
                   <span>Unit</span>
                   <span>VIN</span>
                   <span>License plate</span>
+                  <div className={styles.statusDropDownContainer}>
+                    <select
+                      value={equipStatus}
+                      onChange={equipStatusHandler}
+                      name=""
+                      id=""
+                    >
+                      <option value="active">Active</option>
+                      <option value="inactive">Inactive</option>
+                      <option value="safety due">Safety due</option>
+                      <option value="DNU">DNU</option>
+                    </select>
+                  </div>
                 </div>
                 <hr />
                 {alldrivers &&

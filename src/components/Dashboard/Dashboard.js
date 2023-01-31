@@ -32,7 +32,7 @@ const Dashboard = () => {
   useEffect(() => {
     Axios.get("https://lc-backend-v2.herokuapp.com/api/v1/LC/expired", config)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setExpDrivingLicense(res.data.expired_driving_licenses);
         setExpMedicalLicense(res.data.expired_medical_licenses);
         setExpPlate(res.data.expired_plates);
@@ -41,11 +41,9 @@ const Dashboard = () => {
       .catch((err) => {
         console.log(err);
       });
-
     Axios.get("https://lc-backend-v2.herokuapp.com/api/v1/LC/activity", config)
       .then((res) => {
         setActivity(res.data.activities);
-        // console.log(res.data.activities);
       })
       .catch((err) => {
         console.log(err);
@@ -57,6 +55,7 @@ const Dashboard = () => {
     setActivity([]);
     Axios.get("https://lc-backend-v2.herokuapp.com/api/v1/LC/activity", config)
       .then((res) => {
+        // console.log(res);
         setActivity(res.data.activities);
       })
       .catch((err) => {
@@ -249,6 +248,8 @@ const Dashboard = () => {
                             ? "#e84b01"
                             : item.type === "CREATION"
                             ? "green"
+                            : item.type === "REMINDER"
+                            ? "#D22B2B"
                             : "#f5f5f5"
                         }`,
                       }}
@@ -260,6 +261,8 @@ const Dashboard = () => {
                             item.type === "UPDATION"
                               ? "white"
                               : item.type === "CREATION"
+                              ? "white"
+                              : item.type === "REMINDER"
                               ? "white"
                               : "black"
                           }`,
@@ -274,6 +277,8 @@ const Dashboard = () => {
                             item.type === "UPDATION"
                               ? "white"
                               : item.type === "CREATION"
+                              ? "white"
+                              : item.type === "REMINDER"
                               ? "white"
                               : "black"
                           }`,

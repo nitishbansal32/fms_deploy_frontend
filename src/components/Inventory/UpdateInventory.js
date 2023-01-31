@@ -72,7 +72,6 @@ const Inventory = () => {
     safety_expiry_type: inventoryData.safety_expiry_type,
     status: inventoryData.status,
     plate_expiry_date: inventoryData.plate_expiry_date,
-
     mechanical_notes: inventoryData.mechanical_notes,
     maintenance_duration: inventoryData.maintenance_duration,
     next_maintenance_at: inventoryData.next_maintenance_at,
@@ -355,6 +354,7 @@ const Inventory = () => {
                         </option>
                         <option value="inactive">Inactive</option>
                         <option value="safety due">Safety due</option>
+                        <option value="DNU">DNU</option>
                       </select>
                     </div>
                     <div className={styles.table_content}>
