@@ -217,7 +217,7 @@ const Inventory = () => {
           setModal(true);
           setModalColor("red");
         } else {
-          setMsg("Try again after sometime!");
+          setMsg(err.response.data.msg);
           setModal(true);
           setModalColor("red");
         }

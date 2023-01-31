@@ -69,7 +69,7 @@ const Inventory = () => {
     standard_job: "",
     annual_inspection: "",
     // next_annual_inspection: "",
-    safety_expiry_date: "",
+    // safety_expiry_date: "",
     safety_expiry_type: "",
     status: "",
     plate_expiry_date: "",
@@ -110,7 +110,7 @@ const Inventory = () => {
     safety_expiry_type: `${
       !data.safety_expiry_type ? "Semi-Annual" : data.safety_expiry_type
     }`,
-    safety_expiry_date: data.safety_expiry_date,
+    // safety_expiry_date: data.safety_expiry_date,
     status: `${!data.status ? "active" : data.status}`,
     plate_expiry_date: data.plate_expiry_date,
 
@@ -251,6 +251,7 @@ const Inventory = () => {
                         Tractor
                       </option>
                       <option value="Trailer">Trailer</option>
+                      <option value="Straight Truck">Straight truck</option>
                     </select>
                   </div>
                   <div className={styles.table_content}>
@@ -431,7 +432,7 @@ const Inventory = () => {
                       <option value="Annual">Annual</option>
                     </select>
                   </div>
-                  <div className={styles.table_content}>
+                  {/* <div className={styles.table_content}>
                     <label htmlFor="">*Safety expiry:</label>
 
                     <input
@@ -443,7 +444,7 @@ const Inventory = () => {
                       value={data.safety_expiry_date}
                       required
                     />
-                  </div>
+                  </div> */}
 
                   <div className={styles.table_content}>
                     <label htmlFor="">*Plate expiry:</label>

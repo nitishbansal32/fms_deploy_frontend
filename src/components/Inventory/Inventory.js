@@ -94,8 +94,8 @@ const Inventory = () => {
     setModalColor("green");
     try {
       Axios.get(
-        // `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/${url}?type=Tractor&status=DNU`,
-        `http://localhost:8000/api/v1/LC/tractors/${url}?type=Tractor&status=${equipStatus}`,
+        `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/${url}?type=Tractor&status=${equipStatus}`,
+        // `http://localhost:8000/api/v1/LC/tractors/${url}?type=Tractor&status=${equipStatus}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -105,6 +105,7 @@ const Inventory = () => {
         .then((response) => {
           setAlldrivers(response.data.tractors);
           setModal(false);
+          console.log(response);
         })
         .catch((err) => {
           console.log(err);
@@ -133,8 +134,8 @@ const Inventory = () => {
     setModalColor("green");
     try {
       Axios.get(
-        // `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/${url}?type=Trailer&status=DNU`,
-        `http://localhost:8000/api/v1/LC/tractors/${url}?type=Trailer&status=${equipStatus}`,
+        `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/${url}?type=Trailer&status=${equipStatus}`,
+        // `http://localhost:8000/api/v1/LC/tractors/${url}?type=Trailer&status=${equipStatus}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -172,8 +173,8 @@ const Inventory = () => {
     setModalColor("green");
     try {
       Axios.get(
-        // `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/${url}?type=Straight Truck&status=DNU`,
-        `http://localhost:8000/api/v1/LC/tractors/${url}?type=Straight Truck&status=${equipStatus}`,
+        `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/${url}?type=Straight Truck&status=${equipStatus}`,
+        // `http://localhost:8000/api/v1/LC/tractors/${url}?type=Straight Truck&status=${equipStatus}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
