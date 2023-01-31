@@ -64,7 +64,7 @@ const ServiceDash = () => {
                     </p>
                   )}
                   <div className={styles.button_container}>
-                    <Link to="/loading">
+                    <Link to="/dashboard">
                       <button>Continue</button>
                     </Link>
                     <button

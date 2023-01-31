@@ -169,7 +169,7 @@ function App() {
 
             <Route exact path="/allservices" element={<ServiceDash />}></Route>
 
-            <Route exact path="/loading" element={<Loading />}></Route>
+            {/* <Route exact path="/loading" element={<Loading />}></Route> */}
           </Routes>
         </Router>
         {modal && <Modal />}
