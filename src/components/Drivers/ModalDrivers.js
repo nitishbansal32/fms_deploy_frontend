@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { UserContext } from "../../UserContext";
 import { useEffect, useState, useContext } from "react";
 import Logo from "../../../src/Images/DriversLogo.svg";
+import cross from "../../Images/cross.svg";
 
 const ModalDrivers = (props) => {
   const {
@@ -32,6 +33,26 @@ const ModalDrivers = (props) => {
   const [profileUrl, setProfileUrl] = useState("");
 
   const [checkField, setCheckField] = useState("");
+
+  const [appendDisplay, setAppendDisplay] = useState({
+    cuurent_abstract: false,
+    certificate_of_violation: false,
+    certificate_of_road_test: false,
+    training: false,
+    disciplinary_actions: false,
+    safety_records: false,
+  });
+
+  const [appendedFile, setAppendedFile] = useState({
+    cuurent_abstract: [],
+    certificate_of_violation: [],
+    certificate_of_road_test: [],
+    training: [],
+    disciplinary_actions: [],
+    safety_records: [],
+  });
+
+  const [appendedFileName, setAppendedFileName] = useState("");
 
   const fileInputChange = (e) => {
     setFile({
@@ -100,7 +121,19 @@ const ModalDrivers = (props) => {
   // );
   // console.log("props.file.license_disclosure", props.file.license_disclosure);
 
-  const handleAppendedFiles = (item) => {
+  const handleAppendedFiles = (item, event) => {
+    setAppendDisplay({
+      ...appendDisplay,
+      [event]: true,
+    });
+
+    setAppendedFile({
+      ...appendedFile,
+      [event]: item,
+    });
+
+    // setAppendedFile(item);
+    console.log(event);
     console.log(item);
   };
 
@@ -397,54 +430,76 @@ const ModalDrivers = (props) => {
                     }}
                   ></div>
                 </div>
-                <div
-                  onClick={(event) =>
-                    props.file.current_abstract[
-                      props.file.current_abstract.length - 1
-                    ] == "none"
-                      ? "none"
-                      : props.file.current_abstract[
-                          props.file.current_abstract.length - 1
-                        ] == null
-                      ? "none"
-                      : props.file.current_abstract[
-                          props.file.current_abstract.length - 1
-                        ] == undefined
-                      ? "none"
-                      : window.open(
-                          `${
-                            props.file.current_abstract[
-                              props.file.current_abstract.length - 1
-                            ]
-                          }`,
-                          "_blank"
-                        )
-                  }
-                >
-                  <label>Driver MDVR/CDVR</label>
+                <div className={styles.appended_files_extended_container}>
                   <div
-                    className={styles.checkBox}
-                    style={{
-                      width: "12px",
-                      height: "12px",
-                      backgroundColor:
-                        props.file.current_abstract &&
-                        (props.file.current_abstract[
-                          props.file.current_abstract.length - 1
-                        ] == "none"
-                          ? "red"
-                          : props.file.current_abstract[
-                              props.file.current_abstract.length - 1
-                            ] == null
-                          ? "red"
-                          : props.file.current_abstract[
-                              props.file.current_abstract.length - 1
-                            ] == undefined
-                          ? "red"
-                          : "green"),
-                    }}
-                  ></div>{" "}
+                    onClick={(event) =>
+                      // props.file.current_abstract[
+                      //   props.file.current_abstract.length - 1
+                      // ] == "none"
+                      //   ? "none"
+                      //   : props.file.current_abstract[
+                      //       props.file.current_abstract.length - 1
+                      //     ] == null
+                      //   ? "none"
+                      //   : props.file.current_abstract[
+                      //       props.file.current_abstract.length - 1
+                      //     ] == undefined
+                      //   ? "none"
+                      //   : window.open(
+                      //       `${
+                      //         props.file.current_abstract[
+                      //           props.file.current_abstract.length - 1
+                      //         ]
+                      //       }`,
+                      //       "_blank"
+                      //     )
+                      handleAppendedFiles(
+                        props.file.current_abstract,
+                        "current_abstract"
+                      )
+                    }
+                  >
+                    {/* {console.log(props.file.current_abstract)} */}
+                    <label>Driver MDVR/CDVR</label>
+                    <div
+                      className={styles.checkBox}
+                      style={{
+                        width: "12px",
+                        height: "12px",
+                        backgroundColor:
+                          props.file.current_abstract &&
+                          (props.file.current_abstract[
+                            props.file.current_abstract.length - 1
+                          ] == "none"
+                            ? "red"
+                            : props.file.current_abstract[
+                                props.file.current_abstract.length - 1
+                              ] == null
+                            ? "red"
+                            : props.file.current_abstract[
+                                props.file.current_abstract.length - 1
+                              ] == undefined
+                            ? "red"
+                            : "green"),
+                      }}
+                    ></div>{" "}
+                  </div>
+                  {appendDisplay.current_abstract && (
+                    <div className={styles.append_main_container}>
+                      {appendedFile.current_abstract.map((item, index) => (
+                        <button
+                          onClick={(event) => window.open(`${item}`, "_blank")}
+                          style={{
+                            display: item === "none" ? "none" : "block",
+                          }}
+                        >
+                          File {item === "none" ? index + 1 : index}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
+
                 <div
                   onClick={(event) =>
                     props.file.personal_investigation_consent == "none"
@@ -663,53 +718,77 @@ const ModalDrivers = (props) => {
                     }}
                   ></div>
                 </div>
-                <div
-                  onClick={(event) =>
-                    props.file.certificate_of_violation[
-                      props.file.certificate_of_violation.length - 1
-                    ] == "none"
-                      ? "none"
-                      : props.file.certificate_of_violation[
-                          props.file.certificate_of_violation.length - 1
-                        ] == null
-                      ? "none"
-                      : props.file.certificate_of_violation[
-                          props.file.certificate_of_violation.length - 1
-                        ] == undefined
-                      ? "none"
-                      : window.open(
-                          `${
-                            props.file.certificate_of_violation[
-                              props.file.certificate_of_violation.length - 1
-                            ]
-                          }`,
-                          "_blank"
-                        )
-                  }
-                >
-                  <label>Certificate of violations(once every 6months)</label>
+                <div className={styles.appended_files_extended_container}>
                   <div
-                    className={styles.checkBox}
-                    style={{
-                      width: "12px",
-                      height: "12px",
-                      backgroundColor:
-                        props.file.certificate_of_violation &&
-                        (props.file.certificate_of_violation[
-                          props.file.certificate_of_violation.length - 1
-                        ] == "none"
-                          ? "red"
-                          : props.file.certificate_of_violation[
-                              props.file.certificate_of_violation.length - 1
-                            ] == null
-                          ? "red"
-                          : props.file.certificate_of_violation[
-                              props.file.certificate_of_violation.length - 1
-                            ] == undefined
-                          ? "red"
-                          : "green"),
-                    }}
-                  ></div>
+                    onClick={(event) =>
+                      // props.file.certificate_of_violation[
+                      //   props.file.certificate_of_violation.length - 1
+                      // ] == "none"
+                      //   ? "none"
+                      //   : props.file.certificate_of_violation[
+                      //       props.file.certificate_of_violation.length - 1
+                      //     ] == null
+                      //   ? "none"
+                      //   : props.file.certificate_of_violation[
+                      //       props.file.certificate_of_violation.length - 1
+                      //     ] == undefined
+                      //   ? "none"
+                      //   : window.open(
+                      //       `${
+                      //         props.file.certificate_of_violation[
+                      //           props.file.certificate_of_violation.length - 1
+                      //         ]
+                      //       }`,
+                      //       "_blank"
+                      //     )
+                      handleAppendedFiles(
+                        props.file.certificate_of_violation,
+                        "certificate_of_violation"
+                      )
+                    }
+                  >
+                    <label>Certificate of violations(once every 6months)</label>
+                    <div
+                      className={styles.checkBox}
+                      style={{
+                        width: "12px",
+                        height: "12px",
+                        backgroundColor:
+                          props.file.certificate_of_violation &&
+                          (props.file.certificate_of_violation[
+                            props.file.certificate_of_violation.length - 1
+                          ] == "none"
+                            ? "red"
+                            : props.file.certificate_of_violation[
+                                props.file.certificate_of_violation.length - 1
+                              ] == null
+                            ? "red"
+                            : props.file.certificate_of_violation[
+                                props.file.certificate_of_violation.length - 1
+                              ] == undefined
+                            ? "red"
+                            : "green"),
+                      }}
+                    ></div>
+                  </div>
+                  {appendDisplay.certificate_of_violation && (
+                    <div className={styles.append_main_container}>
+                      {appendedFile.certificate_of_violation.map(
+                        (item, index) => (
+                          <button
+                            onClick={(event) =>
+                              window.open(`${item}`, "_blank")
+                            }
+                            style={{
+                              display: item === "none" ? "none" : "block",
+                            }}
+                          >
+                            File {item === "none" ? index + 1 : index}
+                          </button>
+                        )
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 <h2>Additional documents status</h2>
@@ -745,48 +824,66 @@ const ModalDrivers = (props) => {
                     }}
                   ></div>
                 </div>
-
-                <div
-                  onClick={(event) =>
-                    props.file.training[props.file.training.length - 1] ==
-                    "none"
-                      ? "none"
-                      : props.file.training[props.file.training.length - 1] ==
-                        null
-                      ? "none"
-                      : props.file.training[props.file.training.length - 1] ==
-                        undefined
-                      ? "none"
-                      : window.open(
-                          `${
-                            props.file.training[props.file.training.length - 1]
-                          }`,
-                          "_blank"
-                        )
-                  }
-                >
-                  <label>Training</label>
+                <div className={styles.appended_files_extended_container}>
                   <div
-                    className={styles.checkBox}
-                    style={{
-                      width: "12px",
-                      height: "12px",
-                      backgroundColor:
-                        props.file.training &&
-                        (props.file.training[props.file.training.length - 1] ==
-                        "none"
-                          ? "red"
-                          : props.file.training[
-                              props.file.training.length - 1
-                            ] == null
-                          ? "red"
-                          : props.file.training[
-                              props.file.training.length - 1
-                            ] == undefined
-                          ? "red"
-                          : "green"),
-                    }}
-                  ></div>
+                    onClick={(event) =>
+                      // props.file.training[props.file.training.length - 1] ==
+                      // "none"
+                      //   ? "none"
+                      //   : props.file.training[props.file.training.length - 1] ==
+                      //     null
+                      //   ? "none"
+                      //   : props.file.training[props.file.training.length - 1] ==
+                      //     undefined
+                      //   ? "none"
+                      //   : window.open(
+                      //       `${
+                      //         props.file.training[props.file.training.length - 1]
+                      //       }`,
+                      //       "_blank"
+                      //     )
+                      handleAppendedFiles(props.file.training, "training")
+                    }
+                  >
+                    <label>Training</label>
+                    <div
+                      className={styles.checkBox}
+                      style={{
+                        width: "12px",
+                        height: "12px",
+                        backgroundColor:
+                          props.file.training &&
+                          (props.file.training[
+                            props.file.training.length - 1
+                          ] == "none"
+                            ? "red"
+                            : props.file.training[
+                                props.file.training.length - 1
+                              ] == null
+                            ? "red"
+                            : props.file.training[
+                                props.file.training.length - 1
+                              ] == undefined
+                            ? "red"
+                            : "green"),
+                      }}
+                    ></div>
+                  </div>
+
+                  {appendDisplay.training && (
+                    <div className={styles.append_main_container}>
+                      {appendedFile.training.map((item, index) => (
+                        <button
+                          onClick={(event) => window.open(`${item}`, "_blank")}
+                          style={{
+                            display: item === "none" ? "none" : "block",
+                          }}
+                        >
+                          File {item === "none" ? index + 1 : index}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 <div
@@ -871,6 +968,28 @@ const ModalDrivers = (props) => {
                   ></div>
                 </div>
               </div>
+              {/* {appendDisplay && (
+                <div className={styles.append_main_container}>
+                  <img
+                    src={cross}
+                    onClick={() => {
+                      setAppendDisplay(false);
+                    }}
+                    alt=""
+                  />
+                  <div className={styles.append_option_container}>
+                    <h3>{appendedFileName}</h3>
+                    {appendedFile.map((item, index) => (
+                      <button
+                        onClick={(event) => window.open(`${item}`, "_blank")}
+                        style={{ display: item === "none" ? "none" : "block" }}
+                      >
+                        File {item === "none" ? index + 1 : index}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )} */}
             </div>
           ))}
         <div className={styles.button_container}>

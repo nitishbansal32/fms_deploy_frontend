@@ -114,8 +114,6 @@ const Navbar = () => {
       </div>
       <div className={styles.container}>
         <div className={styles.nav_logo_container}>
-          <img src={Logo} className={styles.nav_main_logo} />
-          <hr style={{ opacity: "0.1" }} />
           <img
             className={styles.nav_comp_logo}
             src={localStorage.getItem("logo")}
@@ -222,6 +220,8 @@ const Navbar = () => {
         <button onClick={handleLogOut} className={styles.logOut_button}>
           LogOut
         </button>
+        <hr style={{ opacity: "0.1" }} />
+        <img src={Logo} className={styles.nav_main_logo} />
       </div>
     </div>
   );
