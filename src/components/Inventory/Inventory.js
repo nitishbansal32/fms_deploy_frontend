@@ -22,6 +22,10 @@ const Inventory = () => {
 
   const [equipStatus, setEquipStatus] = useState("active");
 
+  const [equipmentName, setEquipmentName] = useState("Equipment");
+
+  const [selectEquipmentValue, setSelectEquipmentValue] = useState("");
+
   const {
     isLoggedIn,
     setIsLoggedIn,
@@ -58,6 +62,7 @@ const Inventory = () => {
     setModal(true);
     setMsg("Fetching data...");
     setModalColor("green");
+    setEquipmentName("Equipments");
 
     try {
       if (!(e.target[0].value == "")) {
@@ -92,6 +97,7 @@ const Inventory = () => {
     setModal(true);
     setMsg("Fetching data...");
     setModalColor("green");
+    setEquipmentName("Tractors");
     try {
       Axios.get(
         `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/${url}?type=Tractor&status=${equipStatus}`,
@@ -132,6 +138,7 @@ const Inventory = () => {
     setModal(true);
     setMsg("Fetching data...");
     setModalColor("green");
+    setEquipmentName("Trailers");
     try {
       Axios.get(
         `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/${url}?type=Trailer&status=${equipStatus}`,
@@ -171,6 +178,7 @@ const Inventory = () => {
     setModal(true);
     setMsg("Fetching data...");
     setModalColor("green");
+    setEquipmentName("Straight trucks");
     try {
       Axios.get(
         `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/${url}?type=Straight Truck&status=${equipStatus}`,
@@ -242,6 +250,24 @@ const Inventory = () => {
     setEquipStatus(e.target.value);
   };
 
+  const handleSelectEquipment = (e) => {
+    console.log(e.target.value);
+    e.preventDefault();
+    setSelectEquipmentValue(e.target.value);
+  };
+
+  const handleOnClickEquipment = (e) => {
+    e.preventDefault();
+    console.log(selectEquipmentValue);
+    if (selectEquipmentValue === "getAllTractors") {
+      getAllTractors();
+    } else if (selectEquipmentValue === "getAllTrailers") {
+      getAllTrailers();
+    } else if (selectEquipmentValue === "getAllStraightTrucks") {
+      getAllStraightTrucks();
+    }
+  };
+
   return (
     <>
       {/* {isLoggedIn ? ( */}
@@ -262,7 +288,22 @@ const Inventory = () => {
               </div>
             </form>
             <div className={styles.button_alignment_container}>
-              <button onClick={getAllTractors} className="button_all">
+              <select
+                value={selectEquipmentValue}
+                name=""
+                id=""
+                onChange={handleSelectEquipment}
+                className="button_all"
+              >
+                <option value="getAllTractors">Tractors</option>
+                <option value="getAllTrailers">Trailers</option>
+                <option value="getAllStraightTrucks">Straight trucks</option>
+              </select>
+
+              <button onClick={handleOnClickEquipment} className="button_all">
+                Get
+              </button>
+              {/* <button onClick={getAllTractors} className="button_all">
                 Get all tractors
               </button>
               <button onClick={getAllTrailers} className="button_all">
@@ -270,7 +311,7 @@ const Inventory = () => {
               </button>
               <button onClick={getAllStraightTrucks} className="button_all">
                 Get all straight trucks
-              </button>
+              </button> */}
               <Link to="/registerInventory">
                 <button className="button_add">
                   <img src={plus} alt="" />
@@ -281,14 +322,8 @@ const Inventory = () => {
           </div>
 
           <div className={styles.table_wrapper_container}>
-            <h1>Equipment Information</h1>
-            {/* <h1>DRIVERS INFORMATION</h1> */}
-            <div
-              className={styles.table_container}
-              // style={{
-              //   background: viewState ? "transparent" : "white",
-              // }}
-            >
+            <h1>{equipmentName} Information</h1>
+            <div className={styles.table_container}>
               <div className={styles.table_main_container}>
                 <div className={styles.grid_headings}>
                   <span>Unit</span>

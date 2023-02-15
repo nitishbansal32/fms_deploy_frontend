@@ -1,6 +1,6 @@
 import styles from "./Settings.module.css";
 import Navbar from "../../components/Navbar/Navbar";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import ModalUpdate from "./ModalUpdate";
 import Axios from "axios";
 
@@ -65,6 +65,22 @@ const Settings = () => {
     console.log(pair[0] + ", " + pair[1]);
   }
 
+  const config = {
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+  };
+
+  useEffect(() => {
+    Axios.get(
+      `https://lc-backend-v2.herokuapp.com/api/v1/LC/currCompany`,
+      config
+    )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   const handleCompanyUpdate = (e) => {
     e.preventDefault();
 
@@ -108,7 +124,7 @@ const Settings = () => {
         <div className={styles.personal_container}>
           <h3>Company information</h3>
           <form action="" onSubmit={handleSubmit}>
-            <div className={styles.content_container}>
+            <div className={styles.content_email_container}>
               <label htmlFor="">Email:</label>
               <p>{email}</p>
             </div>
@@ -122,6 +138,7 @@ const Settings = () => {
               <label htmlFor="">Change logo:</label>
               <input type="file" name="logo" onChange={fileInputChange} />
             </div>
+            {/* <div className={styles.label_container}></div> */}
             <div className={styles.content_container}>
               <label htmlFor="">Address:</label>
               <textarea

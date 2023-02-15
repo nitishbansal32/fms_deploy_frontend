@@ -76,6 +76,8 @@ const Login = () => {
         localStorage.setItem("role", response.data.user.role);
         localStorage.setItem("logo", response.data.user.logo);
         localStorage.setItem("_id", response.data.user.company);
+        localStorage.setItem("version", response.data.version);
+        // console.log(response.data.version);
         const item = localStorage.getItem("token", response.data.token);
         console.log(response);
         if (response.data == "Too many requests, please try again later.") {

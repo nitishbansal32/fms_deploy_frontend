@@ -221,7 +221,10 @@ const Navbar = () => {
           LogOut
         </button>
         <hr style={{ opacity: "0.1" }} />
-        <img src={Logo} className={styles.nav_main_logo} />
+        <div className={styles.bottom_container}>
+          <img src={Logo} className={styles.nav_main_logo} />
+          <p>2.8.0</p>
+        </div>
       </div>
     </div>
   );
