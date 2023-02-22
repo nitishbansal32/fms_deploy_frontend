@@ -29,6 +29,11 @@ const Settings = () => {
     address: "",
     is_email_reminder_active: true,
     is_sms_reminder_active: true,
+    PM_reminder_email: "",
+    CVOR_reminder_email: "",
+    maintenance_duration: "",
+    safety_duration: "",
+    safety_expiry_type: "",
   });
 
   const [file, setFile] = useState({
@@ -61,26 +66,34 @@ const Settings = () => {
   formData.append("is_email_reminder_active", data.is_email_reminder_active);
   formData.append("is_sms_reminder_active", data.is_sms_reminder_active);
 
-  for (var pair of formData.entries()) {
-    console.log(pair[0] + ", " + pair[1]);
-  }
+  formData.append("PM_reminder_email", data.PM_reminder_email);
+  formData.append("CVOR_reminder_email", data.CVOR_reminder_email);
+  formData.append("maintenance_duration", data.maintenance_duration);
+  formData.append("safety_duration", data.safety_duration);
+  formData.append("safety_expiry_type", data.safety_expiry_type);
 
   const config = {
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
   };
 
-  useEffect(() => {
-    Axios.get(
-      `https://lc-backend-v2.herokuapp.com/api/v1/LC/currCompany`,
-      config
-    )
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   Axios.get(
+  //     `https://lc-backend-v2.herokuapp.com/api/v1/LC/currCompany`,
+
+  //     config
+  //   )
+  //     .then((response) => {
+  //       setData({
+  //         ...data,
+  //         ["address"]: response.data.company.address,
+  //       });
+  //       console.log(response);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
+
   const handleCompanyUpdate = (e) => {
     e.preventDefault();
 
@@ -99,7 +112,7 @@ const Settings = () => {
       }
     )
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setMsg("Company info updated!");
         setModal(true);
         setModalColor("green");
@@ -138,7 +151,6 @@ const Settings = () => {
               <label htmlFor="">Change logo:</label>
               <input type="file" name="logo" onChange={fileInputChange} />
             </div>
-            {/* <div className={styles.label_container}></div> */}
             <div className={styles.content_container}>
               <label htmlFor="">Address:</label>
               <textarea
@@ -194,6 +206,55 @@ const Settings = () => {
                 name="country"
                 value={data.country}
               />
+            </div>
+            <div className={styles.content_container}>
+              <label htmlFor="">PM reminder email:</label>
+              <input
+                type="email"
+                onChange={inputChange}
+                name="PM_reminder_email"
+                value={data.PM_reminder_email}
+              />
+            </div>
+            <div className={styles.content_container}>
+              <label htmlFor="">CVOR reminder email:</label>
+              <input
+                type="email"
+                onChange={inputChange}
+                name="CVOR_reminder_email"
+                value={data.CVOR_reminder_email}
+              />
+            </div>
+            <div className={styles.content_container}>
+              <label htmlFor="">Maintenance duration:</label>
+              <input
+                type="text"
+                onChange={inputChange}
+                name="maintenance_duration"
+                value={data.maintenance_duration}
+              />
+            </div>
+            <div className={styles.content_container}>
+              <label htmlFor="">Safety duration:</label>
+              <input
+                type="text"
+                onChange={inputChange}
+                name="safety_duration"
+                value={data.safety_duration}
+              />
+            </div>
+            <div className={styles.content_container}>
+              <label htmlFor="">Safety expiry type:</label>
+              <select
+                name="safety_expiry_type"
+                id=""
+                onChange={inputChange}
+                value={data.safety_expiry_type}
+                required
+              >
+                <option value="Semi-Annual">Semi-Annual</option>
+                <option value="Annual">Annual</option>
+              </select>
             </div>
             <div className={styles.content_container}>
               <label htmlFor="">Email active:</label>

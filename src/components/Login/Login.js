@@ -9,7 +9,8 @@ import cross from "../../Images/cross.svg";
 import LoginImage from "../../../src/Images/signin.svg";
 
 const Login = () => {
-  const url = "https://lc-backend-v2.herokuapp.com/api/v1/LC/login";
+  // const url = "https://lc-backend-v2.herokuapp.com/api/v1/LC/login";
+  const url = "https://loadlc-backend-staging.herokuapp.com/api/v1/LC/login";
 
   // const url = "http://localhost:8000/api/v1/LC/login";
 

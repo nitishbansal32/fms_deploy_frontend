@@ -79,6 +79,8 @@ const Inventory = () => {
     // days_remaining_for_next_inspection: "",
     mechanical_notes: "",
     maintenance_duration: "",
+    maintenance_delay: "",
+    last_maintenance_at: "",
     type: "",
   });
 
@@ -116,6 +118,8 @@ const Inventory = () => {
 
     mechanical_notes: data.mechanical_notes,
     maintenance_duration: data.maintenance_duration,
+    maintenance_delay: data.maintenance_delay,
+    last_maintenance_at: data.last_maintenance_at,
     type: `${!data.type ? "Tractor" : data.type}`,
   };
 
@@ -469,6 +473,34 @@ const Inventory = () => {
                       name="maintenance_duration"
                       onChange={inputChange}
                       value={data.maintenance_duration}
+                      required
+                    />
+                  </div>
+                  <div className={styles.table_content}>
+                    <label htmlFor="">*Last maintainence at:</label>
+                    <input
+                      type="date"
+                      data-date-format="YYYY MM DD"
+                      placeholder="Enter date"
+                      name="last_maintenance_at"
+                      onChange={inputChange}
+                      value={
+                        data.last_maintenance_at
+                          ? data.last_maintenance_at.substr(0, 10)
+                          : ""
+                      }
+                      required
+                    />
+                  </div>
+                  <div className={styles.table_content}>
+                    <label htmlFor="">*Maintainence delay:</label>
+                    <input
+                      type="number"
+                      min="0"
+                      placeholder="E.g. 2"
+                      name="maintenance_delay"
+                      onChange={inputChange}
+                      value={data.maintenance_delay}
                       required
                     />
                   </div>

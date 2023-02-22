@@ -24,7 +24,8 @@ const Inventory = () => {
 
   const [equipmentName, setEquipmentName] = useState("Equipment");
 
-  const [selectEquipmentValue, setSelectEquipmentValue] = useState("");
+  const [selectEquipmentValue, setSelectEquipmentValue] =
+    useState("getAllTractors");
 
   const {
     isLoggedIn,

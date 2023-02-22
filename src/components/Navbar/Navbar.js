@@ -223,7 +223,7 @@ const Navbar = () => {
         <hr style={{ opacity: "0.1" }} />
         <div className={styles.bottom_container}>
           <img src={Logo} className={styles.nav_main_logo} />
-          <p>2.8.0</p>
+          <p>v2.8.0</p>
         </div>
       </div>
     </div>

@@ -132,6 +132,7 @@ const Inventory = () => {
                         General
                       </option>
                       <option value="PM">PM</option>
+                      <option value="safety">Safety</option>
                     </select>
                   </div>
 
