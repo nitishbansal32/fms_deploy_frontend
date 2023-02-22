@@ -131,7 +131,7 @@ const Inventory = () => {
     setModalColor("green");
 
     Axios.post(
-      `https://lc-backend-v2.herokuapp.com/api/v1/LC/tractors/createTractor`,
+      `https://loadlc-backend-staging.herokuapp.com/api/v1/LC/tractors/createTractor`,
       body,
       {
         headers: {

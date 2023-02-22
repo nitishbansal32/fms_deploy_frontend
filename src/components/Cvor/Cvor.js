@@ -48,11 +48,14 @@ const Inventory = () => {
     setMsg("Fetching data...");
     setModalColor("green");
     try {
-      Axios.get(`https://lc-backend-v2.herokuapp.com/api/v1/LC/currCVOR`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
+      Axios.get(
+        `https://loadlc-backend-staging.herokuapp.com/api/v1/LC/currCVOR`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
         .then((response) => {
           // console.log(response.data.entry[0].CVIR);
           setAllCvir(response.data.entry[0].CVIR);

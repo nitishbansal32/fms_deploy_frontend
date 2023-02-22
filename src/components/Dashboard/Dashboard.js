@@ -30,9 +30,12 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    Axios.get("https://lc-backend-v2.herokuapp.com/api/v1/LC/expired", config)
+    Axios.get(
+      "https://loadlc-backend-staging.herokuapp.com/api/v1/LC/expired",
+      config
+    )
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         setExpDrivingLicense(res.data.expired_driving_licenses);
         setExpMedicalLicense(res.data.expired_medical_licenses);
         setExpPlate(res.data.expired_plates);
@@ -41,7 +44,10 @@ const Dashboard = () => {
       .catch((err) => {
         console.log(err);
       });
-    Axios.get("https://lc-backend-v2.herokuapp.com/api/v1/LC/activity", config)
+    Axios.get(
+      "https://loadlc-backend-staging.herokuapp.com/api/v1/LC/activity",
+      config
+    )
       .then((res) => {
         setActivity(res.data.activities);
       })
@@ -53,7 +59,10 @@ const Dashboard = () => {
   const handleActivity = (e) => {
     e.preventDefault();
     setActivity([]);
-    Axios.get("https://lc-backend-v2.herokuapp.com/api/v1/LC/activity", config)
+    Axios.get(
+      "https://loadlc-backend-staging.herokuapp.com/api/v1/LC/activity",
+      config
+    )
       .then((res) => {
         // console.log(res);
         setActivity(res.data.activities);
@@ -189,7 +198,7 @@ const Dashboard = () => {
                       expSafety.map((item) => (
                         <>
                           <div className={styles.expiry_content}>
-                            <div>{item.licence_plate}</div>
+                            <div>{item.unit}</div>
                             <div>{item.safety_expiry_date.substr(0, 10)}</div>
                           </div>
                           <hr />

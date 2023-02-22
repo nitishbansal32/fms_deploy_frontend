@@ -56,7 +56,7 @@ const Inventory = () => {
     try {
       if (!(e.target[0].value == "")) {
         Axios.get(
-          `https://lc-backend-v2.herokuapp.com/api/v1/LC/accidents/${drivers}`,
+          `https://loadlc-backend-staging.herokuapp.com/api/v1/LC/accidents/${drivers}`,
           config
         )
           .then((response) => {
@@ -88,7 +88,7 @@ const Inventory = () => {
     setModalColor("green");
     try {
       Axios.get(
-        `https://lc-backend-v2.herokuapp.com/api/v1/LC/accidents/${url}`,
+        `https://loadlc-backend-staging.herokuapp.com/api/v1/LC/accidents/${url}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -129,7 +129,7 @@ const Inventory = () => {
 
     try {
       Axios.get(
-        `https://lc-backend-v2.herokuapp.com/api/v1/LC/accidents/${InputClick}`,
+        `https://loadlc-backend-staging.herokuapp.com/api/v1/LC/accidents/${InputClick}`,
         config
       )
         .then((response) => {

@@ -155,7 +155,7 @@ const Inventory = () => {
     setMsg("Updating accident info....");
     setModalColor("green");
     Axios.patch(
-      `https://lc-backend-v2.herokuapp.com/api/v1/LC/accidents/${accidentData.accident_number}`,
+      `https://loadlc-backend-staging.herokuapp.com/api/v1/LC/accidents/${accidentData.accident_number}`,
       formData,
       {
         headers: {

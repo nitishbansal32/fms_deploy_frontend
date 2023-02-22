@@ -74,7 +74,7 @@ const ModalDrivers = (props) => {
     setModalColor("green");
 
     Axios.patch(
-      `https://lc-backend-v2.herokuapp.com/api/v1/LC/drivers/${
+      `https://loadlc-backend-staging.herokuapp.com/api/v1/LC/drivers/${
         driverData.employee_name ? driverData.employee_name : ""
       }`,
       formData,

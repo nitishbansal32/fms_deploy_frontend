@@ -187,7 +187,7 @@ const Inventory = () => {
     setModalColor("green");
 
     Axios.post(
-      `https://lc-backend-v2.herokuapp.com/api/v1/LC/drivers/createDriver`,
+      `https://loadlc-backend-staging.herokuapp.com/api/v1/LC/drivers/createDriver`,
       formData,
       {
         headers: {

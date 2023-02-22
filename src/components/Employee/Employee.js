@@ -185,11 +185,15 @@ const Inventory = () => {
     setMsg("Adding new user.... Please wait");
     setModalColor("green");
 
-    Axios.post(`https://lc-backend-v2.herokuapp.com/api/v1/LC/register`, body, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    })
+    Axios.post(
+      `https://loadlc-backend-staging.herokuapp.com/api/v1/LC/register`,
+      body,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    )
       .then((response) => {
         setStatus(response.status);
         setMsg("Employee Added!");

@@ -146,7 +146,7 @@ const Inventory = () => {
     setMsg("Adding new accident....");
     setModalColor("green");
     Axios.post(
-      `https://lc-backend-v2.herokuapp.com/api/v1/LC/accidents/createAccident`,
+      `https://loadlc-backend-staging.herokuapp.com/api/v1/LC/accidents/createAccident`,
       formData,
       {
         headers: {
