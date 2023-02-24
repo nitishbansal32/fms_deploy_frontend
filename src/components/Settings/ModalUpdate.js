@@ -36,7 +36,7 @@ const ModalUpdate = () => {
     setModal(true);
     setModalColor("green");
     Axios.patch(
-      `https://lc-backend-v2.herokuapp.com/api/v1/LC/updatePassword`,
+      `https://loadlc-backend-staging.herokuapp.com/api/v1/LC/updatePassword`,
       body,
       {
         headers: {
