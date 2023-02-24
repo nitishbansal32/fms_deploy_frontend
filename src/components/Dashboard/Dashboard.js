@@ -35,7 +35,8 @@ const Dashboard = () => {
       config
     )
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
+
         setExpDrivingLicense(res.data.expired_driving_licenses);
         setExpMedicalLicense(res.data.expired_medical_licenses);
         setExpPlate(res.data.expired_plates);

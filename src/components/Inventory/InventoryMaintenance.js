@@ -56,8 +56,8 @@ const Inventory = () => {
   const formData = new FormData();
 
   //Form Data
-  formData.append("employee_name", `${!data.type ? "general" : data.type}`);
-  formData.append("start_date", data.maintenance_documents);
+  formData.append("type", `${!data.type ? "general" : data.type}`);
+  formData.append("maintenance_documents", data.maintenance_documents);
 
   const InventoryNumber = inventoryData.unit;
 
@@ -124,8 +124,7 @@ const Inventory = () => {
                       name="type"
                       id=""
                       onChange={inputChange}
-                      value={data.shift}
-                      // default={}
+                      value={data.type}
                       required
                     >
                       <option selected="selected" value="general">

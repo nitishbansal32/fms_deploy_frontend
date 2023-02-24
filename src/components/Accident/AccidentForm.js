@@ -99,6 +99,31 @@ const Inventory = () => {
     });
   };
 
+  // const body = {
+  //   accident_number: data.accident_number,
+  //   accident_date: data.accident_date,
+  //   accident_time: data.accident_time,
+  //   driver_name: data.driver_name,
+  //   driver_licene_number: data.driver_licene_number,
+  //   tractor_number: data.tractor_number,
+  //   location: data.location,
+  //   accident_type: data.accident_type,
+  //   damage: `${!data.damage ? "Y" : data.damage}`,
+  //   towing: `${!data.towing ? "Y" : data.towing}`,
+  //   police_report_number: data.police_report_number,
+  //   police_officer: data.police_officer,
+  //   company_accident_report: data.company_accident_report,
+  //   claim_number: data.claim_number,
+  //   adjuster: data.adjuster,
+  //   driver_charged: `${!data.driver_charged ? "No" : data.driver_charged}`,
+  //   action_taken: `${!data.action_taken ? "No" : data.action_taken}`,
+  //   cause_of_accident: data.cause_of_accident,
+  //   preventable: `${!data.preventable ? "No" : data.preventable}`,
+  //   cost: data.cost,
+  //   comments: data.comments,
+  //   driver_statement: data.driver_statement,
+  // };
+
   const config = {
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
   };
