@@ -27,6 +27,8 @@ import Loading from "./components/Loading";
 import UpdateInventory from "./components/Inventory/UpdateInventory";
 import UpdateAccident from "./components/Accident/UpdateAccident";
 import UpdateDriver from "./components/Drivers/UpdateDriver";
+import UpdateCompany from "./components/Settings/UpdateCompany";
+
 // import UpdateEmployee from "./components/Employee/UpdateEmployee";
 // import UpdateDriver from "./components/Drivers/UpdateDriver";
 
@@ -48,6 +50,7 @@ function App() {
   const [inventoryData, setInventoryData] = useState([]);
   const [driverData, setDriverData] = useState([]);
   const [accidentData, setAccidentData] = useState([]);
+  const [globalCompanyData, setGloabalCompanyData] = useState([]);
 
   const value = useMemo(
     () => ({
@@ -69,6 +72,8 @@ function App() {
       setAccidentData,
       modalColor,
       setModalColor,
+      globalCompanyData,
+      setGloabalCompanyData,
     }),
     [
       isLoggedIn,
@@ -89,6 +94,8 @@ function App() {
       setAccidentData,
       modalColor,
       setModalColor,
+      globalCompanyData,
+      setGloabalCompanyData,
     ]
   );
 
@@ -121,7 +128,6 @@ function App() {
             <Route exact path="/accident" element={<Accident />}></Route>
             <Route exact path="/register" element={<Employee />}></Route>
             <Route exact path="/cvor" element={<Cvor />}></Route>
-            <Route exact path="/settings" element={<Settings />}></Route>
             <Route
               exact
               path="/registerDriver"
@@ -161,13 +167,21 @@ function App() {
             ></Route>
 
             <Route exact path="/registerCvor" element={<CvorForm />}></Route>
+
+            <Route exact path="/settings" element={<Settings />}></Route>
+            <Route
+              exact
+              path="/updateCompany"
+              element={<UpdateCompany />}
+            ></Route>
+
+            <Route exact path="/allservices" element={<ServiceDash />}></Route>
+
             {/* <Route
               exact
               path="/updateUser"
               element={<UpdateEmployee />}
             ></Route> */}
-
-            <Route exact path="/allservices" element={<ServiceDash />}></Route>
 
             {/* <Route exact path="/loading" element={<Loading />}></Route> */}
           </Routes>

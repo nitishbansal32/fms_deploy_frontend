@@ -259,6 +259,8 @@ const Dashboard = () => {
                             : item.type === "CREATION"
                             ? "green"
                             : item.type === "REMINDER"
+                            ? "#FFC800"
+                            : item.type === "WARNING"
                             ? "#D22B2B"
                             : "#f5f5f5"
                         }`,
@@ -273,6 +275,8 @@ const Dashboard = () => {
                               : item.type === "CREATION"
                               ? "white"
                               : item.type === "REMINDER"
+                              ? "white"
+                              : item.type === "WARNING"
                               ? "white"
                               : "black"
                           }`,
@@ -289,6 +293,8 @@ const Dashboard = () => {
                               : item.type === "CREATION"
                               ? "white"
                               : item.type === "REMINDER"
+                              ? "white"
+                              : item.type === "WARNING"
                               ? "white"
                               : "black"
                           }`,

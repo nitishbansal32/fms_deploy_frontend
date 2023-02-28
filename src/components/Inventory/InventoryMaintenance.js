@@ -30,7 +30,9 @@ const Inventory = () => {
   const navigate = useNavigate();
 
   const [file, setFile] = useState({
-    maintenance_documents: "none",
+    invoice: "none",
+    safety_certificate: "none",
+    inspection_checklist: "none",
   });
 
   const [data, setData] = useState({
@@ -57,7 +59,9 @@ const Inventory = () => {
 
   //Form Data
   formData.append("type", `${!data.type ? "general" : data.type}`);
-  formData.append("maintenance_documents", data.maintenance_documents);
+  formData.append("invoice", data.invoice);
+  formData.append("safety_certificate", data.safety_certificate);
+  formData.append("inspection_checklist", data.inspection_checklist);
 
   const InventoryNumber = inventoryData.unit;
 
@@ -134,13 +138,30 @@ const Inventory = () => {
                       <option value="safety">Safety</option>
                     </select>
                   </div>
-
                   <div className={styles.table_file_container}>
                     <div>
-                      <label>Maintainence documents</label>
+                      <label>Invoice</label>
                       <input
                         type="file"
-                        name="maintenance_documents"
+                        name="invoice"
+                        onChange={fileInputChange}
+                        // value={file.training}
+                      />
+                    </div>
+                    <div>
+                      <label>Safety certificate</label>
+                      <input
+                        type="file"
+                        name="safety_certificate"
+                        onChange={fileInputChange}
+                        // value={file.training}
+                      />
+                    </div>
+                    <div>
+                      <label>Inspection checklist</label>
+                      <input
+                        type="file"
+                        name="inspection_checklist"
                         onChange={fileInputChange}
                         // value={file.training}
                       />

@@ -61,12 +61,15 @@ const Inventory = () => {
           setAllCvir(response.data.entry[0].CVIR);
           setAllCvor(response.data.entry[0].CVOR);
           setAllCitations(response.data.entry[0].citations);
-          setModal(false);
+          setModal(true);
           setMsg("Files fetched...");
           setModalColor("green");
         })
         .catch((err) => {
           console.log(err);
+          setModal(true);
+          setMsg("No files");
+          setModalColor("green");
         });
     } catch (exc) {
       console.log(exc);
