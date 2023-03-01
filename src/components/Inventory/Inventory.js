@@ -153,6 +153,7 @@ const Inventory = () => {
         .then((response) => {
           setAlldrivers(response.data.tractors);
           setModal(false);
+          console.log(response);
         })
         .catch((err) => {
           console.log(err);

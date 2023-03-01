@@ -427,8 +427,6 @@
   gap: 1rem;
 }
 
-
-
 .view_button {
   padding: 0.2rem 0.2rem !important;
   font-size: 0.75rem !important;
@@ -439,6 +437,24 @@
   outline: 0 !important;
   border: 0 !important;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25) !important;
+}
+
+.maintenance_container {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.upper_maintenacne_container {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.upper_maintenacne_container_index {
+  font-weight: 600;
 }
 
 /* Media queries  */

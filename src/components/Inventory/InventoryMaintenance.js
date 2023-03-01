@@ -23,6 +23,7 @@ const Inventory = () => {
     setMsg,
     setModalColor,
     inventoryData,
+    setDisplay,
   } = useContext(UserContext);
 
   const [status, setStatus] = useState("");
@@ -108,6 +109,7 @@ const Inventory = () => {
   const handleBack = () => {
     navigate("/inventory", { replace: true });
     setModal(false);
+    setDisplay(true);
   };
 
   return (
