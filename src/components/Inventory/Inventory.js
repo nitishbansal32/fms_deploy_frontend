@@ -368,7 +368,7 @@ const Inventory = () => {
               <Link to="/registerInventory">
                 <button className="button_add">
                   <img src={plus} alt="" />
-                  Add new equipement
+                  Add new equipment
                 </button>
               </Link>
             </div>
@@ -409,7 +409,11 @@ const Inventory = () => {
                           />{" "}
                           <input type="text" value={item.VIN} />
                           <input type="text" value={item.licence_plate} />
-                          <input type="text" className={styles.status} value={item.status} />
+                          <input
+                            type="text"
+                            className={styles.status}
+                            value={item.status}
+                          />
                         </div>
                         <hr />
                       </div>
