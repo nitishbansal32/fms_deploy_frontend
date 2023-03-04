@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../UserContext";
 import { useEffect, useState, useContext } from "react";
 import Logo from "../../../src/Images/EquipmentsLogo.png";
-import loadingAnimation from "../../../src/Images/loading_animation.gif";
+import loadingAnimation from "../../../src/Images/loadingAnimation.gif";
 import Axios from "axios";
 
 const ModalInventory = (props) => {
@@ -39,11 +39,7 @@ const ModalInventory = (props) => {
   };
 
   // console.log("Props", props.modalInventory);
-  // console.log("global", inventoryData);
-
-  console.log(inventoryData.maintenance_documents);
-
-  console.log(maintainenceLogDisplay);
+  console.log("global", inventoryData.maintenance_documents);
 
   return (
     <div className={styles.main_modal_container}>
@@ -375,23 +371,41 @@ const ModalInventory = (props) => {
             <img src={loading} alt="" style={{ height: "700px" }} />
           )
         ) : inventoryData.maintenance_documents ? (
-          inventoryData.maintenance_documents.map((item, index) => (
-            <div className={styles.maintenance_container}>
-              <div className={styles.upper_maintenacne_container}>
-                <p className={styles.upper_maintenacne_container_index}>
-                  {index + 1}.
-                </p>
-                <p>Type: {item.type}</p>
+          <div className={styles.wrap_container}>
+            {inventoryData.maintenance_documents.map((item, index) => (
+              <div className={styles.maintenance_container}>
+                <div className={styles.upper_maintenacne_container}>
+                  <p className={styles.upper_maintenacne_container_index}>
+                    {index + 1}.
+                  </p>
+                  <p>Type:</p> <span>{item.type}</span>
+                </div>
+                <div>
+                  <p>Date:</p> <span>{item.date.substr(0, 10)}</span>
+                </div>
+                <div>
+                  <p>Invoice:</p> <span>{item.invoice}</span>
+                </div>
+                <div>
+                  <p>Safety certificate:</p>{" "}
+                  <span>{item.safety_certificate}</span>
+                </div>
+                <div>
+                  <p>Inspection checklist:</p>{" "}
+                  <span> {item.inspection_checklist}</span>
+                </div>
+                <div>
+                  <p>Actual date: </p> <span>{item.actual_date}</span>
+                </div>
+                <div>
+                  <p>Scheduled date: </p> <span>{item.scheduled_date}</span>
+                </div>
+                <div>
+                  <p>Delay: </p> <span>{item.delay}</span>
+                </div>
               </div>
-              <p>Date: {item.date.substr(0, 10)}</p>
-              <p>Invoice: {item.invoice}</p>
-              <p>Safety certificate: {item.safety_certificate}</p>
-              <p>Inspection checklist: {item.inspection_checklist}</p>
-              <p>Actual date: {item.actual_date}</p>
-              <p>Scheduled date: {item.scheduled_date}</p>
-              <p>Delay: {item.delay}</p>
-            </div>
-          ))
+            ))}
+          </div>
         ) : (
           <img src={loading} alt="" style={{ height: "700px" }} />
         )}
@@ -406,15 +420,18 @@ const ModalInventory = (props) => {
               <button className="button_general" onClick={handleUpdate}>
                 Update
               </button>
+
               <button className="button_general" onClick={handleMaintenance}>
                 Maintainence
               </button>
             </>
           )}
-
-          <button className="button_general" onClick={handleMaintenanceLog}>
-            {maintainenceLogDisplay ? "Back" : "Maintainence Log"}
-          </button>
+          {inventoryData.maintenance_documents &&
+            !(inventoryData.maintenance_documents.length === 0) && (
+              <button className="button_general" onClick={handleMaintenanceLog}>
+                {maintainenceLogDisplay ? "Back" : "Maintainence Log"}
+              </button>
+            )}
         </div>
       </div>
     </div>

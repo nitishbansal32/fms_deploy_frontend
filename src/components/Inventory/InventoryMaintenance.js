@@ -55,8 +55,9 @@ const Inventory = () => {
       [e.target.name]: e.target.files[0],
     });
   };
-
   const formData = new FormData();
+
+  console.log(data.type);
 
   //Form Data
   formData.append("type", `${!data.type ? "general" : data.type}`);
@@ -150,24 +151,29 @@ const Inventory = () => {
                         // value={file.training}
                       />
                     </div>
-                    <div>
-                      <label>Safety certificate</label>
-                      <input
-                        type="file"
-                        name="safety_certificate"
-                        onChange={fileInputChange}
-                        // value={file.training}
-                      />
-                    </div>
-                    <div>
-                      <label>Inspection checklist</label>
-                      <input
-                        type="file"
-                        name="inspection_checklist"
-                        onChange={fileInputChange}
-                        // value={file.training}
-                      />
-                    </div>
+                    {!(data.type === "" || data.type === "general") && (
+                      <>
+                        {" "}
+                        <div>
+                          <label>Safety certificate</label>
+                          <input
+                            type="file"
+                            name="safety_certificate"
+                            onChange={fileInputChange}
+                            // value={file.training}
+                          />
+                        </div>
+                        <div>
+                          <label>Inspection checklist</label>
+                          <input
+                            type="file"
+                            name="inspection_checklist"
+                            onChange={fileInputChange}
+                            // value={file.training}
+                          />
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
                 <div className={styles.button_alignment_container}>

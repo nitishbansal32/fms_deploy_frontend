@@ -9,6 +9,8 @@ import Permission from "../../components/Permission/Permission";
 
 import { UserContext } from "../../UserContext";
 
+import loadingAni from "../../../src/Images/loadingAnimation.gif";
+
 import Axios from "axios";
 
 const Dashboard = () => {
@@ -25,6 +27,9 @@ const Dashboard = () => {
   const [plateState, setPlateState] = useState(false);
   const [safetyState, setSafetyState] = useState(false);
 
+  const [loadingAniStateExpiry, setLoadingAniStateExpiry] = useState(true);
+  const [loadingAniStateActivity, setLoadingAniStateActivity] = useState(true);
+
   const config = {
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
   };
@@ -35,8 +40,8 @@ const Dashboard = () => {
       config
     )
       .then((res) => {
-        // console.log(res.data);
-
+        console.log(res.data);
+        setLoadingAniStateExpiry(false);
         setExpDrivingLicense(res.data.expired_driving_licenses);
         setExpMedicalLicense(res.data.expired_medical_licenses);
         setExpPlate(res.data.expired_plates);
@@ -50,6 +55,7 @@ const Dashboard = () => {
       config
     )
       .then((res) => {
+        setLoadingAniStateActivity(false);
         setActivity(res.data.activities);
       })
       .catch((err) => {
@@ -140,12 +146,22 @@ const Dashboard = () => {
                     Expired safety
                   </button>
                 </div>
-                <div className={styles.expiry_container}>
+                <div
+                  className={styles.expiry_container}
+                  style={{
+                    overflowY: loadingAniStateExpiry ? "none" : "scroll",
+                  }}
+                >
                   <div className={styles.expiry_content_container}>
-                    {dlState && !(expDrivingLicense.length === 0) && (
-                      <h3>Expired driving licenses</h3>
-                    )}
-                    {dlState &&
+                    {loadingAniStateExpiry && <img src={loadingAni} alt="" />}
+
+                    {!loadingAniStateExpiry &&
+                      dlState &&
+                      !(expDrivingLicense.length === 0) && (
+                        <h3>Expired driving licenses</h3>
+                      )}
+                    {!loadingAniStateExpiry &&
+                      dlState &&
                       expDrivingLicense &&
                       expDrivingLicense.map((item) => (
                         <>
@@ -158,11 +174,14 @@ const Dashboard = () => {
                       ))}
                   </div>
                   <div className={styles.expiry_content_container}>
-                    {mlState && !(expMedicalLicense.length === 0) && (
-                      <h3>Expired medical licenses</h3>
-                    )}
+                    {!loadingAniStateExpiry &&
+                      mlState &&
+                      !(expMedicalLicense.length === 0) && (
+                        <h3>Expired medical licenses</h3>
+                      )}
 
-                    {mlState &&
+                    {!loadingAniStateExpiry &&
+                      mlState &&
                       expMedicalLicense &&
                       expMedicalLicense.map((item) => (
                         <>
@@ -175,10 +194,11 @@ const Dashboard = () => {
                       ))}
                   </div>
                   <div className={styles.expiry_content_container}>
-                    {plateState && !(expPlate.length === 0) && (
-                      <h3>Expired plates</h3>
-                    )}
-                    {plateState &&
+                    {!loadingAniStateExpiry &&
+                      plateState &&
+                      !(expPlate.length === 0) && <h3>Expired plates</h3>}
+                    {!loadingAniStateExpiry &&
+                      plateState &&
                       expPlate &&
                       expPlate.map((item) => (
                         <>
@@ -191,10 +211,11 @@ const Dashboard = () => {
                       ))}
                   </div>
                   <div className={styles.expiry_content_container}>
-                    {safetyState && !(expSafety.length === 0) && (
-                      <h3>Expired safety</h3>
-                    )}
-                    {safetyState &&
+                    {!loadingAniStateExpiry &&
+                      safetyState &&
+                      !(expSafety.length === 0) && <h3>Expired safety</h3>}
+                    {!loadingAniStateExpiry &&
+                      safetyState &&
                       expSafety &&
                       expSafety.map((item) => (
                         <>
@@ -247,8 +268,16 @@ const Dashboard = () => {
                 <button onClick={handleActivity}>Refresh</button>
               </div>
               <img src alt="" />
-              <div className={styles.activity_desc}>
-                {activity &&
+              <div
+                className={styles.activity_desc}
+                style={{
+                  overflowY: loadingAniStateActivity ? "none" : "scroll",
+                }}
+              >
+                {loadingAniStateActivity && <img src={loadingAni} alt="" />}
+
+                {!loadingAniStateActivity &&
+                  activity &&
                   activity.map((item) => (
                     <div
                       className={styles.activity}

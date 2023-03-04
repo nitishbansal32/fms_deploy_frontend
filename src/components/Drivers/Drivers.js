@@ -96,7 +96,7 @@ const Inventory = () => {
 
   //For Getting all tractors
 
-  const getAlldrivers = () => {
+  useEffect(() => {
     setModal(true);
     setMsg("Fetching data...");
     setModalColor("green");
@@ -131,7 +131,7 @@ const Inventory = () => {
     } finally {
       setAlldrivers("");
     }
-  };
+  }, []);
 
   //Field Click Modal
   const handleInput = (e) => {
@@ -206,9 +206,9 @@ const Inventory = () => {
               </div>
             </form>
             <div className={styles.button_alignment_container}>
-              <button onClick={getAlldrivers} className="button_all">
+              {/* <button onClick={getAlldrivers} className="button_all">
                 Get all drivers
-              </button>
+              </button> */}
               <Link to="/registerDriver">
                 <button className="button_add">
                   <img src={plus} alt="" />

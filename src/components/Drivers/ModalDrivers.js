@@ -182,6 +182,7 @@ const ModalDrivers = (props) => {
                                     onChange={fileInputChange}
                                     style={{
                                       zIndex: file.profile_picture ? "1" : "4",
+                                      border: "2px solid red",
                                     }}
                                   />
                                   <button
@@ -433,26 +434,6 @@ const ModalDrivers = (props) => {
                 <div className={styles.appended_files_extended_container}>
                   <div
                     onClick={(event) =>
-                      // props.file.current_abstract[
-                      //   props.file.current_abstract.length - 1
-                      // ] == "none"
-                      //   ? "none"
-                      //   : props.file.current_abstract[
-                      //       props.file.current_abstract.length - 1
-                      //     ] == null
-                      //   ? "none"
-                      //   : props.file.current_abstract[
-                      //       props.file.current_abstract.length - 1
-                      //     ] == undefined
-                      //   ? "none"
-                      //   : window.open(
-                      //       `${
-                      //         props.file.current_abstract[
-                      //           props.file.current_abstract.length - 1
-                      //         ]
-                      //       }`,
-                      //       "_blank"
-                      //     )
                       handleAppendedFiles(
                         props.file.current_abstract,
                         "current_abstract"
@@ -460,7 +441,16 @@ const ModalDrivers = (props) => {
                     }
                   >
                     {/* {console.log(props.file.current_abstract)} */}
-                    <label>Driver MDVR/CDVR</label>
+                    <label
+                      onClick={(event) =>
+                        handleAppendedFiles(
+                          props.file.current_abstract,
+                          "current_abstract"
+                        )
+                      }
+                    >
+                      Driver MDVR/CDVR
+                    </label>
                     <div
                       className={styles.checkBox}
                       style={{
@@ -747,7 +737,16 @@ const ModalDrivers = (props) => {
                       )
                     }
                   >
-                    <label>Certificate of violations(once every 6months)</label>
+                    <label
+                      onClick={(event) =>
+                        handleAppendedFiles(
+                          props.file.certificate_of_violation,
+                          "certificate_of_violation"
+                        )
+                      }
+                    >
+                      Certificate of violations(once every 6months)
+                    </label>
                     <div
                       className={styles.checkBox}
                       style={{
@@ -845,7 +844,13 @@ const ModalDrivers = (props) => {
                       handleAppendedFiles(props.file.training, "training")
                     }
                   >
-                    <label>Training</label>
+                    <label
+                      onClick={(event) =>
+                        handleAppendedFiles(props.file.training, "training")
+                      }
+                    >
+                      Training
+                    </label>
                     <div
                       className={styles.checkBox}
                       style={{
