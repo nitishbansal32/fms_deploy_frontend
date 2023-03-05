@@ -80,6 +80,7 @@ const Inventory = () => {
     employee_name: "",
     start_date: "",
     employee_id: "",
+    email: "",
     DL_number: "",
     expiry: "",
     medical_expiry_date: "",
@@ -123,6 +124,7 @@ const Inventory = () => {
   formData.append("employee_name", data.employee_name);
   formData.append("start_date", data.start_date);
   formData.append("employee_id", data.employee_id);
+  formData.append("email", data.email);
   formData.append("DL_number", data.DL_number);
   formData.append("expiry", data.expiry);
   formData.append("medical_expiry_date", data.medical_expiry_date);
@@ -275,6 +277,18 @@ const Inventory = () => {
                       required
                     />
                   </div>
+
+                  <div className={styles.table_content}>
+                    <label htmlFor="">Email:</label>
+                    <input
+                      type="email"
+                      placeholder="E.g. abcd@email.com"
+                      name="email"
+                      onChange={inputChange}
+                      value={data.email}
+                    />
+                  </div>
+
                   <div className={styles.table_content}>
                     <label htmlFor="">Driver license number:</label>
                     <input

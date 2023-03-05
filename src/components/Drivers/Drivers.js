@@ -31,6 +31,7 @@ const Inventory = () => {
     certificate_of_violation: null,
     training: null,
     certificate_of_road_test: null,
+    DQF_Files: null,
   });
 
   const {
@@ -111,7 +112,7 @@ const Inventory = () => {
         }
       )
         .then((response) => {
-          // console.log(response);
+          console.log(response);
           setAlldrivers(response.data.drivers);
           setModal(false);
         })
@@ -171,6 +172,7 @@ const Inventory = () => {
           file.training = response.data.driver.training;
           file.certificate_of_road_test =
             response.data.driver.certificate_of_road_test;
+          file.DQF_Files = response.data.driver.DQF_Files;
           setModalDrivers([response.data.driver]);
           setDriverData(response.data.driver);
           setModal(false);

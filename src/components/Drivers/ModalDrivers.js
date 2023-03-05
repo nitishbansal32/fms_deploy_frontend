@@ -333,7 +333,42 @@ const ModalDrivers = (props) => {
                 </div>
               </div>
               <div className={styles.upload_container}>
-                <h2>DQF upload status</h2>
+                <h2>Original DQF </h2>
+                {console.log(props.file.DQF_Files)}
+                <div
+                  onClick={(event) =>
+                    props.file.DQF_Files === "none"
+                      ? "none"
+                      : props.file.DQF_Files === null
+                      ? "none"
+                      : props.file.DQF_Files === undefined
+                      ? "none"
+                      : props.file.DQF_Files === "undefined"
+                      ? "none"
+                      : window.open(`${props.file.DQF_Files}`, "_blank")
+                  }
+                >
+                  <label>DQF File</label>
+                  <div
+                    className={styles.checkBox}
+                    style={{
+                      width: "12px",
+                      height: "12px",
+                      backgroundColor:
+                        props.file.DQF_Files == "none"
+                          ? "red"
+                          : props.file.DQF_Files == null
+                          ? "red"
+                          : props.file.DQF_Files == undefined
+                          ? "red"
+                          : props.file.DQF_Files == "undefined"
+                          ? "red"
+                          : "green",
+                    }}
+                  ></div>
+                </div>
+
+                <h2>Other files</h2>
 
                 <div
                   onClick={(event) =>
