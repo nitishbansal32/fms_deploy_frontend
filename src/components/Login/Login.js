@@ -94,11 +94,23 @@ const Login = () => {
           setMsg("User authenticated!");
           setModalColor("green");
         }
+
+        if (response.data.msg === "No account exists with provided email") {
+          setModal(true);
+          setMsg("Invalid credentials!");
+          setModalColor("red");
+        }
         setIsLoggedIn(item);
       })
       .catch((err) => {
         console.log(err);
         if (err.response.data.msg === "Invalid Credentials") {
+          setModal(true);
+          setMsg("Invalid credentials!");
+          setModalColor("red");
+        } else if (
+          err.response.data.msg === "No account exists with provided email"
+        ) {
           setModal(true);
           setMsg("Invalid credentials!");
           setModalColor("red");

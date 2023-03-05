@@ -381,7 +381,8 @@ const ModalInventory = (props) => {
                   <p>Type:</p> <span>{item.type}</span>
                 </div>
                 <div>
-                  <p>Date:</p> <span>{item.date.substr(0, 10)}</span>
+                  <p>Date:</p>{" "}
+                  <span>{item.date ? item.date.substr(0, 10) : ""}</span>
                 </div>
                 <div>
                   <p>Invoice:</p> <span>{item.invoice}</span>

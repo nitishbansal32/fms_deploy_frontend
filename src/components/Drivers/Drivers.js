@@ -112,7 +112,7 @@ const Inventory = () => {
         }
       )
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           setAlldrivers(response.data.drivers);
           setModal(false);
         })

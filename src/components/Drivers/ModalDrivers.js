@@ -133,9 +133,11 @@ const ModalDrivers = (props) => {
     });
 
     // setAppendedFile(item);
-    console.log(event);
-    console.log(item);
+    // console.log(event);
+    // console.log(item);
   };
+
+  // console.log(driverData);
 
   return (
     <div className={styles.main_modal_container}>
@@ -182,7 +184,6 @@ const ModalDrivers = (props) => {
                                     onChange={fileInputChange}
                                     style={{
                                       zIndex: file.profile_picture ? "1" : "4",
-                                      border: "2px solid red",
                                     }}
                                   />
                                   <button
